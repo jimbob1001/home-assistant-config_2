@@ -4,10 +4,10 @@
     name: "MEDIA SHIELD"
     control: hidden
     entities:
-    - media_player.shield_all
+      - media_player.shield_all
 
   media_sonos_all:
     name: "MEDIA SONOS"
     control: hidden
     entities:
-    - media_player.sonos_all
+      - media_player.sonos_all

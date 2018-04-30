@@ -5,25 +5,25 @@
   id: notify_docker_container_down
   initial_state: 'True'
   trigger:
-  - platform: state
-    entity_id: 
-    - switch.docker_emby
-    - switch.docker_nzbget
-    - switch.docker_plex
-    - switch.docker_radarr
-    - switch.docker_sonarr
-    - switch.docker_watchtower
-    to: 'off'
-    for:
-     minutes: '5'
+    - platform: state
+      entity_id:
+        - switch.docker_emby
+        - switch.docker_nzbget
+        - switch.docker_plex
+        - switch.docker_radarr
+        - switch.docker_sonarr
+        - switch.docker_watchtower
+      to: 'off'
+      for:
+       minutes: '5'
   action:
-  - service: notify.get_notified
-    data_template:
-      message: >
-        {{ trigger.to_state.name }} container is down
-        & has been offline for more than 5 minutes
-      title: >
-        {{ trigger.to_state.name }} Down
+    - service: notify.get_notified
+      data_template:
+        message: >
+          {{ trigger.to_state.name }} container is down
+          & has been offline for more than 5 minutes
+        title: >
+          {{ trigger.to_state.name }} Down
 
 ### DOCKER
 ### NOTIFY WHEN CONTAINER RUNNING
@@ -31,23 +31,21 @@
   id: notify_docker_container_up
   initial_state: 'True'
   trigger:
-  - platform: state
-    entity_id: 
-    - switch.docker_emby
-    - switch.docker_nzbget
-    - switch.docker_plex
-    - switch.docker_radarr
-    - switch.docker_sonarr
-    - switch.docker_watchtower
-    to: 'on'
-    for:
-     minutes: '1'
+    - platform: state
+      entity_id:
+        - switch.docker_emby
+        - switch.docker_nzbget
+        - switch.docker_plex
+        - switch.docker_radarr
+        - switch.docker_sonarr
+        - switch.docker_watchtower
+      to: 'on'
+      for:
+       minutes: '1'
   action:
-  - service: notify.get_notified
-    data_template:
-      message: >
-        {{ trigger.to_state.name }} container is back up & running
-      title: >
-        {{ trigger.to_state.name }} Up & Running
- 
- 
+    - service: notify.get_notified
+      data_template:
+        message: >
+          {{ trigger.to_state.name }} container is back up & running
+        title: >
+          {{ trigger.to_state.name }} Up & Running

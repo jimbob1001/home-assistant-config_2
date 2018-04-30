@@ -5,7 +5,7 @@
     alias: "Sonos Playing Show Group"
     sequence:
       - service: group.set_visibility
-        entity_id: 
+        entity_id:
           - group.media_sonos_all
         data:
           visible: True
@@ -14,7 +14,7 @@
     alias: "Hide Sonos Group"
     sequence:
       - service: group.set_visibility
-        entity_id: 
+        entity_id:
           - group.media_sonos_all
         data:
           visible: False
@@ -43,7 +43,8 @@
           - media_player.sonos_living_room
       - service: media_player.select_source
         data:
-          entity_id: media_player.sonos_kitchen
+          entity_id:
+            - media_player.sonos_kitchen
           source: "BBC Radio 6 Music"
 
 ### SELECT WAVES
@@ -59,7 +60,8 @@
           - media_player.sonos_bedroom
       - service: media_player.select_source
         data:
-          entity_id: media_player.sonos_bedroom
+          entity_id:
+            - media_player.sonos_bedroom
           source: "Sea Waves"
 
 ### SELECT WEIGHTLESS
@@ -75,5 +77,6 @@
           - media_player.sonos_bedroom
       - service: media_player.select_source
         data:
-          entity_id: media_player.sonos_bedroom
+          entity_id:
+            - media_player.sonos_bedroom
           source: "Weightless (Ambient Transmission Vol. 2)"

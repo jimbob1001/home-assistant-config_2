@@ -5,55 +5,55 @@
   id: hue_lights_living_room_on_sunrise
   initial_state: 'True'
   trigger:
-  - platform: time
-    at: '05:50:00'
+    - platform: time
+      at: '05:50:00'
   action:
-  - service: script.hue_lights_living_room_dim
+    - service: script.hue_lights_living_room_dim
 
 ### LIVING ROOM SUNSET
 - alias: hue_lights_living_room_on_sunset
   id: hue_lights_living_room_on_sunset
   initial_state: True
   trigger:
-  - platform: time
-    at: '17:30:00'
-  - platform: sun
-    event: 'sunset'
-    offset: '-1:30:00'
+    - platform: time
+      at: '17:30:00'
+    - platform: sun
+      event: 'sunset'
+      offset: '-1:30:00'
   condition:
-  - condition: template
-    value_template: >
-      {{ is_state("light.hue_living_room_all", 'off') }}
+    - condition: template
+      value_template: >
+        {{ is_state("light.hue_living_room_all", 'off') }}
   action:
-  - service: script.hue_lights_living_room_full
+    - service: script.hue_lights_living_room_full
 
 ### LIVING ROOM LIGHTS OFF AM
 - alias: hue_lights_living_room_off_am
   id: hue_lights_living_room_off_am
   initial_state: 'True'
   trigger:
-  - platform: time
-    at: '08:45:00'
+    - platform: time
+      at: '08:45:00'
   condition:
-  - condition: template
-    value_template: >
-      {{ is_state("binary_sensor.workday_sensor", 'on') and
-      is_state("input_boolean.misc_enable_guest_mode", 'off') and
-      is_state("input_boolean.misc_enable_at_home", 'off') }}
+    - condition: template
+      value_template: >
+        {{ is_state("binary_sensor.workday_sensor", 'on') and
+        is_state("input_boolean.misc_enable_guest_mode", 'off') and
+        is_state("input_boolean.misc_enable_at_home", 'off') }}
   action:
-  - service: script.hue_lights_living_room_off
+    - service: script.hue_lights_living_room_off
 
 ### LIVING ROOM LIGHTS OFF PM
 - alias: hue_lights_living_room_off_pm
   id: hue_lights_living_room_off_pm
   initial_state: 'True'
   trigger:
-  - platform: time
-    at: '22:15:00'
+    - platform: time
+      at: '22:15:00'
   condition:
-  - condition: template
-    value_template: >
-      {{ is_state("input_boolean.misc_disable_bedtime",  'off') and 
-      is_state("input_boolean.misc_enable_guest_mode", 'off') }}
+    - condition: template
+      value_template: >
+        {{ is_state("input_boolean.misc_disable_bedtime",  'off') and
+        is_state("input_boolean.misc_enable_guest_mode", 'off') }}
   action:
-  - service: script.hue_lights_living_room_off
+    - service: script.hue_lights_living_room_off

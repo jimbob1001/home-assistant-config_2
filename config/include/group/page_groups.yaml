@@ -5,72 +5,71 @@
     name: 'Today'
     control: hidden
     entities:
-    - sensor.time
-    - sensor.date
-    - sun.sun
-    - sensor.day_time
-    - input_boolean.misc_enable_at_home
-    - input_boolean.misc_enable_guest_mode
-    - input_boolean.misc_enable_time_for_bed
+      - sensor.time
+      - sensor.date
+      - sun.sun
+      - sensor.day_time
+      - input_boolean.misc_enable_at_home
+      - input_boolean.misc_enable_guest_mode
+      - input_boolean.misc_enable_time_for_bed
 
   page_one_home:
     name: 'Home'
     control: hidden
     entities:
-    - binary_sensor.bayesian_presence_james
-    - binary_sensor.bayesian_presence_gillian
+      - binary_sensor.bayesian_presence_james
+      - binary_sensor.bayesian_presence_gillian
 
   page_one_info:
     name: 'Info'
     control: hidden
     entities:
-    - climate.heating
-    - sensor.motion_hue_living_room
-    - sensor.hue_motion_living_room_battery
-    - sensor.hue_tap
-    - script.docker_restart_homeassistant
-    - script.config_purge_database_keep_1_day
+      - climate.heating
+      - sensor.motion_hue_living_room
+      - sensor.hue_motion_living_room_battery
+      - sensor.hue_tap
+      - script.docker_restart_homeassistant
+      - script.config_purge_database_keep_1_day
 
 ### PAGE 2
   page_two_media_sonos_select_music:
     name: 'Music'
     control: hidden
     entities:
-    - input_select.media_sonos_select_source
+      - input_select.media_sonos_select_source
 
 ### PAGE 3
   page_three_guest_mode:
     name: "Guest mode"
     entities:
-    - input_boolean.misc_enable_guest_mode
+      - input_boolean.misc_enable_guest_mode
 
   page_three_input_enables:
     name: "Enable Things"
     control: hidden
     entities:
-    - input_boolean.misc_enable_at_home
-    - input_boolean.misc_enable_guest_mode
-    - input_boolean.misc_enable_time_for_bed
-    - input_boolean.media_shield_enable_lights
-    - input_boolean.misc_disable_bedtime
+      - input_boolean.misc_enable_at_home
+      - input_boolean.misc_enable_guest_mode
+      - input_boolean.misc_enable_time_for_bed
+      - input_boolean.media_shield_enable_lights
+      - input_boolean.misc_disable_bedtime
 
   page_three_test_things:
     name: "Test Things"
     control: hidden
     entities:
-    - sensor.day_time
-    - binary_sensor.sun_up
-    - binary_sensor.sun_down
-    
+      - sensor.day_time
+      - binary_sensor.sun_up
+      - binary_sensor.sun_down
+
   page_three_config:
     name: 'Config'
     control: hidden
     entities:
-    - script.config_clear_error_log
-    - script.config_reload_automations
-    - script.config_reload_scripts
-    - script.config_reload_groups
-    - script.config_purge_database_full
-    - script.config_purge_database_keep_1_day
-    - script.config_homekit_start
-    
+      - script.config_clear_error_log
+      - script.config_reload_automations
+      - script.config_reload_scripts
+      - script.config_reload_groups
+      - script.config_purge_database_full
+      - script.config_purge_database_keep_1_day
+      - script.config_homekit_start

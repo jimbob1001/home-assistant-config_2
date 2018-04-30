@@ -5,33 +5,33 @@
   id: hue_motion_living_room_notify
   initial_state: 'True'
   trigger:
-  - platform: state
-    entity_id:
-    - sensor.motion_hue_living_room
-    to: 'on'
+    - platform: state
+      entity_id:
+        - sensor.motion_hue_living_room
+      to: 'on'
   condition:
-  - condition: template
-    value_template: >
-      {{ is_state("binary_sensor.bayesian_presence_james", 'off') and
-      is_state("binary_sensor.bayesian_presence_gillian", 'off') }}
+    - condition: template
+      value_template: >
+        {{ is_state("binary_sensor.bayesian_presence_james", 'off') and
+        is_state("binary_sensor.bayesian_presence_gillian", 'off') }}
   action:
-  - service: script.hue_motion_living_room_notify
+    - service: script.hue_motion_living_room_notify
 
 ### MOTION LIVING ROOM NIGHT
 - alias: hue_motion_living_room_night_light
   id: hue_motion_living_room_night_light
   initial_state: 'True'
   trigger:
-  - platform: state
-    entity_id: 
-    - sensor.motion_hue_living_room
-    to: 'on'
+    - platform: state
+      entity_id:
+        - sensor.motion_hue_living_room
+      to: 'on'
   condition:
-  - condition: template
-    value_template: >
-      {% if is_state("sensor.day_time", 'off') and
-      is_state("light.hue_living_room_all", 'off') %} True
-      {% else %} False
-      {% endif %}
+    - condition: template
+      value_template: >
+        {% if is_state("sensor.day_time", 'off') and
+        is_state("light.hue_living_room_all", 'off') %} True
+        {% else %} False
+        {% endif %}
   action:
-  - service: script.hue_lights_living_room_night
+    - service: script.hue_lights_living_room_night

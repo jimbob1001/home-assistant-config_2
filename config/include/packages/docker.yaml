@@ -4,8 +4,6 @@
 switch:
   - platform: hadockermon
     host: !secret hadockermon_host
-#    exclude:
-#      - hadockermon
 
 ### SHELL COMMANDS
 shell_command:

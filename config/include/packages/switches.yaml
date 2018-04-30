@@ -20,8 +20,8 @@ switch:
           {% endif %}
 
 ### HUE LIVING ROOM
-  - platform: template
-    switches:
+  # - platform: template
+  #   switches:
       hue_lights_living_room:
         friendly_name: "Hue Living Room"
         value_template: >

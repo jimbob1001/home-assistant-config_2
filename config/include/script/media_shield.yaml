@@ -5,7 +5,8 @@
     alias: "Shield Playing Show Group"
     sequence:
       - service: group.set_visibility
-        entity_id: group.media_shield_all
+        entity_id:
+          - group.media_shield_all
         data:
           visible: True
 
@@ -14,7 +15,8 @@
     alias: "Hide Shield Group"
     sequence:
       - service: group.set_visibility
-        entity_id: group.media_shield_all
+        entity_id:
+          - group.media_shield_all
         data:
           visible: False
 
@@ -25,9 +27,9 @@
       - service: media_player.media_pause
         data:
           entity_id:
-          - media_player.sonos_living_room
-          - media_player.sonos_kitchen
-          - media_player.sonos_bedroom
+            - media_player.sonos_living_room
+            - media_player.sonos_kitchen
+            - media_player.sonos_bedroom
 
 ### SHIELD PLAY DIM LIGHTS
   media_shield_playing_lights_dim:
@@ -53,4 +55,4 @@
       - service: input_boolean.turn_on
         data:
           entity_id:
-          - input_boolean.media_shield_enable_lights
+            - input_boolean.media_shield_enable_lights

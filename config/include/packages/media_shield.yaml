@@ -3,7 +3,7 @@
 ### PLEX
 media_player:
   - platform: plex
-    entity_namespace: 'plex'
+    # entity_namespace: 'plex'
     scan_interval: 5
     include_non_clients: true
     remove_unavailable_clients: false
@@ -19,7 +19,7 @@ media_player:
     entity_namespace: 'kodi'
     host: !secret cast_ip
     port: !secret kodi_port
-    
+
 ### EMBY
   - platform: emby
     host: !secret emby_ip
@@ -46,4 +46,3 @@ media_player:
       - media_player.cast_shield
       - media_player.kodi_kodi
       - media_player.emby_shield
-      

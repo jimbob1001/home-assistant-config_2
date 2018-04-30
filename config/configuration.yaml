@@ -38,19 +38,19 @@ recorder:
   purge_keep_days: 2
   exclude:
     domains:
-    - sun
+      - sun
     entities:
-    - sensor.time
-    - sensor.date
+      - sensor.time
+      - sensor.date
 
 logbook:
   exclude:
     domains:
-    - sun
-    - group
+      - sun
+      - group
     entities:
-    - sensor.time
-    - sensor.date
+      - sensor.time
+      - sensor.date
 
 http:
   api_password: !secret http_password

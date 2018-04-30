@@ -3,17 +3,17 @@
 ### SONOS
 media_player:
   - platform: sonos
-    entity_namespace: 'sonos'
+    # entity_namespace: 'sonos'
     hosts:
       - !secret sonos_ip_living_room
 
   - platform: sonos
-    entity_namespace: 'sonos'
+    # entity_namespace: 'sonos'
     hosts:
       - !secret sonos_ip_kitchen
-      
+
   - platform: sonos
-    entity_namespace: 'sonos'
+    # entity_namespace: 'sonos'
     hosts:
       - !secret sonos_ip_bedroom
 
@@ -32,32 +32,32 @@ media_player:
       is_state("media_player.sonos_kitchen", 'playing') or
       is_state("media_player.sonos_living_room", 'playing') %}
       playing
-      {% 
+      {%
       elif is_state("media_player.sonos_bedroom", 'playing') and
       is_state("media_player.sonos_kitchen", 'playing') and
       is_state("media_player.sonos_living_room", 'paused') %}
       playing
-      {% 
+      {%
       elif is_state("media_player.sonos_bedroom", 'playing') and
       is_state("media_player.sonos_kitchen", 'paused') and
       is_state("media_player.sonos_living_room", 'playing') %}
       playing
-      {% 
+      {%
       elif is_state("media_player.sonos_bedroom", 'paused') and
       is_state("media_player.sonos_kitchen", 'playing') and
       is_state("media_player.sonos_living_room", 'paused') %}
       playing
-      {% 
+      {%
       elif is_state("media_player.sonos_bedroom", 'playing') and
       is_state("media_player.sonos_kitchen", 'paused') and
       is_state("media_player.sonos_living_room", 'paused') %}
       {{ states("media_player.sonos_bedroom") }}
-      {% 
+      {%
       elif is_state("media_player.sonos_kitchen", 'playing') and
       is_state("media_player.sonos_bedroom", 'paused') and
       is_state("media_player.sonos_living_room", 'paused') %}
       {{ states("media_player.sonos_kitchen") }}
-      {% 
+      {%
       elif is_state("media_player.sonos_living_room", 'playing') and
       is_state("media_player.sonos_bedroom", 'paused') and
       is_state("media_player.sonos_kitchen", 'paused') %}

@@ -6,7 +6,8 @@
     sequence:
       - service: input_select.select_option
         data:
-          entity_id: input_select.media_sonos_select_source
+          entity_id:
+            - input_select.media_sonos_select_source
           option: None
       - delay: '00:00:01'
       - service: input_boolean.turn_off
@@ -22,7 +23,8 @@
     sequence:
       - service: input_boolean.turn_on
         data:
-          entity_id: input_boolean.misc_enable_guest_mode
+          entity_id:
+            - input_boolean.misc_enable_guest_mode
       - delay: '00:00:01'
       - service: input_boolean.turn_on
         data:

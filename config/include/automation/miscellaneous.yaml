@@ -5,99 +5,99 @@
   id: misc_daily_reset
   initial_state: 'True'
   trigger:
-  - platform: time
-    at: '02:00:00'
+    - platform: time
+      at: '02:00:00'
   condition:
-  - condition: template
-    value_template: >
-      {{ is_state("input_boolean.misc_enable_guest_mode", 'off') }}
+    - condition: template
+      value_template: >
+        {{ is_state("input_boolean.misc_enable_guest_mode", 'off') }}
   action:
-  - service: script.misc_daily_reset
+    - service: script.misc_daily_reset
 
 ### GUEST MODE ON
 - alias: misc_guest_mode_on
   id: misc_guest_mode_on
   initial_state: 'True'
   trigger:
-  - platform: state
-    entity_id: 
-    - input_boolean.misc_enable_guest_mode
-    to: 'on'
-  - platform: event
-    event_type: "telegram_command"
-    event_data:
-      command: '/guest_on'
+    - platform: state
+      entity_id:
+        - input_boolean.misc_enable_guest_mode
+      to: 'on'
+    - platform: event
+      event_type: 'telegram_command'
+      event_data:
+        command: '/guest_on'
   action:
-  - service: script.misc_guest_mode
+    - service: script.misc_guest_mode
 
 ### GUEST MODE OFF
 - alias: misc_guest_mode_off
   id: misc_guest_mode_off
   initial_state: 'True'
   trigger:
-  - platform: state
-    entity_id: 
-    - input_boolean.misc_enable_guest_mode
-    to: 'off'
-  - platform: event
-    event_type: "telegram_command"
-    event_data:
-      command: '/guest_off'
+    - platform: state
+      entity_id:
+        - input_boolean.misc_enable_guest_mode
+      to: 'off'
+    - platform: event
+      event_type: 'telegram_command'
+      event_data:
+        command: '/guest_off'
   action:
-  - service: script.misc_daily_reset
-  - service: notify.get_notified
-    data:
-      message: "Automations have been re-enabled."
-      title: "Guest Mode Disabled"
+    - service: script.misc_daily_reset
+    - service: notify.get_notified
+      data:
+        message: "Automations have been re-enabled."
+        title: "Guest Mode Disabled"
 
 ### BEDTIME ON
 - alias: misc_time_for_bed_on
   id: misc_time_for_bed_on
   initial_state: 'True'
   trigger:
-  - platform: state
-    entity_id: 
-    - input_boolean.misc_enable_time_for_bed
-    to: 'on'
+    - platform: state
+      entity_id:
+        - input_boolean.misc_enable_time_for_bed
+      to: 'on'
   action:
-  - service: script.misc_time_for_bed
-  - service: notify.get_notified
-    data:
-      message: 'Goodnight!'
+    - service: script.misc_time_for_bed
+    - service: notify.get_notified
+      data:
+        message: 'Goodnight!'
 
 ### CONFIG RESTART
 - alias: config_docker_restart_hass
   id: config_docker_restart_hass
   initial_state: 'True'
   trigger:
-  - platform: event
-    event_type: "telegram_command"
-    event_data:
-      command: '/restart'
+    - platform: event
+      event_type: 'telegram_command'
+      event_data:
+        command: '/restart'
   action:
-  - service: script.docker_restart_hass
+    - service: script.docker_restart_hass
 
 ### PURGE DATABASE
 - alias: config_purge_database
   id: config_purge_database
   initial_state: 'True'
   trigger:
-  - platform: event
-    event_type: "telegram_command"
-    event_data:
-      command: '/purge'
+    - platform: event
+      event_type: 'telegram_command'
+      event_data:
+        command: '/purge'
   action:
-  - service: script.config_clear_error_log
-  - delay: '00:00:01'
-  - service: script.config_purge_database_keep_1_day
+    - service: script.config_clear_error_log
+    - delay: '00:00:01'
+    - service: script.config_purge_database_keep_1_day
 
 ### CONFIG START HOMEKIT
 - alias: config_start_homekit
   id: config_start_homekit
   initial_state: 'False'
   trigger:
-  - platform: homeassistant
-    event: 'start'
+    - platform: homeassistant
+      event: 'start'
   action:
-  - delay: '00:02:00'
-  - service: script.homekit_start
+    - delay: '00:02:00'
+    - service: script.homekit_start

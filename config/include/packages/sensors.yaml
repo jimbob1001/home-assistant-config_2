@@ -9,8 +9,8 @@ tado:
 sensor:
   - platform: time_date
     display_options:
-    - time
-    - date
+      - time
+      - date
 
 ### UPTIME SENSOR
   - platform: uptime
@@ -95,8 +95,8 @@ binary_sensor:
           {{ states.sun.sun.attributes.elevation|float > 0 }}
           {% endif %}
 
-  - platform: template
-    sensors:
+  # - platform: template
+  #   sensors:
       sun_down:
         friendly_name: "Sun is down"
         value_template: >
