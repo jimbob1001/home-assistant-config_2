@@ -1,0 +1,49 @@
+
+### CONFIG
+### RELOAD AUTOMATIONS
+  config_reload_automations:
+    alias: "Reload Automations"
+    sequence:
+      - service: automation.reload
+
+### RELOAD SCRIPTS
+  config_reload_scripts:
+    alias: "Reload Scripts"
+    sequence:
+      - service: script.reload
+
+### RELOAD GROUPS
+  config_reload_groups:
+    alias: "Reload Groups"
+    sequence:
+      - service: group.reload
+
+### PURGE DATABASE
+  config_purge_database_full:
+    alias: "Purge Full Database"
+    sequence:
+     - service: recorder.purge
+       data:
+         keep_days: 0
+         repack: yes
+
+### PURGE DATABASE BUT KEEP LAST DAY
+  config_purge_database_keep_1_day:
+    alias: "Purge Database (Keep 1 Day)"
+    sequence:
+     - service: recorder.purge
+       data:
+         keep_days: 1
+         repack: yes
+
+### CLEAR LOG
+  config_clear_error_log:
+    alias: "Clear Error Log"
+    sequence:
+    - service: system_log.clear
+
+### START HOMEKIT
+  config_homekit_start:
+    alias: "Start Homekit"
+    sequence:
+    - service: homekit.start

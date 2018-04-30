@@ -1,0 +1,39 @@
+
+### ZONES
+zone:
+  - name: 'Home'
+    latitude: !secret latitude_home
+    longitude: !secret longitude_home
+    radius: 150
+    icon: mdi:home-map-marker
+
+  - name: 'Work'
+    latitude: !secret latitude_work
+    longitude: !secret longitude_work
+    radius: 150
+    icon: mdi:account-multiple
+
+### DEVICE TRACKERS
+### ASUSWRT
+device_tracker:
+  - platform: asuswrt
+    host: !secret asus_ip
+    username: !secret asus_username
+    password: !secret asus_password
+    protocol: ssh
+    port: !secret asus_port
+
+    consider_home: '00:10:00'
+    interval_seconds: '00:02:00'
+    new_device_defaults:
+      track_new_devices: false
+      hide_if_away: false
+
+### BLUETOOTH
+  - platform: bluetooth_tracker
+
+### TADO
+  - platform: tado
+    username: !secret tado_user
+    password: !secret tado_pass
+    home_id: !secret home_id

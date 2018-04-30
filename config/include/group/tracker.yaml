@@ -1,0 +1,16 @@
+
+### TRACKER
+### CREATE A SINGLE ENTITY FOR ALL DEVICES
+  presence_james:
+    name: 'James'
+    entities:
+    - device_tracker.james_tado
+    - device_tracker.james_asus_oneplus3
+    - device_tracker.james_bt_oneplus3
+
+  presence_gillian:
+    name: 'Gillian'
+    entities:
+    - device_tracker.gillian_tado
+    - device_tracker.gillian_asus_oneplus3t
+    - device_tracker.gillian_bt_oneplus3t

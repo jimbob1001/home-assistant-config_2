@@ -1,0 +1,45 @@
+
+### INPUT
+### DAILY RESET
+  misc_daily_reset:
+    alias: 'Reset'
+    sequence:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.media_sonos_select_source
+          option: None
+      - delay: '00:00:01'
+      - service: input_boolean.turn_off
+        data:
+          entity_id:
+            - input_boolean.misc_disable_bedtime
+            - input_boolean.misc_enable_at_home
+            - input_boolean.media_shield_enable_lights
+
+### GUEST MODE ON
+  misc_guest_mode:
+    alias: 'Guests'
+    sequence:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.misc_enable_guest_mode
+      - delay: '00:00:01'
+      - service: input_boolean.turn_on
+        data:
+          entity_id:
+            - input_boolean.misc_disable_bedtime
+      - delay: '00:00:01'
+      - service: notify.get_notified
+        data:
+          message: 'Automations are off until guest mode has been disabled.'
+          title: "Guest Mode Enabled"
+
+### TIME FOR BED
+  misc_time_for_bed:
+    alias: "Time for Bed"
+    sequence:
+      - service: script.hue_lights_living_room_off
+      - delay: '00:00:01'
+      - service: script.hue_lights_outside_dim
+      - delay: '00:00:01'
+      - service: script.misc_daily_reset

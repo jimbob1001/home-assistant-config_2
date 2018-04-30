@@ -1,0 +1,76 @@
+
+### CUSTOMIZE
+### DOMAINS
+homeassistant:
+  customize_domain:
+### INPUTS
+    input_boolean:
+      entity_picture: /local/sw/thumbs_up.png
+    input_select:
+      entity_picture: /local/sw/falcon.png
+
+### GLOBAL ENTITIES
+  customize_glob:
+    "binary_sensor.bayesian_presence*":
+      device_class: presence
+    "script.hue_lights*":
+      icon: mdi:lightbulb
+    "script.docker*":
+      icon: mdi:docker
+    "script.config*":
+      icon: mdi:settings
+      
+### INDIVIDUAL ENTITIES
+  customize:
+### GROUPS
+    group.hue_scripts:
+      entity_picture: /local/sw/deathstar.png
+    group.presence_james:
+      entity_picture: /local/sw/hansolo.png
+    group.presence_gillian:
+      entity_picture: /local/sw/leia.png
+    group.media_shield_all:
+      control: hidden
+    group.media_sonos_all:
+      control: hidden
+### SENSORS
+    sensor.motion_hue_living_room:
+      friendly_name: "Hue Motion Living Room"
+    sensor.hue_motion_living_room_battery:
+      icon: mdi:battery
+    sensor.hue_tap:
+      icon: mdi:google-circles-communities
+### BINARY SENSORS
+    binary_sensor.bayesian_presence_james:
+      friendly_name: 'James'
+      entity_picture: /local/sw/poe.png
+    binary_sensor.bayesian_presence_gillian:
+      friendly_name: 'Gillian'
+      entity_picture: /local/sw/rey2.png
+### MEDIA PLAYERS
+    media_player.kodi_kodi:
+      friendly_name: 'KODI'
+    media_player.sonos_all:
+      friendly_name: 'SONOS'
+    media_player.shield_all:
+      friendly_name: 'SHIELD'
+    media_player.emby_shield:
+      hidden: false
+### SWITCHES
+    switch.docker_emby:
+      friendly_name: 'Emby'
+    switch.docker_hadockermon:
+      friendly_name: "HA Dockermon"
+    switch.docker_homeassistant:
+      friendly_name: "Home Assistant"
+    switch.docker_nzbget:
+      friendly_name: 'NZBGet'
+    switch.docker_plex:
+      friendly_name: 'Plex'
+    switch.docker_radarr:
+      friendly_name: 'Radarr'
+    switch.docker_sonarr:
+      friendly_name: 'Sonarr'
+    switch.docker_watchtower:
+      friendly_name: 'Watchtower'
+      

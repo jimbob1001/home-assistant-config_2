@@ -1,0 +1,107 @@
+
+### SENSORS
+### TADO
+tado:
+  username: !secret tado_user
+  password: !secret tado_pass
+
+### TIME & DATE SENSOR
+sensor:
+  - platform: time_date
+    display_options:
+    - time
+    - date
+
+### UPTIME SENSOR
+  - platform: uptime
+
+### DAY TIME OR NIGHT TIME
+  - platform: template
+    sensors:
+      day_time:
+        friendly_name_template: >
+          {% if is_state("sensor.day_time", 'on') %}
+          Day Time
+          {% elif is_state("sensor.day_time", 'off') %}
+          Night Time
+          {% endif %}
+        icon_template: >
+          {% if is_state("sensor.day_time", 'on') %}
+          mdi:weather-partlycloudy
+          {% elif is_state("sensor.day_time", 'off') %}
+          mdi:weather-night
+          {% endif %}
+        value_template: >
+          {% if now().strftime('%H:%M:%S') > ('05:50:00') and
+          now().strftime('%H:%M:%S') < ('22:15:00')  %}
+          on
+          {% else %}
+          off
+          {% endif %}
+
+### BINARY SENSORS
+### WORKDAY
+binary_sensor:
+  - platform: workday
+    country: UK
+
+### BAYESIAN PRESENCE JAMES
+  - platform: bayesian
+    prior: 0.75
+    name: "Bayesian Presence James"
+    probability_threshold: 0.95
+    observations:
+      - entity_id: "device_tracker.james_asus_oneplus3"
+        prob_given_true: 0.6
+        platform: 'state'
+        to_state: 'home'
+      - entity_id: "device_tracker.james_tado"
+        prob_given_true: 0.8
+        platform: 'state'
+        to_state: 'home'
+      - entity_id: "device_tracker.james_bt_oneplus3"
+        prob_given_true: 0.8
+        platform: 'state'
+        to_state: 'home'
+
+### BAYESIAN PRESENCE GILLIAN
+  - platform: bayesian
+    prior: 0.75
+    name: "Bayesian Presence Gillian"
+    probability_threshold: 0.95
+    observations:
+      - entity_id: "device_tracker.gillian_asus_oneplus3t"
+        prob_given_true: 0.8
+        platform: 'state'
+        to_state: 'home'
+      - entity_id: "device_tracker.gillian_tado"
+        prob_given_true: 0.8
+        platform: 'state'
+        to_state: 'home'
+      - entity_id: "device_tracker.gillian_bt_oneplus3t"
+        prob_given_true: 0.8
+        platform: 'state'
+        to_state: 'home'
+
+### TIME
+  - platform: template
+    sensors:
+      sun_up:
+        friendly_name: "Sun is up"
+        value_template: >
+          {% if is_state("sun.sun", 'unknown')%}
+          not available
+          {% else %}
+          {{ states.sun.sun.attributes.elevation|float > 0 }}
+          {% endif %}
+
+  - platform: template
+    sensors:
+      sun_down:
+        friendly_name: "Sun is down"
+        value_template: >
+          {% if is_state("sun.sun", 'unknown')%}
+          not available
+          {% else %}
+          {{ states.sun.sun.attributes.elevation|float < 0 }}
+          {% endif %}

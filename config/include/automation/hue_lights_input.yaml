@@ -1,0 +1,135 @@
+
+### HUE
+### TEST TURN ON LIGHTS USING TELEGRAM
+- alias: hue_lights_on_telegram_test
+  id: hue_lights_on_telegram_test
+  initial_state: 'True'
+  trigger:
+  - platform: event
+    event_type: "telegram_command"
+  action:
+  - service_template: >
+      {% if (trigger.event.data.state == '/full') %}
+      script.hue_lights_living_room_full
+      {% endif %}
+
+### TURN ON LIGHTS USING INPUT
+- alias: hue_lights_on_input_boolean
+  id: hue_lights_on_input_boolean
+  initial_state: 'True'
+  trigger:
+  - platform: state
+    entity_id:
+    - input_boolean.hue_lights_living_room_full
+    - input_boolean.hue_lights_living_room_dim
+    - input_boolean.hue_lights_living_room_movie
+    - input_boolean.hue_lights_living_room_morning
+    - input_boolean.hue_lights_living_room_white
+    - input_boolean.hue_lights_living_room_night
+    - input_boolean.hue_lights_living_room_off
+    - input_boolean.hue_lights_outside_full
+    - input_boolean.hue_lights_outside_dim
+    - input_boolean.hue_lights_outside_off
+    to: 'on'
+  action:
+  - service_template: >
+      {% if
+      is_state("input_boolean.hue_lights_living_room_full", "on") %}
+      script.hue_lights_living_room_full
+      {% elif
+      is_state("input_boolean.hue_lights_living_room_dim", "on") %}
+      script.hue_lights_living_room_dim
+      {% elif
+      is_state("input_boolean.hue_lights_living_room_movie", "on") %}
+      script.hue_lights_living_room_movie
+      {% elif
+      is_state("input_boolean.hue_lights_living_room_morning", "on") %}
+      script.hue_lights_living_room_morning
+      {% elif
+      is_state("input_boolean.hue_lights_living_room_white", "on") %}
+      script.hue_lights_living_room_white
+      {% elif
+      is_state("input_boolean.hue_lights_living_room_night", "on") %}
+      script.hue_lights_living_room_night
+      {% elif
+      is_state("input_boolean.hue_lights_living_room_off", "on") %}
+      script.hue_lights_living_room_off
+      {% elif
+      is_state("input_boolean.hue_lights_outside_full", "on") %}
+      script.hue_lights_outside_full
+      {% elif
+      is_state("input_boolean.hue_lights_outside_dim", "on") %}
+      script.hue_lights_outside_dim
+      {% elif
+      is_state("input_boolean.hue_lights_outside_off", "on") %}
+      script.hue_lights_outside_off
+      {% endif %}
+
+### TURN ON LIGHTS USING TELEGRAM
+- alias: hue_lights_on_telegram
+  id: hue_lights_on_telegram
+  initial_state: 'False'
+  trigger:
+  - platform: event
+    event_type: "telegram_command"
+    event_data:
+      command: '/full'
+  - platform: event
+    event_type: "telegram_command"
+    event_data:
+      command: '/dim'
+  - platform: event
+    event_type: "telegram_command"
+    event_data:
+      command: '/movie'
+  - platform: event
+    event_type: "telegram_command"
+    event_data:
+      command: '/morning'
+  - platform: event
+    event_type: "telegram_command"
+    event_data:
+      command: '/white'
+  - platform: event
+    event_type: "telegram_command"
+    event_data:
+      command: '/night'
+  - platform: event
+    event_type: "telegram_command"
+    event_data:
+      command: '/off'
+  - platform: event
+    event_type: "telegram_command"
+    event_data:
+      command: '/outside_full'
+  - platform: event
+    event_type: "telegram_command"
+    event_data:
+      command: '/outside_dim'
+  - platform: event
+    event_type: "telegram_command"
+    event_data:
+      command: '/outside_off'
+  action:
+  - service_template: >
+      {% if trigger.event.data.command == '/full' %}
+      script.hue_lights_living_room_full
+      {% elif "trigger.event.data.command[0]" == '/dim' %}
+      script.hue_lights_living_room_dim
+      {% elif "trigger.event.data.command[0]" == '/movie' %}
+      script.hue_lights_living_room_movie
+      {% elif "trigger.event.data.command[0]" == '/morning' %}
+      script.hue_lights_living_room_morning
+      {% elif "trigger.event.data.command[0]" == '/white' %}
+      script.hue_lights_living_room_white
+      {% elif "trigger.event.data.command[0]" == '/night' %}
+      script.hue_lights_living_room_night
+      {% elif "trigger.event.data.command[0]" == '/off' %}
+      script.hue_lights_living_room_off
+      {% elif "trigger.event.data.command[0]" == '/outside_full' %}
+      script.hue_lights_outside_full
+      {% elif "trigger.event.data.command[0]" == '/outside_dim' %}
+      script.hue_lights_outside_dim
+      {% elif "trigger.event.data.command[0]" == '/outside_off' %}
+      script.hue_lights_outside_off
+      {% endif %}

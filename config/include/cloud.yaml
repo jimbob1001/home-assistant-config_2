@@ -1,0 +1,12 @@
+  google_actions:
+    filter:
+      include_domains:
+        - script
+      exclude_entities:
+        - script.hue_motion_living_room_notify
+        
+    entity_config:
+      script.docker_restart_hass:
+        aliases:
+         - restart hass
+ 

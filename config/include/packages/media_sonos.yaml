@@ -1,0 +1,67 @@
+
+### MEDIA
+### SONOS
+media_player:
+  - platform: sonos
+    entity_namespace: 'sonos'
+    hosts:
+      - !secret sonos_ip_living_room
+
+  - platform: sonos
+    entity_namespace: 'sonos'
+    hosts:
+      - !secret sonos_ip_kitchen
+      
+  - platform: sonos
+    entity_namespace: 'sonos'
+    hosts:
+      - !secret sonos_ip_bedroom
+
+### UNIVERSAL
+### COMBINES ALL SONOS PLAYERS INTO ONE ENTITY
+### Sonos only uses STATE_PLAYING or STATE_PAUSED so need to
+### template "paused" to "off"
+  - platform: universal
+    name: "SONOS ALL"
+    children:
+      - media_player.sonos_bedroom
+      - media_player.sonos_kitchen
+      - media_player.sonos_living_room
+    state_template: >
+      {% if is_state("media_player.sonos_bedroom", 'playing') or
+      is_state("media_player.sonos_kitchen", 'playing') or
+      is_state("media_player.sonos_living_room", 'playing') %}
+      playing
+      {% 
+      elif is_state("media_player.sonos_bedroom", 'playing') and
+      is_state("media_player.sonos_kitchen", 'playing') and
+      is_state("media_player.sonos_living_room", 'paused') %}
+      playing
+      {% 
+      elif is_state("media_player.sonos_bedroom", 'playing') and
+      is_state("media_player.sonos_kitchen", 'paused') and
+      is_state("media_player.sonos_living_room", 'playing') %}
+      playing
+      {% 
+      elif is_state("media_player.sonos_bedroom", 'paused') and
+      is_state("media_player.sonos_kitchen", 'playing') and
+      is_state("media_player.sonos_living_room", 'paused') %}
+      playing
+      {% 
+      elif is_state("media_player.sonos_bedroom", 'playing') and
+      is_state("media_player.sonos_kitchen", 'paused') and
+      is_state("media_player.sonos_living_room", 'paused') %}
+      {{ states("media_player.sonos_bedroom") }}
+      {% 
+      elif is_state("media_player.sonos_kitchen", 'playing') and
+      is_state("media_player.sonos_bedroom", 'paused') and
+      is_state("media_player.sonos_living_room", 'paused') %}
+      {{ states("media_player.sonos_kitchen") }}
+      {% 
+      elif is_state("media_player.sonos_living_room", 'playing') and
+      is_state("media_player.sonos_bedroom", 'paused') and
+      is_state("media_player.sonos_kitchen", 'paused') %}
+      {{ states("media_player.sonos_living_room") }}
+      {% else %}
+      off
+      {% endif %}

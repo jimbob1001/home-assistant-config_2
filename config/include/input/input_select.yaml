@@ -1,0 +1,10 @@
+### INPUT_SELECT
+### SONOS
+  media_sonos_select_source:
+    name: "Sonos Source"
+    options:
+      - None
+      - Sea Waves
+      - Weightless
+      - BBC 6 MUSIC
+    initial: None

@@ -1,0 +1,54 @@
+
+### HUE
+### HUE HUB
+hue:
+  bridges:
+    - host: !secret hue_ip
+      filename: phue.conf
+      allow_unreachable: true
+      allow_hue_groups: true
+
+### LIGHT GROUPS
+light:
+- platform: group
+  name: "Hue Outside All"
+  entities: 
+    - light.hue_front_porch
+
+- platform: group
+  name: "Hue Living Room All"
+  entities: 
+    - light.hue_big_floor_lamp
+    - light.hue_small_floor_lamp
+    - light.hue_table_lamp
+    - light.hue_tv_backlight
+
+### HUE SENSORS
+### CUSTOM COMPONENT
+### ADDS HUE MOTION & HUE TAP
+sensor:
+  - platform: hue
+
+### ADDS HUE MOTION TEMPERATURE SENSOR
+  - platform: template
+    sensors:
+      hue_motion_living_room_temp:
+        friendly_name: "Living Room Temp"
+        value_template: >
+          {% if is_state("sensor.motion_hue_living_room", 'unknown')%} 
+          not available
+          {% else %} 
+          {{ states.sensor.motion_hue_living_room.attributes.temperature }} 
+          {% endif %}
+        unit_of_measurement: '°C'
+
+### ADDS HUE MOTION BATTERY SENSOR
+      hue_motion_living_room_battery:
+        friendly_name: "Motion Sensor Battery"
+        value_template: >
+          {% if is_state("sensor.motion_hue_living_room", 'unknown')%} 
+          not available
+          {% else %} 
+          {{ states.sensor.motion_hue_living_room.attributes.battery }} 
+          {% endif %}
+        unit_of_measurement: '%'

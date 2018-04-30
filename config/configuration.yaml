@@ -1,0 +1,78 @@
+
+### BASIC CONFIG
+homeassistant:
+  name: No. 33
+  latitude: !secret latitude_home
+  longitude: !secret longitude_home
+  elevation: !secret elevation_home
+  unit_system: metric
+  time_zone: Europe/London
+  packages: !include_dir_named include/packages
+
+### ADDITIONAL CONFIG
+updater:
+config:
+sun:
+conversation:
+shopping_list:
+map:
+frontend:
+
+#mqtt:
+#  broker: !secret mqtt_broker
+#  port: !secret mqtt_port
+#  username: !secret mqtt_user
+#  password: !secret mqtt_pass
+#  client_id: !secret mqtt_client
+#  keepalive: 60
+#  protocol: 3.1
+
+history:
+logger:
+  default: warning
+system_log:
+  max_entries: 15
+
+recorder:
+  purge_interval: 10
+  purge_keep_days: 2
+  exclude:
+    domains:
+    - sun
+    entities:
+    - sensor.time
+    - sensor.date
+
+logbook:
+  exclude:
+    domains:
+    - sun
+    - group
+    entities:
+    - sensor.time
+    - sensor.date
+
+http:
+  api_password: !secret http_password
+  trusted_networks:
+    - !secret trusted_ip_1
+    - !secret trusted_ip_2
+    - !secret trusted_ip_3
+  ip_ban_enabled: true
+  login_attempts_threshold: 5
+
+cloud: !include include/cloud.yaml
+
+#homekit:
+#  pincode: !secret homekit_pincode
+#  auto_start: false
+#  filter:
+#    include_domains:
+#      - light
+
+### INCLUDE
+automation: !include_dir_merge_list include/automation
+script: !include_dir_merge_named include/script/
+group: !include_dir_merge_named include/group/
+input_boolean: !include include/input/input_boolean.yaml
+input_select: !include include/input/input_select.yaml

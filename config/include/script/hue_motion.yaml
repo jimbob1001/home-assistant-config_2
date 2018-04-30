@@ -1,0 +1,11 @@
+ 
+### HUE
+### LIVING ROOM MOTION
+  hue_motion_living_room_notify:
+    alias: "Motion Living Room"
+    sequence:
+      - service: notify.get_notified
+        data:
+          message: "Motion Detected"
+          title: "Living Room Motion Sensor has been triggered at home"
+          

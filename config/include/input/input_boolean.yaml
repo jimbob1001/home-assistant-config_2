@@ -1,0 +1,51 @@
+
+### INPUT
+### MISCELLANEOUS
+### DISABLE
+  misc_disable_bedtime:
+    name: "Disable Bedtime Automation"
+### ENABLE
+  misc_enable_at_home:
+    name: "Enable At Home"
+  misc_enable_guest_mode:
+    name: "Enable Guest Mode"
+  misc_enable_time_for_bed:
+    name: "Enable Time for Bed"
+    initial: off
+
+### MEDIA
+  media_shield_enable_lights:
+    name: "Enable Shield Lights"
+
+### HUE
+### SWITCHES TO ENABLE NATIVE HUE SCENES
+  hue_lights_living_room_dim:
+    name: "Living Room Dim"
+    initial: off
+  hue_lights_living_room_full:
+    name: "Living Room Full"
+    initial: off
+  hue_lights_living_room_movie:
+    name: "Living Room Movie"
+    initial: off
+  hue_lights_living_room_morning:
+    name: "Living Room Morning"
+    initial: off
+  hue_lights_living_room_white:
+    name: "Living Room White"
+    initial: off
+  hue_lights_living_room_night:
+    name: "Living Room Night"
+    initial: off
+  hue_lights_living_room_off:
+    name: "Living Room Off"
+    initial: off
+  hue_lights_outside_full:
+    name: "Outside Full"
+    initial: off
+  hue_lights_outside_dim:
+    name: "Outside Dim"
+    initial: off
+  hue_lights_outside_off:
+    name: "Outside Off"
+    initial: off

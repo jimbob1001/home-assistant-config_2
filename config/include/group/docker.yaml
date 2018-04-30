@@ -1,0 +1,32 @@
+
+### DOCKER GROUPS
+  docker_restart_all:
+    name: "Restart Docker Containers"
+    control: hidden
+    entities:
+    - script.docker_restart_emby
+    - script.docker_restart_hadockermon
+    - script.docker_restart_nzbget
+    - script.docker_restart_plex
+    - script.docker_restart_radarr
+    - script.docker_restart_sonarr
+    - script.docker_restart_watchtower
+
+  docker_switches_all:
+    name: "Docker Switches"
+    control: hidden
+    entities:
+    - switch.docker_emby
+    - switch.docker_hadockermon
+    - switch.docker_nzbget
+    - switch.docker_plex
+    - switch.docker_radarr
+    - switch.docker_sonarr
+    - switch.docker_watchtower
+
+  docker_homeassistant:
+    name: "Docker Home Assistant"
+    control: hidden
+    entities:
+    - switch.docker_homeassistant
+    - script.docker_restart_homeassistant
