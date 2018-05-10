@@ -1,3 +1,4 @@
+
 ### INPUT_SELECT
 ### SONOS
   media_sonos_select_source:
@@ -7,4 +8,25 @@
       - Sea Waves
       - Weightless
       - BBC 6 MUSIC
+    initial: None
+
+### HUE
+### HUE SCENE SELECT
+  hue_select_scene_living_room:
+    name: "Living Room Scene"
+    options:
+      - None
+      - Full
+      - Dim
+      - Movie
+      - White
+      - Night
+    initial: None
+    
+  hue_select_scene_outside:
+    name: "Outside Scene"
+    options:
+      - None
+      - Full
+      - Dim
     initial: None
