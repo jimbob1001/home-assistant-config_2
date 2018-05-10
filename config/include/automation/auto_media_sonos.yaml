@@ -1,63 +1,41 @@
 
 ### SONOS
 ### SHOW SONOS GROUP
-- alias: media_sonos_group_show
+- alias: 'media_sonos_group_show'
   id: media_sonos_group_show
   initial_state: 'True'
   trigger:
-    - platform: state
-      entity_id:
-        - media_player.sonos_all
-      to: 'playing'
-  action:
-    - service: script.media_sonos_group_show
-
-### HIDE SONOS GROUP
-- alias: media_sonos_group_hide
-  id: media_sonos_group_hide
-  initial_state: 'True'
-  trigger:
-    - platform: state
-      entity_id:
-        - media_player.sonos_all
-      from: 'playing'
     - platform: homeassistant
       event: 'start'
+    - platform: state
+      entity_id:
+        - media_player.sonos_all
   action:
+    - service_template: >
+        {% if is_state('media_player.sonos_all', 'playing') %}
+          script.media_sonos_group_show
+        {% else %}
+          script.media_sonos_group_hide
+        {% endif %}
+    - wait_template: >
+        {{ is_state('media_player.sonos_all', 'off') or 
+        is_state('media_player.shield_all', 'paused') }}
     - service: script.media_sonos_group_hide
 
-### SONOS BBC 6 MUSIC
-- alias: media_sonos_select_6music
-  id: media_sonos_select_6music
+### SONOS SELECT  MUSIC
+- alias: 'media_sonos_select_music'
+  id: media_sonos_select_music
   initial_state: 'True'
   trigger:
     - platform: state
       entity_id:
         - input_select.media_sonos_select_source
-      to: "BBC 6 MUSIC"
   action:
-    - service: script.media_sonos_select_6music
-
-### SONOS WAVES
-- alias: media_sonos_select_waves
-  id: media_sonos_select_waves
-  initial_state: 'True'
-  trigger:
-    - platform: state
-      entity_id:
-        - input_select.media_sonos_select_source
-      to: "Sea Waves"
-  action:
-    - service: script.media_sonos_select_waves
-
-### SONOS WEIGHTLESS
-- alias: media_sonos_select_weightless
-  id: media_sonos_select_weightless
-  initial_state: 'True'
-  trigger:
-    - platform: state
-      entity_id:
-        - input_select.media_sonos_select_source
-      to: "Weightless"
-  action:
-    - service: script.media_sonos_select_weightless
+    - service_template: >
+        {% if is_state('input_select.media_sonos_select_source', "BBC 6 MUSIC") %}
+          script.media_sonos_select_6music
+        {% elif is_state('input_select.media_sonos_select_source', "Sea Waves") %}
+          script.media_sonos_select_waves
+        {% elif is_state('input_select.media_sonos_select_source', "Weightless") %}
+          script.media_sonos_select_weightless
+        {% endif %}
