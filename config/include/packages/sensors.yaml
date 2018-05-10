@@ -15,9 +15,37 @@ sensor:
 ### UPTIME SENSOR
   - platform: uptime
 
-### DAY TIME OR NIGHT TIME
+### TODAY
   - platform: template
     sensors:
+      today_all:
+        friendly_name: 'Today'
+        value_template: >
+          {{ now().strftime('%a %d %b %Y') }}
+        icon_template: >
+          {% if is_state('sensor.today_all', 'unknown') %}
+          mdi:calendar
+          {%else%}
+          mdi:calendar
+          {% endif %}
+      today_day:
+        friendly_name: 'Day'
+        value_template: >
+          {{ now().strftime('%A') }}
+      today_date:
+        friendly_name: 'Date'
+        value_template: >
+          {{ now().strftime('%d') }}
+      today_month:
+        friendly_name: 'Month'
+        value_template: >
+          {{ now().strftime('%b') }}
+      today_year:
+        friendly_name: 'Year'
+        value_template: >
+          {{ now().strftime('%Y') }}
+
+### DAY TIME OR NIGHT TIME - UNUSED?
       day_time:
         friendly_name_template: >
           {% if is_state("sensor.day_time", 'on') %}
@@ -39,11 +67,55 @@ sensor:
           off
           {% endif %}
 
+### MORNING, AFTERNOON, EVENING OR NIGHT
+      time_of_day:
+        friendly_name_template: >
+          {% if is_state("sensor.time_of_day", 'Morning') %}
+          Morning
+          {% elif is_state("sensor.time_of_day", 'Afternoon') %}
+          Afternoon
+          {% elif is_state("sensor.time_of_day", 'Evening') %}
+          Evening
+          {% elif is_state("sensor.time_of_day", 'Night') %}
+          Night
+          {% elif is_state("sensor.time_of_day", 'Off') %}
+          off
+          {% endif %}
+        icon_template: >
+          {% if is_state("sensor.time_of_day", 'Morning') or 
+          is_state("sensor.time_of_day", 'Afternoon') or 
+          is_state("sensor.time_of_day", 'Evening') %}
+          mdi:weather-partlycloudy
+          {% elif is_state("sensor.time_of_day", 'Night') %}
+          mdi:weather-night
+          {% else %}
+          mdi:timelapse
+          {% endif %}
+        value_template: >
+          {% if now().strftime('%H:%M:%S') > ('00:00:00') and
+          now().strftime('%H:%M:%S') < ('05:50:00') %}
+          Night
+          {% elif now().strftime('%H:%M:%S') > ('00:00:00') and
+          now().strftime('%H:%M:%S') < ('12:00:00') %}
+          Morning
+          {% elif now().strftime('%H:%M:%S') > ('11:59:59') and
+          now().strftime('%H:%M:%S') < ('18:00:00') %}
+          Afternoon
+          {% elif now().strftime('%H:%M:%S') > ('17:59:59') and
+          now().strftime('%H:%M:%S') < ('22:15:00') %}
+          Evening
+          {% elif now().strftime('%H:%M:%S') > ('22:14:59') and
+          now().strftime('%H:%M:%S') < ('23:59:59') %}
+          Night
+          {% else %}
+          Off
+          {% endif %}
+
 ### BINARY SENSORS
 ### WORKDAY
 binary_sensor:
   - platform: workday
-    country: UK
+    country: 'UK'
 
 ### BAYESIAN PRESENCE JAMES
   - platform: bayesian
@@ -83,25 +155,31 @@ binary_sensor:
         platform: 'state'
         to_state: 'home'
 
-### TIME
+### SUN
   - platform: template
     sensors:
       sun_up:
         friendly_name: "Sun is up"
         value_template: >
-          {% if is_state("sun.sun", 'unknown')%}
+          {% if is_state("sun.sun", 'unknown') %}
           not available
           {% else %}
           {{ states.sun.sun.attributes.elevation|float > 0 }}
           {% endif %}
 
-  # - platform: template
-  #   sensors:
       sun_down:
         friendly_name: "Sun is down"
         value_template: >
-          {% if is_state("sun.sun", 'unknown')%}
+          {% if is_state("sun.sun", 'unknown') %}
           not available
           {% else %}
           {{ states.sun.sun.attributes.elevation|float < 0 }}
           {% endif %}
+
+      allow_shield_lights:
+        friendly_name: "Allow Shield Lights"
+        value_template: >
+          {{ now().strftime('%H:%M:%S') > ('17:30:00') or
+          is_state('sun.sun', 'below_horizon') or
+          is_state('input_boolean.media_shield_enable_lights', 'on') }}
+          
