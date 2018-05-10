@@ -3,21 +3,24 @@
 ### PAGE 1
   default_view:
     name: 'Home'
-    view: true
+    view: 'True'
     entities:
       - group.page_one_today
       - group.page_one_home
       - group.page_one_info
       - group.hue_lights_living_room
       - group.hue_lights_outside
-      - group.hue_light_scripts
+      - group.hue_light_scripts_morning
+      - group.hue_light_scripts_afternoon
+      - group.hue_light_scripts_evening
+      - group.hue_light_scripts_night
       - group.media_shield_all
       - group.media_sonos_all
 
 #### PAGE 2
   Page_2:
     name: "Page 2"
-    view: true
+    view: 'True'
     entities:
       - group.page_two_media_sonos_select_music
       - media_player.shield_all
@@ -34,7 +37,7 @@
 ### PAGE 3
   Page_3:
     name: "Page 3"
-    view: true
+    view: 'True'
     entities:
       - group.page_three_test_things
       - group.page_three_config
@@ -46,12 +49,13 @@
       - group.hue_lights_all
       - group.presence_james
       - group.presence_gillian
+      - group.all_scripts
 
 ### DOCKER
   docker:
     name: 'Docker'
-    control: hidden
-    view: true
+    control: 'hidden'
+    view: 'True'
     entities:
       - group.docker_restart_all
       - group.docker_switches_all

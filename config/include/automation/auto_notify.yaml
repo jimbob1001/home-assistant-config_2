@@ -1,7 +1,7 @@
 
 ### NOTIFY
 ### PING PONG
-- alias: notify_ping_pong
+- alias: 'notify_ping_pong'
   id: notify_ping_pong
   initial_state: 'True'
   trigger:
@@ -15,7 +15,7 @@
         message: 'pong'
 
 ### RESTARTED
-- alias: notify_hass_restart
+- alias: 'notify_hass_restart'
   id: notify_hass_restart
   initial_state: 'True'
   trigger:
@@ -28,7 +28,7 @@
         title: "Hass Restarted"
 
 ### SHUTTING DOWN
-- alias: notify_hass_shutdown
+- alias: 'notify_hass_shutdown'
   id: notify_hass_shutdown
   initial_state: 'True'
   trigger:
@@ -41,7 +41,7 @@
         title: "Hass Shutting Down"
 
 ### HOMEASSISTANT UPDATE
-- alias: notify_hass_update
+- alias: 'notify_hass_update'
   id: notify_hass_update
   initial_state: 'True'
   trigger:
@@ -51,11 +51,11 @@
   condition:
     - condition: template
       value_template: >
-        {{ not is_state("updater.updater", 'unknown' ) }}
+        {{ not is_state('updater.updater', 'unknown' ) }}
   action:
     - service: notify.get_notified
       data:
         message: >
-          Home Assistant {{ states("updater.updater") }}
+          Home Assistant {{ states('updater.updater') }}
           is now available. Go to https://home-assistant.io
         title: "Home Assistant Update"

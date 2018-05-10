@@ -3,17 +3,14 @@
 ### SONOS
 media_player:
   - platform: sonos
-    # entity_namespace: 'sonos'
     hosts:
       - !secret sonos_ip_living_room
 
   - platform: sonos
-    # entity_namespace: 'sonos'
     hosts:
       - !secret sonos_ip_kitchen
 
   - platform: sonos
-    # entity_namespace: 'sonos'
     hosts:
       - !secret sonos_ip_bedroom
 

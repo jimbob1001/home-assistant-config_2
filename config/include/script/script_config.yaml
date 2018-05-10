@@ -24,8 +24,8 @@
     sequence:
       - service: recorder.purge
         data:
-          keep_days: 0
-          repack: yes
+          keep_days: '0'
+          repack: 'yes'
 
 ### PURGE DATABASE BUT KEEP LAST DAY
   config_purge_database_keep_1_day:
@@ -33,8 +33,8 @@
     sequence:
       - service: recorder.purge
         data:
-          keep_days: 1
-          repack: yes
+          keep_days: '1'
+          repack: 'yes'
 
 ### CLEAR LOG
   config_clear_error_log:

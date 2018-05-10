@@ -2,7 +2,7 @@
 ### DOCKER GROUPS
   docker_restart_all:
     name: "Restart Docker Containers"
-    control: hidden
+    control: 'hidden'
     entities:
       - script.docker_restart_emby
       - script.docker_restart_hadockermon
@@ -14,7 +14,7 @@
 
   docker_switches_all:
     name: "Docker Switches"
-    control: hidden
+    control: 'hidden'
     entities:
       - switch.docker_emby
       - switch.docker_hadockermon
@@ -26,7 +26,7 @@
 
   docker_homeassistant:
     name: "Docker Home Assistant"
-    control: hidden
+    control: 'hidden'
     entities:
       - switch.docker_homeassistant
       - script.docker_restart_homeassistant

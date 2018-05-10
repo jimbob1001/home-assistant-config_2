@@ -1,13 +1,13 @@
 
 ### MEDIA
   media_shield_all:
-    name: "MEDIA SHIELD"
-    control: hidden
+    name: "SHIELD"
+    control: 'hidden'
     entities:
       - media_player.shield_all
 
   media_sonos_all:
-    name: "MEDIA SONOS"
-    control: hidden
+    name: "SONOS"
+    control: 'hidden'
     entities:
       - media_player.sonos_all

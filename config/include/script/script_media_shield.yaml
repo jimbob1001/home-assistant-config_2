@@ -8,7 +8,7 @@
         entity_id:
           - group.media_shield_all
         data:
-          visible: True
+          visible: 'True'
 
 ### SHIELD HIDE GROUP
   media_shield_group_hide:
@@ -18,7 +18,7 @@
         entity_id:
           - group.media_shield_all
         data:
-          visible: False
+          visible: 'False'
 
 ### SHIELD PAUSES SONOS
   media_shield_playing_sonos_pause:
@@ -30,23 +30,6 @@
             - media_player.sonos_living_room
             - media_player.sonos_kitchen
             - media_player.sonos_bedroom
-
-### SHIELD PLAY DIM LIGHTS
-  media_shield_playing_lights_dim:
-    alias: "Shield Playing Dim Lights"
-    sequence:
-      - service_template: >
-          {% if states.media_player.shield_all.attributes.media_content_type == "movie" %}
-          script.hue_lights_living_room_movie
-          {% else %}
-          script.hue_lights_living_room_dim
-          {% endif %}
-
-### SHIELD STOP DIM LIGHTS
-  media_shield_stopped_lights_dim:
-    alias: "Shield Stopped Dim Lights"
-    sequence:
-      - service: script.hue_lights_living_room_dim
 
 ### SHIELD ENABLE LIGHTS
   media_shield_enable_lights:

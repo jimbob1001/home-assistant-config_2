@@ -4,9 +4,9 @@
 media_player:
   - platform: plex
     # entity_namespace: 'plex'
-    scan_interval: 5
-    include_non_clients: true
-    remove_unavailable_clients: false
+    scan_interval: '5'
+    include_non_clients: 'True'
+    remove_unavailable_clients: 'False'
     # client_remove_interval: 600
 
 ### CAST
@@ -15,10 +15,10 @@ media_player:
     host: !secret cast_ip
 
 ### KODI
-  - platform: kodi
-    entity_namespace: 'kodi'
-    host: !secret cast_ip
-    port: !secret kodi_port
+#  - platform: kodi
+#    entity_namespace: 'kodi'
+#    host: !secret cast_ip
+#    port: !secret kodi_port
 
 ### EMBY
   - platform: emby
@@ -32,8 +32,8 @@ media_player:
     host: !secret sony_ip
     psk: !secret sony_psk
     mac: !secret sony_mac
-    amp: True
-    android: True
+    amp: 'True'
+    android: 'True'
     sourcefilter:
       - HDMI
 

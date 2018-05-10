@@ -73,7 +73,7 @@
         entity_id:
           - light.hue_outside_all
         data:
-          transition: 2
+          transition: '2'
 
   hue_lights_living_room_off:
     alias: "Living Room Off"
@@ -82,4 +82,4 @@
         entity_id:
           - light.hue_living_room_all
         data:
-          transition: 2
+          transition: '2'

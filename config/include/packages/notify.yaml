@@ -18,7 +18,7 @@ notify:
   - platform: group
     name: 'get_notified'
     services:
-      - service: pushover
+      - service: 'pushover'
 
 ### TELEGRAM BOT
 ### TELEGRAM BOT TO CONTROL HOMEASSISTANT

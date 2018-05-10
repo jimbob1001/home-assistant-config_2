@@ -4,13 +4,13 @@ zone:
   - name: 'Home'
     latitude: !secret latitude_home
     longitude: !secret longitude_home
-    radius: 150
+    radius: '150'
     icon: mdi:home-map-marker
 
   - name: 'Work'
     latitude: !secret latitude_work
     longitude: !secret longitude_work
-    radius: 150
+    radius: '150'
     icon: mdi:account-multiple
 
 ### DEVICE TRACKERS
@@ -20,14 +20,14 @@ device_tracker:
     host: !secret asus_ip
     username: !secret asus_username
     password: !secret asus_password
-    protocol: ssh
+    protocol: 'ssh'
     port: !secret asus_port
 
     consider_home: '00:10:00'
     interval_seconds: '00:02:00'
     new_device_defaults:
-      track_new_devices: false
-      hide_if_away: false
+      track_new_devices: 'False'
+      hide_if_away: 'False'
 
 ### BLUETOOTH
   - platform: bluetooth_tracker

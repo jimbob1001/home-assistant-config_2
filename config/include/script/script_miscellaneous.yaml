@@ -8,7 +8,7 @@
         data:
           entity_id:
             - input_select.media_sonos_select_source
-          option: None
+          option: 'None'
       - delay: '00:00:01'
       - service: input_boolean.turn_off
         data:
@@ -33,7 +33,9 @@
       - delay: '00:00:01'
       - service: notify.get_notified
         data:
-          message: 'Automations are off until guest mode has been disabled.'
+          message: >
+            Automations are off until guest 
+            mode has been disabled
           title: "Guest Mode Enabled"
 
 ### TIME FOR BED

@@ -1,7 +1,7 @@
 
 ### DOCKER
 ### NOTIFY WHEN CONTAINER DOWN
-- alias: notify_docker_container_down
+- alias: 'notify_docker_container_down'
   id: notify_docker_container_down
   initial_state: 'True'
   trigger:
@@ -22,12 +22,11 @@
         message: >
           {{ trigger.to_state.name }} container is down
           & has been offline for more than 5 minutes
-        title: >
-          {{ trigger.to_state.name }} Down
+        title: "{{ trigger.to_state.name }} Down"
 
 ### DOCKER
 ### NOTIFY WHEN CONTAINER RUNNING
-- alias: notify_docker_container_up
+- alias: 'notify_docker_container_up'
   id: notify_docker_container_up
   initial_state: 'True'
   trigger:
@@ -46,6 +45,6 @@
     - service: notify.get_notified
       data_template:
         message: >
-          {{ trigger.to_state.name }} container is back up & running
-        title: >
-          {{ trigger.to_state.name }} Up & Running
+          {{ trigger.to_state.name }} container is back 
+          up & running for 1 minute
+        title: "{{ trigger.to_state.name }} Up & Running"

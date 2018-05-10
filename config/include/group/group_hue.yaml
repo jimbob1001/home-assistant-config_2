@@ -4,6 +4,7 @@
     name: "Hue Outside Lights"
     entities:
       - light.hue_front_porch
+      - input_select.hue_select_scene_outside
 
   hue_lights_living_room:
     name: "Hue Living Room Lights"
@@ -12,10 +13,11 @@
       - light.hue_small_floor_lamp
       - light.hue_table_lamp
       - light.hue_tv_backlight
+      - input_select.hue_select_scene_living_room
 
   hue_lights_all:
     name: "Hue Lights All"
-    control: hidden
+    control: 'hidden'
     entities:
       - switch.hue_lights_living_room
       - switch.hue_lights_outside
@@ -27,24 +29,9 @@
       - light.hue_tv_backlight
       - light.hue_front_porch
 
-  hue_light_inputs:
-    name: "Hue Lights Input"
-    control: hidden
-    entities:
-      - input_boolean.hue_lights_living_room_dim
-      - input_boolean.hue_lights_living_room_full
-      - input_boolean.hue_lights_living_room_movie
-      - input_boolean.hue_lights_living_room_morning
-      - input_boolean.hue_lights_living_room_white
-      - input_boolean.hue_lights_living_room_night
-      - input_boolean.hue_lights_living_room_off
-      - input_boolean.hue_lights_outside_full
-      - input_boolean.hue_lights_outside_dim
-      - input_boolean.hue_lights_outside_off
-
   hue_light_scripts:
     name: "Hue Lights Scripts"
-    control: hidden
+    control: 'hidden'
     entities:
       - script.hue_lights_living_room_dim
       - script.hue_lights_living_room_full
@@ -56,3 +43,4 @@
       - script.hue_lights_outside_full
       - script.hue_lights_outside_dim
       - script.hue_lights_outside_off
+      

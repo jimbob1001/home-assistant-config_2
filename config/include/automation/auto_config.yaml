@@ -1,7 +1,7 @@
 
 ### CONFIG
 ### RESTART
-- alias: config_docker_restart_hass
+- alias: 'config_docker_restart_hass'
   id: config_docker_restart_hass
   initial_state: 'True'
   trigger:
@@ -13,7 +13,7 @@
     - service: script.docker_restart_hass
 
 ### PURGE DATABASE
-- alias: config_purge_database
+- alias: 'config_purge_database'
   id: config_purge_database
   initial_state: 'True'
   trigger:
@@ -27,7 +27,7 @@
     - service: script.config_purge_database_keep_1_day
 
 ### START HOMEKIT
-- alias: config_start_homekit
+- alias: 'config_start_homekit'
   id: config_start_homekit
   initial_state: 'False'
   trigger:

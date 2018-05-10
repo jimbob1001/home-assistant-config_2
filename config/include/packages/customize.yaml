@@ -7,7 +7,7 @@ homeassistant:
     input_boolean:
       entity_picture: /local/sw/thumbs_up.png
     input_select:
-      entity_picture: /local/sw/falcon.png
+      icon: mdi:view-list
 
 ### GLOBAL ENTITIES
   customize_glob:
@@ -23,23 +23,28 @@ homeassistant:
 ### INDIVIDUAL ENTITIES
   customize:
 ### GROUPS
+    group.all_scripts:
+      hidden: 'False'
     group.hue_scripts:
       entity_picture: /local/sw/deathstar.png
     group.presence_james:
       entity_picture: /local/sw/hansolo.png
     group.presence_gillian:
       entity_picture: /local/sw/leia.png
+
     group.media_shield_all:
-      control: hidden
+      visible: 'False'
     group.media_sonos_all:
-      control: hidden
+      visible: 'False'
+
 ### SENSORS
-    sensor.motion_hue_living_room:
+    sensor.hue_motion_living_room_motion_sensor:
       friendly_name: "Hue Motion Living Room"
     sensor.hue_motion_living_room_battery:
       icon: mdi:battery
     sensor.hue_tap:
       icon: mdi:google-circles-communities
+
 ### BINARY SENSORS
     binary_sensor.bayesian_presence_james:
       friendly_name: 'James'
@@ -47,6 +52,7 @@ homeassistant:
     binary_sensor.bayesian_presence_gillian:
       friendly_name: 'Gillian'
       entity_picture: /local/sw/rey2.png
+
 ### MEDIA PLAYERS
     media_player.kodi_kodi:
       friendly_name: 'KODI'
@@ -54,8 +60,7 @@ homeassistant:
       friendly_name: 'SONOS'
     media_player.shield_all:
       friendly_name: 'SHIELD'
-    media_player.emby_shield:
-      hidden: false
+
 ### SWITCHES
     switch.docker_emby:
       friendly_name: 'Emby'
