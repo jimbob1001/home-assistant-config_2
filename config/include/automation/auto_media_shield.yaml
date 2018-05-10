@@ -1,62 +1,45 @@
 
 ### MEDIA
-### SHIELD NOW PLAYING
-- alias: media_shield_now_playing
-  id: media_shield_now_playing
-  initial_state: 'True'
-  trigger:
-    - platform: state
-      entity_id:
-        - media_player.shield_all
-      to: 'playing'
-  action:
-    - service: script.media_shield_group_show
-    - delay: '00:00:01'
-    - service: script.media_shield_playing_sonos_pause
-    - delay: '00:00:01'
-    - service_template: >
-        {% if is_state("input_boolean.misc_enable_guest_mode", 'off') and
-        is_state("input_boolean.media_shield_enable_lights", 'on') %}
-        script.media_shield_playing_lights_dim
-        {% endif %}
-
-### SHIELD NOW STOPPED
-- alias: media_shield_now_stopped
-  id: media_shield_now_stopped
-  initial_state: 'True'
-  trigger:
-    - platform: state
-      entity_id:
-        - media_player.shield_all
-      from: 'playing'
-  action:
-    - service: script.media_shield_group_hide
-    - delay: '00:00:10'
-    - service_template: >
-        {% if is_state("input_boolean.misc_enable_guest_mode", 'off') and
-        is_state("input_boolean.media_shield_enable_lights", 'on') %}
-        script.media_shield_stopped_lights_dim
-        {% endif %}
-
-### SHIELD HIDE MEDIA GROUP
-- alias: media_shield_group_hide
-  id: media_shield_group_hide
+### SHIELD TEST
+- alias: 'media_shield_test'
+  id: media_shield_test
   initial_state: 'True'
   trigger:
     - platform: homeassistant
       event: 'start'
+    - platform: state
+      entity_id: 
+        - media_player.shield_all
   action:
+    - service_template: >
+        {% if is_state('media_player.shield_all', 'playing') %}
+          script.media_shield_group_show
+        {% else %}
+          script.media_shield_group_hide
+        {% endif %}
+        
+    - condition: template
+      value_template: "{{ is_state('media_player.shield_all', 'playing') }}"
+    - service_template: >
+        {% if is_state('media_player.shield_all', 'playing') %}
+          script.media_shield_playing_sonos_pause
+        {% endif %}
+          
+    - condition: template
+      value_template: >
+        {{ is_state('binary_sensor.allow_shield_lights', 'on') and
+        is_state('input_boolean.misc_enable_guest_mode', 'off') }}
+    - service_template: >
+        {% if states.media_player.shield_all.attributes.media_content_type is not none and
+        is_state('media_player.shield_all.attributes.media_content_type', 'movie') %}
+          script.hue_lights_living_room_movie
+        {% else %}
+          script.hue_lights_living_room_dim
+        {% endif %}
+        
+    - wait_template: >
+        {{ is_state('media_player.shield_all', 'off') or 
+        is_state('media_player.shield_all', 'paused') }}
+    - delay: '00:00:10'
+    - service: script.hue_lights_living_room_dim
     - service: script.media_shield_group_hide
-
-### SHIELD ENABLE LIGHTS
-- alias: media_shield_enable_lights
-  id: media_shield_enable_lights
-  initial_state: 'True'
-  trigger:
-    - platform: time
-      at: '17:30:00'
-    - platform: sun
-      event: 'sunset'
-      offset: '-01:00:00'
-  action:
-    - service: script.media_shield_enable_lights
