@@ -14,18 +14,9 @@ updater:
 config:
 sun:
 conversation:
-shopping_list:
+#shopping_list:
 map:
 frontend:
-
-#mqtt:
-#  broker: !secret mqtt_broker
-#  port: !secret mqtt_port
-#  username: !secret mqtt_user
-#  password: !secret mqtt_pass
-#  client_id: !secret mqtt_client
-#  keepalive: 60
-#  protocol: 3.1
 
 history:
 logger:
@@ -69,6 +60,15 @@ cloud: !include include/cloud.yaml
 #  filter:
 #    include_domains:
 #      - light
+
+#mqtt:
+#  broker: !secret mqtt_broker
+#  port: !secret mqtt_port
+#  username: !secret mqtt_user
+#  password: !secret mqtt_pass
+#  client_id: !secret mqtt_client
+#  keepalive: 60
+#  protocol: 3.1
 
 ### INCLUDE
 automation: !include_dir_merge_list include/automation
