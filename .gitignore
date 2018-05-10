@@ -29,6 +29,8 @@ Thumbs.db
 *.log
 *.log
 *.db
+*.db-wal
+*.db-shm
 
 known_devices.yaml
 secrets.yaml
