@@ -5,8 +5,8 @@ hue:
   bridges:
     - host: !secret hue_ip
       filename: phue.conf
-      allow_unreachable: true
-      allow_hue_groups: true
+      allow_unreachable: 'True'
+      allow_hue_groups: 'True'
 
 ### LIGHT GROUPS
 light:
@@ -28,27 +28,18 @@ light:
 ### ADDS HUE MOTION & HUE TAP
 sensor:
   - platform: hue
+    ip_address: !secret hue_ip
+    token: !secret hue_token
 
-### ADDS HUE MOTION TEMPERATURE SENSOR
+### ### ADDS HUE MOTION BATTERY SENSOR
   - platform: template
     sensors:
-      hue_motion_living_room_temp:
-        friendly_name: "Living Room Temp"
-        value_template: >
-          {% if is_state("sensor.motion_hue_living_room", 'unknown')%}
-          not available
-          {% else %}
-          {{ states.sensor.motion_hue_living_room.attributes.temperature }}
-          {% endif %}
-        unit_of_measurement: '°C'
-
-### ADDS HUE MOTION BATTERY SENSOR
       hue_motion_living_room_battery:
-        friendly_name: "Motion Sensor Battery"
+        friendly_name: "Hue Motion Sensor Battery"
         value_template: >
-          {% if is_state("sensor.motion_hue_living_room", 'unknown')%}
-          not available
+          {% if states.sensor.hue_motion_living_room_motion_sensor.attributes.battery is none %}
+          Waiting
           {% else %}
-          {{ states.sensor.motion_hue_living_room.attributes.battery }}
+          {{ states.sensor.hue_motion_living_room_motion_sensor.attributes.battery }}
           {% endif %}
         unit_of_measurement: '%'
