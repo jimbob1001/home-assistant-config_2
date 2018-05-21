@@ -1,17 +1,79 @@
 
 ### DOCKER
-### SWITCHES
-switch:
-  - platform: hadockermon
-    host: !secret hadockermon_host
-
 ### SHELL COMMANDS
 shell_command:
-  docker_restart_emby: !secret docker_restart_emby
   docker_restart_hadockermon: !secret docker_restart_hadockermon
   docker_restart_homeassistant: !secret docker_restart_homeassistant
+  docker_restart_nodered: !secret docker_restart_nodered
   docker_restart_nzbget: !secret docker_restart_nzbget
-  docker_restart_plex: !secret docker_restart_plex
+  docker_restart_mqtt: !secret docker_restart_mqtt
   docker_restart_radarr: !secret docker_restart_radarr
   docker_restart_sonarr: !secret docker_restart_sonarr
   docker_restart_watchtower: !secret docker_restart_watchtower
+
+### DOCKER
+### SWITCHES
+switch:
+  - platform: rest
+    resource: http://127.0.0.1:8126/container/hadockermon
+    name: 'Docker HaDockermon'
+    body_on: '{"state": "start"}'
+    body_off: '{"state": "stop"}'
+    is_on_template: >
+      {{ value_json is not none and value_json.state == "running" }}
+
+  - platform: rest
+    resource: http://127.0.0.1:8126/container/homeassistant
+    name: 'Docker HomeAssistant'
+    body_on: '{"state": "start"}'
+    body_off: '{"state": "stop"}'
+    is_on_template: >
+      {{ value_json is not none and value_json.state == "running" }}
+
+  - platform: rest
+    resource: http://127.0.0.1:8126/container/nodered
+    name: 'Docker NodeRed'
+    body_on: '{"state": "start"}'
+    body_off: '{"state": "stop"}'
+    is_on_template: >
+      {{ value_json is not none and value_json.state == "running" }}
+
+  - platform: rest
+    resource: http://127.0.0.1:8126/container/nzbget
+    name: 'Docker NZBGet'
+    body_on: '{"state": "start"}'
+    body_off: '{"state": "stop"}'
+    is_on_template: >
+      {{ value_json is not none and value_json.state == "running" }}
+
+  - platform: rest
+    resource: http://127.0.0.1:8126/container/mqtt
+    name: 'Docker MQTT'
+    body_on: '{"state": "start"}'
+    body_off: '{"state": "stop"}'
+    is_on_template: >
+      {{ value_json is not none and value_json.state == "running" }}
+
+  - platform: rest
+    resource: http://127.0.0.1:8126/container/radarr
+    name: 'Docker Radarr'
+    body_on: '{"state": "start"}'
+    body_off: '{"state": "stop"}'
+    is_on_template: >
+      {{ value_json is not none and value_json.state == "running" }}
+
+  - platform: rest
+    resource: http://127.0.0.1:8126/container/sonarr
+    name: 'Docker Sonarr'
+    body_on: '{"state": "start"}'
+    body_off: '{"state": "stop"}'
+    is_on_template: >
+      {{ value_json is not none and value_json.state == "running" }}
+
+  - platform: rest
+    resource: http://127.0.0.1:8126/container/watchtower
+    name: 'Docker Watchtower'
+    body_on: '{"state": "start"}'
+    body_off: '{"state": "stop"}'
+    is_on_template: >
+      {{ value_json is not none and value_json.state == "running" }}

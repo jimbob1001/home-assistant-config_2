@@ -6,6 +6,7 @@
     view: 'True'
     entities:
       - group.page_one_today
+      - group.weather
       - group.page_one_home
       - group.page_one_info
       - group.hue_lights_living_room
@@ -23,6 +24,7 @@
     view: 'True'
     entities:
       - group.page_two_media_sonos_select_music
+      - group.media_plex_sensor
       - media_player.shield_all
       - media_player.sonos_all
       - media_player.sony_bravia

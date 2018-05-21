@@ -13,7 +13,7 @@ homeassistant:
 updater:
 config:
 sun:
-conversation:
+#conversation:
 #shopping_list:
 map:
 frontend:
@@ -44,15 +44,16 @@ logbook:
       - sensor.date
 
 http:
-  api_password: !secret http_password
+  api_password: !secret api_password
   trusted_networks:
     - !secret trusted_ip_1
     - !secret trusted_ip_2
     - !secret trusted_ip_3
+    - !secret trusted_ip_4
   ip_ban_enabled: true
   login_attempts_threshold: 5
 
-cloud: !include include/cloud.yaml
+#cloud: !include include/cloud.yaml
 
 #homekit:
 #  pincode: !secret homekit_pincode
@@ -61,14 +62,14 @@ cloud: !include include/cloud.yaml
 #    include_domains:
 #      - light
 
-#mqtt:
-#  broker: !secret mqtt_broker
-#  port: !secret mqtt_port
-#  username: !secret mqtt_user
-#  password: !secret mqtt_pass
-#  client_id: !secret mqtt_client
-#  keepalive: 60
-#  protocol: 3.1
+mqtt:
+  broker: !secret mqtt_broker
+  port: !secret mqtt_port
+  username: !secret mqtt_user
+  password: !secret mqtt_pass
+  client_id: !secret mqtt_client
+  keepalive: 60
+  protocol: 3.1
 
 ### INCLUDE
 automation: !include_dir_merge_list include/automation

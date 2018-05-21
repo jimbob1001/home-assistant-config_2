@@ -37,3 +37,45 @@ device_tracker:
     username: !secret tado_user
     password: !secret tado_pass
     home_id: !secret home_id
+
+### BAYESIAN PRESENCE JAMES
+binary_sensor:
+  - platform: bayesian
+    prior: 0.75
+    name: "Bayesian Presence James"
+    device_class: 'presence'
+    probability_threshold: 0.95
+    observations:
+      - entity_id: "device_tracker.james_asus_oneplus3"
+        prob_given_true: 0.6
+        platform: 'state'
+        to_state: 'home'
+      - entity_id: "device_tracker.james_tado"
+        prob_given_true: 0.8
+        platform: 'state'
+        to_state: 'home'
+      - entity_id: "device_tracker.james_bt_oneplus3"
+        prob_given_true: 0.8
+        platform: 'state'
+        to_state: 'home'
+
+### BAYESIAN PRESENCE GILLIAN
+  - platform: bayesian
+    prior: 0.75
+    name: "Bayesian Presence Gillian"
+    device_class: 'presence'
+    probability_threshold: 0.95
+    observations:
+      - entity_id: "device_tracker.gillian_asus_oneplus3t"
+        prob_given_true: 0.8
+        platform: 'state'
+        to_state: 'home'
+      - entity_id: "device_tracker.gillian_tado"
+        prob_given_true: 0.8
+        platform: 'state'
+        to_state: 'home'
+      - entity_id: "device_tracker.gillian_bt_oneplus3t"
+        prob_given_true: 0.8
+        platform: 'state'
+        to_state: 'home'
+        

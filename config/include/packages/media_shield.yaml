@@ -1,13 +1,12 @@
 
 ### MEDIA
 ### PLEX
-media_player:
+media_player: 
   - platform: plex
-    # entity_namespace: 'plex'
     scan_interval: '5'
     include_non_clients: 'True'
-    remove_unavailable_clients: 'False'
-    # client_remove_interval: 600
+  #   remove_unavailable_clients: 'False'
+  #   # client_remove_interval: 600
 
 ### CAST
   - platform: cast
@@ -21,21 +20,21 @@ media_player:
 #    port: !secret kodi_port
 
 ### EMBY
-  - platform: emby
-    host: !secret emby_ip
-    api_key: !secret emby_api
+  # - platform: emby
+  #   host: !secret emby_ip
+  #   api_key: !secret emby_api
 
 ### SONY_BRAVIA_TV_PSK
 ### CUSTOM COMPONENT
-  - platform: braviatv_psk
-    name: "Sony Bravia"
-    host: !secret sony_ip
-    psk: !secret sony_psk
-    mac: !secret sony_mac
-    amp: 'True'
-    android: 'True'
-    sourcefilter:
-      - HDMI
+#  - platform: braviatv_psk
+#    name: "Sony Bravia"
+#    host: !secret sony_ip
+#    psk: !secret sony_psk
+#    mac: !secret sony_mac
+#    amp: 'True'
+#    android: 'True'
+#    sourcefilter:
+#      - HDMI
 
 ### UNIVERSAL
 ### COMBINES ALL MEDIA PLAYERS INTO A SINGLE ENTITY

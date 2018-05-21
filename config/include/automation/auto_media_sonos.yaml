@@ -1,27 +1,5 @@
 
 ### SONOS
-### SHOW SONOS GROUP
-- alias: 'media_sonos_group_show'
-  id: media_sonos_group_show
-  initial_state: 'True'
-  trigger:
-    - platform: homeassistant
-      event: 'start'
-    - platform: state
-      entity_id:
-        - media_player.sonos_all
-  action:
-    - service_template: >
-        {% if is_state('media_player.sonos_all', 'playing') %}
-          script.media_sonos_group_show
-        {% else %}
-          script.media_sonos_group_hide
-        {% endif %}
-    - wait_template: >
-        {{ is_state('media_player.sonos_all', 'off') or 
-        is_state('media_player.shield_all', 'paused') }}
-    - service: script.media_sonos_group_hide
-
 ### SONOS SELECT  MUSIC
 - alias: 'media_sonos_select_music'
   id: media_sonos_select_music

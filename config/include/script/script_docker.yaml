@@ -1,11 +1,5 @@
 
 ### DOCKER
-### EMBY
-  docker_restart_emby:
-    alias: "Restart Emby"
-    sequence:
-      - service: shell_command.docker_restart_emby
-
 ### HA DOCKERMON
   docker_restart_hadockermon:
     alias: "Restart HA Dockermon"
@@ -18,17 +12,23 @@
     sequence:
       - service: shell_command.docker_restart_homeassistant
 
+### NODERED
+  docker_restart_nodered:
+    alias: "Restart Node-Red"
+    sequence:
+      - service: shell_command.docker_restart_nodered
+
 ### NZBGET
   docker_restart_nzbget:
     alias: "Restart NZBGet"
     sequence:
       - service: shell_command.docker_restart_nzbget
 
-### PLEX
-  docker_restart_plex:
-    alias: "Restart Plex"
+### MQTT
+  docker_restart_mqtt:
+    alias: "Restart MQTT"
     sequence:
-      - service: shell_command.docker_restart_plex
+      - service: shell_command.docker_restart_mqtt
 
 ### RADARR
   docker_restart_radarr:
@@ -47,9 +47,4 @@
     alias: "Restart Watchtower"
     sequence:
       - service: shell_command.docker_restart_watchtower
-
-### HA-DOCKERMON
-  docker_restart_dockermon:
-    alias: "Restart Dockermon"
-    sequence:
-      - service: shell_command.docker_restart_dockermon
+      

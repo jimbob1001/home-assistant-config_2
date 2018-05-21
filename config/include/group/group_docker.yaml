@@ -6,7 +6,9 @@
     entities:
       - script.docker_restart_emby
       - script.docker_restart_hadockermon
+      - script.docker_restart_nodered
       - script.docker_restart_nzbget
+      - script.docker_restart_mqtt
       - script.docker_restart_plex
       - script.docker_restart_radarr
       - script.docker_restart_sonarr
@@ -18,6 +20,7 @@
     entities:
       - switch.docker_emby
       - switch.docker_hadockermon
+      - switch.docker_nodered
       - switch.docker_nzbget
       - switch.docker_plex
       - switch.docker_radarr

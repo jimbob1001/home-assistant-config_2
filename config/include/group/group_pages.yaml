@@ -13,6 +13,7 @@
       - input_boolean.misc_enable_at_home
       - input_boolean.misc_enable_guest_mode
       - input_boolean.misc_enable_time_for_bed
+      - input_select.hue_select_scene
 
   page_one_home:
     name: 'Home'
@@ -26,9 +27,11 @@
     control: 'hidden'
     entities:
       - climate.heating
-      - sensor.hue_motion_living_room_motion_sensor
-      - sensor.hue_motion_living_room_battery
-      - sensor.hue_tap
+      - sensor.hue_motion_living_room_temperature
+      - binary_sensor.hue_motion_daylight
+      - binary_sensor.hue_motion_living_room
+      - sensor.hue_motion_battery
+      - sensor.hue_tap_button_pressed
       - script.docker_restart_homeassistant
       - script.config_purge_database_keep_1_day
 
@@ -59,6 +62,7 @@
     name: "Test Things"
     control: 'hidden'
     entities:
+      - input_select.hue_select_scene
       - sensor.day_time
       - sensor.day_time_morning
       - sensor.day_time_afternoon

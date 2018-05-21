@@ -5,11 +5,9 @@ media_player:
   - platform: sonos
     hosts:
       - !secret sonos_ip_living_room
-
   - platform: sonos
     hosts:
       - !secret sonos_ip_kitchen
-
   - platform: sonos
     hosts:
       - !secret sonos_ip_bedroom

@@ -6,21 +6,27 @@ notify:
     name: 'Pushover'
     api_key: !secret pushover_api
     user_key: !secret pushover_user
-
 ### TELEGRAM
   - platform: telegram
     name: 'bot'
     api_key: !secret telegram_api
     chat_id: !secret telegram_id
-
+### SLACK
+  - platform: slack
+    name: 'slack'
+    api_key: !secret slack_api
+    default_channel: '#home-assistant'
+    username: 'home-assistant'
+    icon: 'bird'
 ### ALL-IN-ONE
-### SINGLE ENTITY FOR ALL NOTIFY PLATFORMS
   - platform: group
     name: 'get_notified'
     services:
       - service: 'pushover'
+      # - service: 'slack'
+      # - service: 'bot'
 
-### TELEGRAM BOT
+### TELEGRAM
 ### TELEGRAM BOT TO CONTROL HOMEASSISTANT
 telegram_bot:
   - platform: polling

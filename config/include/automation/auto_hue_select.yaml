@@ -1,6 +1,6 @@
 
 ### HUE
-### HUE SELECT SCENE
+### HUE SELECT LIVING ROOM SCENE
 - alias: 'hue_select_scene_living_room'
   id: hue_select_scene_living_room
   initial_state: 'True'
@@ -12,8 +12,10 @@
     - service: hue.hue_activate_scene
       data_template:
         group_name: "Living Room"
-        scene_name: "Living Room {{ states.input_select.hue_select_scene_living_room.state }}"
+        scene_name: >
+          Living Room {{ states.input_select.hue_select_scene_living_room.state }}
 
+### HUE SELECT OUTSIDE SCENE
 - alias: 'hue_select_scene_outside'
   id: hue_select_scene_outside
   initial_state: 'True'
@@ -25,5 +27,25 @@
     - service: hue.hue_activate_scene
       data_template:
         group_name: "Outside"
-        scene_name: "Outside {{ states.input_select.hue_select_scene_outside.state }}"
+        scene_name: >
+          Outside {{ states.input_select.hue_select_scene_outside.state }}
 
+### TEST FOR TEMPLATING HUE SCENE NAMES
+- alias: 'hue_select_scene'
+  id: hue_select_scene
+  initial_state: 'True'
+  trigger:
+    - platform: state
+      entity_id:
+        - input_select.hue_select_scene
+  action:
+    - service: hue.hue_activate_scene
+      data_template:
+        group_name: >
+          {% if states.input_select.hue_select_scene.state|first == "L" %}
+          Living Room
+          {% elif states.input_select.hue_select_scene.state|first == "O" %}
+          Outside
+          {% endif %}
+        scene_name: >
+          {{ states.input_select.hue_select_scene.state }}

@@ -11,3 +11,13 @@
     control: 'hidden'
     entities:
       - media_player.sonos_all
+
+  media_plex_sensor:
+    name: "PLEX"
+    control: 'hidden'
+    entities:
+      - sensor.plex_state_sensor
+      - sensor.plex_player_sensor
+      - sensor.plex_content_sensor
+      - sensor.plex_name_sensor
+      - sensor.plex_title_sensor

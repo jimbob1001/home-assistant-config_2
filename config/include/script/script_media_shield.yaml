@@ -1,25 +1,5 @@
 
 ### MEDIA
-### SHIELD SHOW GROUP
-  media_shield_group_show:
-    alias: "Shield Playing Show Group"
-    sequence:
-      - service: group.set_visibility
-        entity_id:
-          - group.media_shield_all
-        data:
-          visible: 'True'
-
-### SHIELD HIDE GROUP
-  media_shield_group_hide:
-    alias: "Hide Shield Group"
-    sequence:
-      - service: group.set_visibility
-        entity_id:
-          - group.media_shield_all
-        data:
-          visible: 'False'
-
 ### SHIELD PAUSES SONOS
   media_shield_playing_sonos_pause:
     alias: "Shield Playing Pause Sonos"
@@ -32,6 +12,7 @@
             - media_player.sonos_bedroom
 
 ### SHIELD ENABLE LIGHTS
+### USEFUL FOR TESTING AUTOMATIONS BEFORE SUNSET
   media_shield_enable_lights:
     alias: "Shield Enable Lights"
     sequence:

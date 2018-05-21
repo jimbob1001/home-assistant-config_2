@@ -1,25 +1,5 @@
 
 ### MEDIA
-### SONOS SHOW GROUP
-  media_sonos_group_show:
-    alias: "Sonos Playing Show Group"
-    sequence:
-      - service: group.set_visibility
-        entity_id:
-          - group.media_sonos_all
-        data:
-          visible: 'True'
-
-### SONOS HIDE GROUP
-  media_sonos_group_hide:
-    alias: "Hide Sonos Group"
-    sequence:
-      - service: group.set_visibility
-        entity_id:
-          - group.media_sonos_all
-        data:
-          visible: 'False'
-
 ### SELECT 6 MUSIC
   media_sonos_select_6music:
     alias: "Sonos BBC 6 MUSIC"

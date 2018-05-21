@@ -1,6 +1,6 @@
 
 ### HUE
-### HUE HUB
+### HUB
 hue:
   bridges:
     - host: !secret hue_ip
@@ -23,23 +23,92 @@ light:
       - light.hue_table_lamp
       - light.hue_tv_backlight
 
-### HUE SENSORS
-### CUSTOM COMPONENT
-### ADDS HUE MOTION & HUE TAP
+### SENSORS
 sensor:
-  - platform: hue
-    ip_address: !secret hue_ip
-    token: !secret hue_token
-
-### ### ADDS HUE MOTION BATTERY SENSOR
+### MOTION
+### TEMP
+  - platform: rest
+    resource: !secret hue_motion_temp
+    value_template: '{{ value_json.state.temperature | float / 100 }}'
+    unit_of_measurement: '°C'
+    name: "Hue Motion Living Room Temperature"
+    device_class: 'temperature'
+### BATTERY
+  - platform: rest
+    resource: !secret hue_motion_battery
+    value_template: '{{ value_json.config.battery }}'
+    unit_of_measurement: '%'
+    name: "Hue Motion Battery"
+    device_class: 'battery'
+### TAP
+  - platform: rest
+    resource: !secret hue_tap
+    value_template: '{{ value_json.state.buttonevent }}'
+    name: "Hue Tap Button"
+### TAP BUTTONS
   - platform: template
     sensors:
-      hue_motion_living_room_battery:
-        friendly_name: "Hue Motion Sensor Battery"
+      hue_tap_button_pressed:
+        friendly_name: "Hue Tap Button Pressed"
         value_template: >
-          {% if states.sensor.hue_motion_living_room_motion_sensor.attributes.battery is none %}
-          Waiting
-          {% else %}
-          {{ states.sensor.hue_motion_living_room_motion_sensor.attributes.battery }}
+          {% if is_state('sensor.hue_tap_button', '34') %}
+          Button 1
+          {% elif is_state('sensor.hue_tap_button', '16') %}
+          Button 2
+          {% elif is_state('sensor.hue_tap_button', '17') %}
+          Button 3
+          {% elif is_state('sensor.hue_tap_button', '18') %}
+          Button 4
           {% endif %}
-        unit_of_measurement: '%'
+
+### BINARY SENSORS
+### MOTION
+binary_sensor:
+  - platform: rest
+    resource: !secret hue_motion_motion
+    value_template: '{{ value_json.state.presence }}'
+    scan_interval: 2
+    name: "Hue Motion Living Room"
+    device_class: 'motion'
+### DAYLIGHT
+  - platform: rest
+    resource: !secret hue_motion_daylight
+    value_template: '{{ value_json.state.daylight }}'
+    name: "Hue Motion Daylight"
+    device_class: 'light'
+
+### SWITCHES
+### HUE OUTSIDE
+switch:
+  - platform: template
+    switches:
+      hue_lights_outside:
+        friendly_name: "Hue Outside"
+        value_template: >
+          {{ is_state('light.hue_outside_all', 'on') }}
+        turn_on:
+          service: script.hue_lights_outside_full
+        turn_off:
+          service: script.hue_lights_outside_off
+        icon_template: >
+          {% if is_state('light.hue_outside_all', 'on') %}
+          mdi:lightbulb-on
+          {% else %}
+          mdi:lightbulb
+          {% endif %}
+### HUE LIVING ROOM
+      hue_lights_living_room:
+        friendly_name: "Hue Living Room"
+        value_template: >
+          {{ is_state('light.hue_living_room_all', 'on') }}
+        turn_on:
+          service: script.hue_lights_living_room_full
+        turn_off:
+          service: script.hue_lights_living_room_off
+        icon_template: >
+          {% if is_state('light.hue_living_room_all', 'on') %}
+          mdi:lightbulb-on
+          {% else %}
+          mdi:lightbulb
+          {% endif %}
+          

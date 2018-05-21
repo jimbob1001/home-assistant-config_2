@@ -54,7 +54,7 @@
     sequence:
       - service: hue.hue_activate_scene
         data:
-          group_name: "Outside"
+          group_name: 'Outside'
           scene_name: "Outside Full"
 
   hue_lights_outside_dim:
@@ -62,7 +62,7 @@
     sequence:
       - service: hue.hue_activate_scene
         data:
-          group_name: "Outside"
+          group_name: 'Outside'
           scene_name: "Outside Dim"
 
 ### TURN OFF THE LIGHTS

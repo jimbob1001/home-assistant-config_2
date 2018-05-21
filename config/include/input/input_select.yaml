@@ -22,11 +22,24 @@
       - White
       - Night
     initial: None
-    
+
   hue_select_scene_outside:
     name: "Outside Scene"
     options:
       - None
       - Full
       - Dim
+    initial: None
+
+  hue_select_scene:
+    name: "Hue Scenes"
+    options:
+      - None
+      - Living Room Full
+      - Living Room Dim
+      - Living Room Movie
+      - Living Room White
+      - Living Room Night
+      - Outside Full
+      - Outside Dim
     initial: None
