@@ -38,7 +38,7 @@ secrets.yaml
 custom_components
 deps
 www
-old
+not_included
 
 dockermon.yaml
 entity_registry.yaml
