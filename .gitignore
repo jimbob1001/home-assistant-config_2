@@ -31,9 +31,13 @@ Thumbs.db
 *.db
 *.db-wal
 *.db-shm
+*.google.token
+*.storage
+*.cloud
 
 known_devices.yaml
 secrets.yaml
+google_calendars.yaml
 
 custom_components
 deps
