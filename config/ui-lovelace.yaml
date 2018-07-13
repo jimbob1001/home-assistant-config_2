@@ -1,0 +1,172 @@
+resources:
+  - url: /local/custom_ui/weather-card.js
+    type: js
+
+title: No. 33
+views:
+  - title: 'Home'
+    id: home
+    cards:
+      - type: glance
+        entities:
+          - entity: binary_sensor.bayesian_presence_james
+            name: 'James'
+          - entity: binary_sensor.bayesian_presence_gillian
+            name: 'Gillian'
+
+      - type: "custom:weather-card"
+        title: 'Weather'
+        entity_weather: weather.yweather
+        entity_sun: sun.sun
+
+      - type: entities
+        entities:
+          - binary_sensor.sun_lights_outside_am
+          - binary_sensor.sun_lights_outside_pm
+
+      - type: entities
+        entities:
+          - entity: binary_sensor.hue_motion_living_room
+            name: 'Motion'
+          - entity: timer.hue_motion
+            name: 'Timer'
+          - entity: sensor.hue_motion_battery
+            name: 'Battery'
+          - entity: sensor.hue_motion_living_room_temperature
+            name: 'Temperature'
+
+      - type: entities
+        #title: 'Today'
+        #title: {{ states.sensor.today_all.state }}
+        show_header_toggle: false
+        entities:
+          - sensor.time
+          - sensor.today_all
+          - binary_sensor.allow_shield_lights
+          - input_boolean.guest_mode_enable
+          - input_boolean.night_mode_enable
+
+      - type: entity-filter
+        entities:
+          - calendar.recycling
+          - calendar.rubbish
+          - calendar.garden
+          - calendar.greensleeves
+          - sensor.calendar_recycling_reminder
+          - sensor.calendar_rubbish_reminder
+          - sensor.calendar_garden_reminder
+          - sensor.calendar_greensleeves_reminder
+        state_filter:
+          - 'on'
+        card:
+          type: entities
+          show_empty: false
+
+      - type: entities
+        #title: 'Sun'
+        show_header_toggle: false
+        entities:
+          - sun.sun
+          - sensor.solar_elevation
+          - entity: binary_sensor.hue_motion_daylight
+            name: 'Daylight'
+          - sensor.time_of_day
+          - entity: sensor.hue_motion_lux
+            name: 'Lux'
+
+      - type: entities
+        #title: 'Info'
+        show_header_toggle: false
+        entities:
+          - entity: climate.heating
+            name: 'Tado'
+          - entity: sensor.hue_tap_button
+            name: "Hue Tap"
+
+      - type: entities
+        #title: 'Restart'
+        show_header_toggle: false
+        entities:
+          - entity: script.docker_restart_homeassistant
+            name: "Restart Homeassistant"
+          - entity: script.config_purge_database_keep_1_day
+            name: "Clear Database"
+
+      - type: entities
+        title: "Living Room Lights"
+        entities:
+          - light.hue_big_floor_lamp
+          - light.hue_small_floor_lamp
+          - light.hue_table_lamp
+          - light.hue_tv_backlight
+          - sensor.hue_lights_active_scene
+          - input_select.hue_select_scene_living_room
+
+      - type: entities
+        title: "Outside Lights"
+        entities:
+          - light.hue_front_porch
+          - sensor.hue_lights_active_scene_outside
+          - input_select.hue_select_scene_outside
+
+  - title: 'Media'
+    id: media
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: media-control
+            entity: media_player.sonos_kitchen
+          - type: media-control
+            entity: media_player.sonos_living_room
+          - type: media-control
+            entity: media_player.sonos_bedroom
+          - type: media-control
+            entity: media_player.sonos_tv
+          - type: media-control
+            entity: media_player.plex_shield2
+          - type: media-control
+            entity: media_player.cast_shield
+
+  - title: 'Docker'
+    id: docker
+    cards:
+      - type: entities
+        title: "Home Assistant"
+        show_header_toggle: false
+        entities:
+          - switch.docker_homeassistant
+          - script.docker_restart_homeassistant
+
+      - type: entities
+        title: "Restart Containers"
+        show_header_toggle: false
+        entities:
+          - script.docker_restart_hadockermon
+          - script.docker_restart_nodered
+          - script.docker_restart_nzbget
+          - script.docker_restart_mqtt
+          - script.docker_restart_plex
+          - script.docker_restart_radarr
+          - script.docker_restart_sonarr
+          - script.docker_restart_watchtower
+
+      - type: entities
+        title: "Docker Switches"
+        show_header_toggle: false
+        entities:
+          - entity: switch.docker_hadockermon
+            name: "HA Dockermon"
+          - entity: switch.docker_nodered
+            name: "Node-Red"
+          - entity: switch.docker_nzbget
+            name: 'NZBGet'
+          - entity: switch.docker_mqtt
+            name: 'MQTT'
+          - entity: switch.docker_plex
+            name: 'Plex'
+          - entity: switch.docker_radarr
+            name: 'Radarr'
+          - entity: switch.docker_sonarr
+            name: 'Sonarr'
+          - entity: switch.docker_watchtower
+            name: 'Watchtower'
