@@ -1,0 +1,34 @@
+
+### TURN AUTOMATIONS OFF
+  guest_mode_automations_off:
+    alias: "Auto Off"
+    sequence:
+      - service: automation.turn_off
+        entity_id:
+        # MOTION
+        - automation.hue_motion_living_room_night
+        - automation.hue_motion_timer_ended
+        # LIVING ROOM LIGHTS
+        - automation.hue_lights_living_room_on_am
+        - automation.hue_lights_living_room_on_pm
+        - automation.hue_lights_living_room_off_am
+        - automation.hue_lights_living_room_off_pm
+        # OUTSIDE LIGHTS
+        - automation.hue_lights_outside_off_pm
+
+### TURN AUTOMATIONS ON
+  guest_mode_automations_on:
+    alias: "Auto On"
+    sequence:
+      - service: automation.turn_on
+        entity_id:
+        # MOTION
+        - automation.hue_motion_living_room_night
+        - automation.hue_motion_timer_ended
+        # LIVING ROOM LIGHTS
+        - automation.hue_lights_living_room_on_am
+        - automation.hue_lights_living_room_on_pm
+        - automation.hue_lights_living_room_off_am
+        - automation.hue_lights_living_room_off_pm
+        # OUTSIDE LIGHTS
+        - automation.hue_lights_outside_off_pm
