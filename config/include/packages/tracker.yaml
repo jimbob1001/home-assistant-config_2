@@ -16,6 +16,8 @@ zone:
 ### DEVICE TRACKERS
 ### ASUSWRT
 device_tracker:
+### BLUETOOTH
+  - platform: bluetooth_tracker
   - platform: asuswrt
     host: !secret asus_ip
     username: !secret asus_username
@@ -28,9 +30,6 @@ device_tracker:
     new_device_defaults:
       track_new_devices: 'False'
       hide_if_away: 'False'
-
-### BLUETOOTH
-  - platform: bluetooth_tracker
 
 ### TADO
   - platform: tado
@@ -78,4 +77,3 @@ binary_sensor:
         prob_given_true: 0.8
         platform: 'state'
         to_state: 'home'
-        

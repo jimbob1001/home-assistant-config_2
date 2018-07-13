@@ -4,42 +4,29 @@
   media_sonos_select_source:
     name: "Sonos Source"
     options:
-      - None
-      - Sea Waves
-      - Weightless
-      - BBC 6 MUSIC
-    initial: None
+      - 'None'
+      - "Sea Waves"
+      - 'Weightless'
+      - "BBC 6 MUSIC"
+    initial: 'None'
 
 ### HUE
 ### HUE SCENE SELECT
   hue_select_scene_living_room:
-    name: "Living Room Scene"
+    name: "Select Scene"
     options:
-      - None
-      - Full
-      - Dim
-      - Movie
-      - White
-      - Night
-    initial: None
+      - 'None'
+      - 'Full'
+      - 'Dim'
+      - 'Movie'
+      - 'White'
+      - 'Night'
+    initial: 'None'
 
   hue_select_scene_outside:
-    name: "Outside Scene"
+    name: "Select Scene"
     options:
-      - None
-      - Full
-      - Dim
-    initial: None
-
-  hue_select_scene:
-    name: "Hue Scenes"
-    options:
-      - None
-      - Living Room Full
-      - Living Room Dim
-      - Living Room Movie
-      - Living Room White
-      - Living Room Night
-      - Outside Full
-      - Outside Dim
-    initial: None
+      - 'None'
+      - 'Full'
+      - 'Dim'
+    initial: 'None'

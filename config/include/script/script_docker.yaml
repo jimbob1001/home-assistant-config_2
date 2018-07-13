@@ -12,6 +12,12 @@
     sequence:
       - service: shell_command.docker_restart_homeassistant
 
+### MQTT
+  docker_restart_mqtt:
+    alias: "Restart MQTT"
+    sequence:
+      - service: shell_command.docker_restart_mqtt
+
 ### NODERED
   docker_restart_nodered:
     alias: "Restart Node-Red"
@@ -24,11 +30,11 @@
     sequence:
       - service: shell_command.docker_restart_nzbget
 
-### MQTT
-  docker_restart_mqtt:
-    alias: "Restart MQTT"
+### PLEX
+  docker_restart_plex:
+    alias: "Restart Plex"
     sequence:
-      - service: shell_command.docker_restart_mqtt
+      - service: shell_command.docker_restart_plex
 
 ### RADARR
   docker_restart_radarr:
@@ -47,4 +53,3 @@
     alias: "Restart Watchtower"
     sequence:
       - service: shell_command.docker_restart_watchtower
-      

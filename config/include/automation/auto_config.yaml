@@ -10,7 +10,7 @@
       event_data:
         command: '/restart'
   action:
-    - service: script.docker_restart_hass
+    - service: script.docker_restart_homeassistant
 
 ### PURGE DATABASE
 - alias: 'config_purge_database'
@@ -35,4 +35,4 @@
       event: 'start'
   action:
     - delay: '00:02:00'
-    - service: script.homekit_start
+    - service: script.config_homekit_start

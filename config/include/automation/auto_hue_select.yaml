@@ -8,12 +8,31 @@
     - platform: state
       entity_id:
         - input_select.hue_select_scene_living_room
+  condition:
+    - condition: template
+      value_template: >
+        {{ not is_state('input_select.hue_select_scene_living_room', 'None') }}
   action:
     - service: hue.hue_activate_scene
       data_template:
         group_name: "Living Room"
         scene_name: >
           Living Room {{ states.input_select.hue_select_scene_living_room.state }}
+
+### SELECT SCENE NONE
+- alias: 'hue_select_scene_living_room_none'
+  id: hue_select_scene_living_room_none
+  initial_state: 'True'
+  trigger:
+    - platform: state
+      entity_id:
+        - input_select.hue_select_scene_living_room
+  condition:
+    - condition: template
+      value_template: >
+        {{ is_state('input_select.hue_select_scene_living_room', 'None') }}
+  action:
+    - service: script.hue_lights_living_room_off
 
 ### HUE SELECT OUTSIDE SCENE
 - alias: 'hue_select_scene_outside'
@@ -23,6 +42,10 @@
     - platform: state
       entity_id:
         - input_select.hue_select_scene_outside
+  condition:
+    - condition: template
+      value_template: >
+        {{ not is_state('input_select.hue_select_scene_outside', 'None') }}
   action:
     - service: hue.hue_activate_scene
       data_template:
@@ -30,22 +53,17 @@
         scene_name: >
           Outside {{ states.input_select.hue_select_scene_outside.state }}
 
-### TEST FOR TEMPLATING HUE SCENE NAMES
-- alias: 'hue_select_scene'
-  id: hue_select_scene
+### SELECT SCENE NONE
+- alias: 'hue_select_scene_outside_none'
+  id: hue_select_scene_outside_none
   initial_state: 'True'
   trigger:
     - platform: state
       entity_id:
-        - input_select.hue_select_scene
+        - input_select.hue_select_scene_outside
+  condition:
+    - condition: template
+      value_template: >
+        {{ is_state('input_select.hue_select_scene_outside', 'None') }}
   action:
-    - service: hue.hue_activate_scene
-      data_template:
-        group_name: >
-          {% if states.input_select.hue_select_scene.state|first == "L" %}
-          Living Room
-          {% elif states.input_select.hue_select_scene.state|first == "O" %}
-          Outside
-          {% endif %}
-        scene_name: >
-          {{ states.input_select.hue_select_scene.state }}
+    - service: script.hue_lights_outside_off

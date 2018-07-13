@@ -9,8 +9,9 @@ tado:
 sensor:
   - platform: time_date
     display_options:
-      - time
-      - date
+      - 'time'
+      - 'date'
+      - 'date_time'
 
 ### UPTIME SENSOR
   - platform: uptime
@@ -18,15 +19,16 @@ sensor:
 ### TODAY
   - platform: template
     sensors:
+### DATES & TIMES
       today_all:
         friendly_name: 'Today'
         value_template: >
           {{ now().strftime('%a %d %b %Y') }}
         icon_template: >
           {% if is_state('sensor.today_all', 'unknown') %}
-          mdi:calendar
+            mdi:calendar
           {%else%}
-          mdi:calendar
+            mdi:calendar
           {% endif %}
       today_day:
         friendly_name: 'Day'
@@ -49,45 +51,51 @@ sensor:
       time_of_day:
         friendly_name_template: >
           {% if is_state("sensor.time_of_day", 'Morning') %}
-          Morning
+            Morning
           {% elif is_state("sensor.time_of_day", 'Afternoon') %}
-          Afternoon
+            Afternoon
           {% elif is_state("sensor.time_of_day", 'Evening') %}
-          Evening
+            Evening
           {% elif is_state("sensor.time_of_day", 'Night') %}
-          Night
+            Night
           {% elif is_state("sensor.time_of_day", 'Off') %}
-          off
+            Off
           {% endif %}
         icon_template: >
           {% if is_state("sensor.time_of_day", 'Morning') or
           is_state("sensor.time_of_day", 'Afternoon') or
           is_state("sensor.time_of_day", 'Evening') %}
-          mdi:weather-partlycloudy
+            mdi:weather-partlycloudy
           {% elif is_state("sensor.time_of_day", 'Night') %}
-          mdi:weather-night
+            mdi:weather-night
           {% else %}
-          mdi:timelapse
+            mdi:timelapse
           {% endif %}
         value_template: >
           {% if now().strftime('%H:%M:%S') > ('00:00:00') and
           now().strftime('%H:%M:%S') < ('05:50:00') %}
-          Night
-          {% elif now().strftime('%H:%M:%S') > ('00:00:00') and
+            Night
+          {% elif now().strftime('%H:%M:%S') > ('05:49:59') and
           now().strftime('%H:%M:%S') < ('12:00:00') %}
-          Morning
+            Morning
           {% elif now().strftime('%H:%M:%S') > ('11:59:59') and
           now().strftime('%H:%M:%S') < ('18:00:00') %}
-          Afternoon
+            Afternoon
           {% elif now().strftime('%H:%M:%S') > ('17:59:59') and
           now().strftime('%H:%M:%S') < ('22:15:00') %}
-          Evening
+            Evening
           {% elif now().strftime('%H:%M:%S') > ('22:14:59') and
           now().strftime('%H:%M:%S') < ('23:59:59') %}
-          Night
+            Night
           {% else %}
-          Off
+            Off
           {% endif %}
+
+### SOLAR ELEVATION
+      solar_elevation:
+        friendly_name: "Solar Elevation"
+        value_template: >
+          {{ states.sun.sun.attributes.elevation }}
 
 ### BINARY SENSORS
 ### WORKDAY
@@ -95,9 +103,9 @@ binary_sensor:
   - platform: workday
     country: 'UK'
 
-### SUN
+### SHIELD
   - platform: template
-    sensors:      
+    sensors:
       allow_shield_lights:
         friendly_name: "Allow Shield Lights"
         value_template: >

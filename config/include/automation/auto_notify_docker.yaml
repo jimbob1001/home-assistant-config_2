@@ -7,7 +7,10 @@
   trigger:
     - platform: state
       entity_id:
-        - switch.docker_emby
+        - switch.docker_hadockermon
+        - switch.docker_homeassistant
+        - switch.docker_mqtt
+        - switch.docker_nodered
         - switch.docker_nzbget
         - switch.docker_plex
         - switch.docker_radarr
@@ -32,7 +35,10 @@
   trigger:
     - platform: state
       entity_id:
-        - switch.docker_emby
+        - switch.docker_hadockermon
+        - switch.docker_homeassistant
+        - switch.docker_mqtt
+        - switch.docker_nodered
         - switch.docker_nzbget
         - switch.docker_plex
         - switch.docker_radarr
@@ -45,6 +51,6 @@
     - service: notify.get_notified
       data_template:
         message: >
-          {{ trigger.to_state.name }} container is back 
+          {{ trigger.to_state.name }} container is back
           up & running for 1 minute
         title: "{{ trigger.to_state.name }} Up & Running"

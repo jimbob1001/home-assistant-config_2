@@ -1,18 +1,13 @@
 
-### INPUT
-### MISCELLANEOUS
-### DISABLE
-  misc_disable_bedtime:
-    name: "Disable Bedtime Automation"
-### ENABLE
-  misc_enable_at_home:
-    name: "Enable At Home"
-  misc_enable_guest_mode:
+### INPUT BOOLEAN
+### GUEST MODE
+  guest_mode_enable:
     name: "Enable Guest Mode"
-  misc_enable_time_for_bed:
-    name: "Enable Time for Bed"
-    initial: off
 
-### MEDIA
+### NIGHT MODE
+  night_mode_enable:
+    name: "Enable Night Mode"
+
+### ENABLE SHIELD AUTOMATIONS
   media_shield_enable_lights:
-    name: "Enable Shield Lights"
+    name: "Enable Shield"

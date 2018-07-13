@@ -1,39 +1,52 @@
 
 ### HUE
-### LIGHTS ON OUTSIDE (AM & PM)
-- alias: 'hue_lights_outside_full'
-  id: hue_lights_outside_full
-  initial_state: 'True'
+### LIGHTS ON OUTSIDE AM
+- alias: 'hue_lights_outside_full_am'
+  id: hue_lights_outside_full_am
+#  initial_state: 'True'
+  trigger:
+    - platform: time
+      at: '05:30:00'
+  action:
+    - service: script.hue_lights_outside_full
+
+### LIGHTS ON OUTSIDE PM
+- alias: 'hue_lights_outside_full_pm'
+  id: hue_lights_outside_full_pm
+#  initial_state: 'True'
   trigger:
     - platform: sun
       event: 'sunset'
       offset: '-1:00:00'
-    - platform: time
-      at: '05:30:00'
   action:
     - service: script.hue_lights_outside_full
 
 ### LIGHTS DIM OUTSIDE PM
 - alias: 'hue_lights_outside_dim'
   id: hue_lights_outside_dim
-  initial_state: 'True'
+#  initial_state: 'True'
   trigger:
     - platform: time
       at: '22:30:00'
   action:
     - service: script.hue_lights_outside_dim
 
-### LIGHTS OFF OUTSIDE AM & PM
-- alias: 'hue_lights_outside_off'
-  id: hue_lights_outside_off
+### LIGHTS OFF OUTSIDE AM
+- alias: 'hue_lights_outside_off_am'
+  id: hue_lights_outside_off_am
   initial_state: 'True'
   trigger:
     - platform: time
-      at: '23:30:00'
-    - platform: time
       at: '08:30:00'
-  condition:
-    - condition: template
-      value_template: "{{ is_state('input_boolean.misc_enable_guest_mode', 'off') }}"
+  action:
+    - service: script.hue_lights_outside_off
+
+### LIGHTS OFF OUTSIDE PM
+- alias: 'hue_lights_outside_off_pm'
+  id: hue_lights_outside_off_pm
+#  initial_state: 'True'
+  trigger:
+    - platform: time
+      at: '23:30:00'
   action:
     - service: script.hue_lights_outside_off
