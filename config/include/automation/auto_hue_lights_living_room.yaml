@@ -1,0 +1,52 @@
+
+### HUE
+### LIVING ROOM LIGHTS ON AM
+- alias: 'hue_lights_living_room_on_am'
+  id: hue_lights_living_room_on_am
+#  initial_state: 'True'
+  trigger:
+    - platform: time
+      at: '05:50:00'
+  action:
+    - service: script.hue_lights_living_room_dim
+
+### LIVING ROOM LIGHTS ON PM
+- alias: 'hue_lights_living_room_on_pm'
+  id: hue_lights_living_room_on_pm
+#  initial_state: True
+  trigger:
+    - platform: time
+      at: '17:30:00'
+    - platform: sun
+      event: 'sunset'
+      offset: '-1:30:00'
+  condition:
+    - condition: template
+      value_template: >
+        {{ is_state('light.hue_living_room_all', 'off') }}
+  action:
+    - service: script.hue_lights_living_room_full
+
+### LIVING ROOM LIGHTS OFF AM
+- alias: 'hue_lights_living_room_off_am'
+  id: hue_lights_living_room_off_am
+#  initial_state: 'True'
+  trigger:
+    - platform: time
+      at: '08:45:00'
+  condition:
+    - condition: template
+      value_template: >
+        {{ is_state('binary_sensor.workday_sensor', 'on') }}
+  action:
+    - service: script.hue_lights_living_room_off
+
+### LIVING ROOM LIGHTS OFF PM
+- alias: 'hue_lights_living_room_off_pm'
+  id: hue_lights_living_room_off_pm
+#  initial_state: 'True'
+  trigger:
+    - platform: time
+      at: '22:15:00'
+  action:
+    - service: script.hue_lights_living_room_off
