@@ -1,0 +1,90 @@
+
+### TESTING FOR LIGHTING AUTOMATIONS BASED ON SUN & TIME
+binary_sensor:
+  - platform: template
+    sensors:
+### SUN AM
+      sun_lights_outside_am:
+        friendly_name: "Outside Lights On AM (Sun)"
+        device_class: 'light'
+        value_template: >
+          {{ now().strftime('%H:%M:%S') > ('05:29:59') and
+          now().strftime('%H:%M:%S') < ('08:30:01') and
+          (states.sun.sun.attributes.elevation | int < 20) }}
+### SUN PM
+      sun_lights_outside_pm:
+        friendly_name: "Outside Lights On PM (Sun)"
+        device_class: 'light'
+        value_template: >
+          {{ now().strftime('%H:%M:%S') > ('17:29:59') and
+          now().strftime('%H:%M:%S') < ('22:15:01') and
+          (states.sun.sun.attributes.elevation | int < 20) }}
+
+sensor:
+  - platform: template
+    sensors:
+### BIN REMINDERS
+      calendar_recycling_reminder:
+        friendly_name: "Recycling Reminder"
+        value_template: >
+          {% if as_timestamp(states.calendar.recycling.attributes.start_time)
+          - as_timestamp(strptime(states.sensor.date__time.state, "%Y-%m-%d, %H:%M"))
+          < 43200  %}
+            on
+          {% else %}
+            off
+          {% endif %}
+        icon_template: >
+          {% if is_state('sensor.calendar_recycling_reminder', 'unknown') %}
+            mdi:recycle
+          {%else%}
+            mdi:recycle
+          {% endif %}
+      calendar_rubbish_reminder:
+        friendly_name: "Rubbish Reminder"
+        value_template: >
+          {% if as_timestamp(states.calendar.rubbish.attributes.start_time)
+          - as_timestamp(strptime(states.sensor.date__time.state, "%Y-%m-%d, %H:%M"))
+          < 43200  %}
+            on
+          {% else %}
+            off
+          {% endif %}
+        icon_template: >
+          {% if is_state('sensor.calendar_rubbish_reminder', 'unknown') %}
+            mdi:delete
+          {%else%}
+            mdi:delete
+          {% endif %}
+      calendar_garden_reminder:
+        friendly_name: "Garden Waste Reminder"
+        value_template: >
+          {% if as_timestamp(states.calendar.garden.attributes.start_time)
+          - as_timestamp(strptime(states.sensor.date__time.state, "%Y-%m-%d, %H:%M"))
+          < 43200  %}
+            on
+          {% else %}
+            off
+          {% endif %}
+        icon_template: >
+          {% if is_state('sensor.calendar_garden_reminder', 'unknown') %}
+            mdi:leaf
+          {%else%}
+            mdi:leaf
+          {% endif %}
+      calendar_greensleeves_reminder:
+        friendly_name: "Greensleeves Reminder"
+        value_template: >
+          {% if as_timestamp(states.calendar.greensleeves.attributes.start_time)
+          - as_timestamp(strptime(states.sensor.date__time.state, "%Y-%m-%d, %H:%M"))
+          < 43200  %}
+            on
+          {% else %}
+            off
+          {% endif %}
+        icon_template: >
+          {% if is_state('sensor.calendar_greensleeves_reminder', 'unknown') %}
+            mdi:home-alert
+          {%else%}
+            mdi:home-alert
+          {% endif %}

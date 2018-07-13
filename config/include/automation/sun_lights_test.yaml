@@ -1,0 +1,28 @@
+
+### LIGHTS OUTSIDE AM
+- alias: 'sun_lights_outside_am'
+  id: sun_lights_outside_am
+  initial_state: 'True'
+  trigger:
+    - platform: state
+      entity_id:
+        - binary_sensor.sun_lights_outside_am
+  action:
+    - service: notify.get_notified
+      data_template:
+        message: "The outside light would turn {{ trigger.to_state.state }}  now"
+        title: "Sun Lights Test"
+
+### LIGHTS OUTSIDE PM
+- alias: 'sun_lights_outside_pm'
+  id: sun_lights_outside_pm
+  initial_state: 'True'
+  trigger:
+    - platform: state
+      entity_id:
+        - binary_sensor.sun_lights_outside_pm
+  action:
+    - service: notify.get_notified
+      data_template:
+        message: "The outside light would turn {{ trigger.to_state.state }} now"
+        title: "Sun Lights Test"
