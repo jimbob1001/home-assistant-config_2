@@ -1,75 +1,25 @@
 
 ### CUSTOMIZE
-### DOMAINS
 homeassistant:
-  customize_domain:
-### INPUTS
-    input_boolean:
-      entity_picture: /local/sw/thumbs_up.png
-    input_select:
-      icon: mdi:view-list
-
 ### GLOBAL ENTITIES
   customize_glob:
-    "script.hue_lights*":
-      icon: mdi:lightbulb
     "script.docker*":
       icon: mdi:docker
-    "script.config*":
-      icon: mdi:settings
 
 ### INDIVIDUAL ENTITIES
   customize:
-### GROUPS
-    group.all_scripts:
-      hidden: 'False'
-    group.hue_scripts:
-      entity_picture: /local/sw/deathstar.png
-    group.presence_james:
-      entity_picture: /local/sw/hansolo.png
-    group.presence_gillian:
-      entity_picture: /local/sw/leia.png
-
  ### SENSORS
     sensor.hue_motion_battery:
       device_class: battery
-    sensor.hue_tap_button:
-      friendly_name: "Hue Tap"
-      icon: mdi:google-circles-communities
+    sensor.hue_motion_lux:
+      icon: mdi:theme-light-dark
+    sensor.solar_elevation:
+      icon: mdi:elevation-rise
     sensor.hue_tap_button_pressed:
-      friendly_name: "Hue Tap"
       icon: mdi:google-circles-communities
 
 ### BINARY SENSORS
     binary_sensor.bayesian_presence_james:
-      friendly_name: 'James'
       entity_picture: /local/sw/poe.png
     binary_sensor.bayesian_presence_gillian:
-      friendly_name: 'Gillian'
       entity_picture: /local/sw/rey2.png
-
-### MEDIA PLAYERS
-    media_player.kodi_kodi:
-      friendly_name: 'KODI'
-    media_player.sonos_all:
-      friendly_name: 'SONOS'
-    media_player.shield_all:
-      friendly_name: 'SHIELD'
-
-### SWITCHES
-    switch.docker_hadockermon:
-      friendly_name: "HA Dockermon"
-    switch.docker_homeassistant:
-      friendly_name: "Home Assistant"
-    switch.docker_nodered:
-      friendly_name: "Node-Red"
-    switch.docker_nzbget:
-      friendly_name: 'NZBGet'
-    switch.docker_mqtt:
-      friendly_name: 'MQTT'
-    switch.docker_radarr:
-      friendly_name: 'Radarr'
-    switch.docker_sonarr:
-      friendly_name: 'Sonarr'
-    switch.docker_watchtower:
-      friendly_name: 'Watchtower'
