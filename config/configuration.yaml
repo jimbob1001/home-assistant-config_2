@@ -17,6 +17,18 @@ sun:
 #shopping_list:
 map:
 frontend:
+  javascript_version: latest
+  themes: !include_dir_merge_named include/themes/
+
+timer:
+  hue_motion:
+    name: "Hue Motion Timer"
+    duration: '00:10:00'
+    icon: mdi:clock-fast
+  media_plex:
+    name: "Plex Paused Timer"
+    duration: '00:00:15'
+    icon: mdi:pause-circle
 
 history:
 logger:
@@ -55,6 +67,10 @@ http:
 
 #cloud: !include include/cloud.yaml
 
+google:
+  client_id: !secret google_client_id
+  client_secret: !secret google_client_secret
+  
 #homekit:
 #  pincode: !secret homekit_pincode
 #  auto_start: false
@@ -74,6 +90,6 @@ mqtt:
 ### INCLUDE
 automation: !include_dir_merge_list include/automation
 script: !include_dir_merge_named include/script/
-group: !include_dir_merge_named include/group/
+# group: !include_dir_merge_named include/group/
 input_boolean: !include include/input/input_boolean.yaml
 input_select: !include include/input/input_select.yaml
