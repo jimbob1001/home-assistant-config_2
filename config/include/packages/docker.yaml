@@ -7,6 +7,7 @@ shell_command:
   docker_restart_nodered: !secret docker_restart_nodered
   docker_restart_nzbget: !secret docker_restart_nzbget
   docker_restart_mqtt: !secret docker_restart_mqtt
+  docker_restart_plex: !secret docker_restart_plex
   docker_restart_radarr: !secret docker_restart_radarr
   docker_restart_sonarr: !secret docker_restart_sonarr
   docker_restart_watchtower: !secret docker_restart_watchtower
@@ -49,6 +50,14 @@ switch:
   - platform: rest
     resource: http://127.0.0.1:8126/container/mqtt
     name: 'Docker MQTT'
+    body_on: '{"state": "start"}'
+    body_off: '{"state": "stop"}'
+    is_on_template: >
+      {{ value_json is not none and value_json.state == "running" }}
+
+  - platform: rest
+    resource: http://127.0.0.1:8126/container/plex
+    name: 'Docker Plex'
     body_on: '{"state": "start"}'
     body_off: '{"state": "stop"}'
     is_on_template: >
