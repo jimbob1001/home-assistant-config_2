@@ -1,0 +1,513 @@
+
+### CONFIG
+### RESTART
+- alias: 'config_docker_restart_hass'
+  id: config_docker_restart_hass
+  initial_state: 'True'
+  trigger:
+    - platform: event
+      event_type: 'telegram_command'
+      event_data:
+        command: '/restart'
+  action:
+    - service: script.docker_restart_homeassistant
+
+### PURGE DATABASE
+- alias: 'config_purge_database'
+  id: config_purge_database
+  initial_state: 'True'
+  trigger:
+    - platform: event
+      event_type: 'telegram_command'
+      event_data:
+        command: '/purge'
+  action:
+    - service: script.config_clear_error_log
+    - delay: '00:00:01'
+    - service: script.config_purge_database_keep_1_day
+
+### START HOMEKIT
+- alias: 'config_start_homekit'
+  id: config_start_homekit
+  initial_state: 'False'
+  trigger:
+    - platform: homeassistant
+      event: 'start'
+  action:
+    - delay: '00:02:00'
+    - service: script.config_homekit_start
+
+### GUEST MODE ON
+- alias: 'guest_mode_enable'
+  id: guest_mode_enable
+  initial_state: 'True'
+  trigger:
+    - platform: state
+      entity_id:
+        - input_boolean.guest_mode_enable
+      to: 'on'
+    - platform: event
+      event_type: 'telegram_command'
+      event_data:
+        command: '/guest_on'
+  action:
+    - service: script.guest_mode_automations_off
+    - delay: '00:00:01'
+    - service: notify.hass
+      data:
+        message: "Automations have been disabled"
+        title: "Guest Mode ON"
+
+### GUEST MODE OFF
+- alias: 'guest_mode_disable'
+  id: guest_mode_disable
+  initial_state: 'True'
+  trigger:
+    - platform: state
+      entity_id:
+        - input_boolean.guest_mode_enable
+      to: 'off'
+    - platform: event
+      event_type: 'telegram_command'
+      event_data:
+        command: '/guest_off'
+  action:
+    - service: script.guest_mode_automations_on
+    - delay: '00:00:01'
+    - service: notify.hass
+      data:
+        message: "Automations have been re-enabled"
+        title: "Guest Mode OFF"
+
+### HUE
+### LIVING ROOM LIGHTS ON AM
+- alias: 'hue_lights_living_room_on_am'
+  id: hue_lights_living_room_on_am
+#  initial_state: 'True'
+  trigger:
+    - platform: time
+      at: '05:50:00'
+  action:
+    - service: script.hue_lights_living_room_dim
+
+### LIVING ROOM LIGHTS ON PM
+- alias: 'hue_lights_living_room_on_pm'
+  id: hue_lights_living_room_on_pm
+#  initial_state: True
+  trigger:
+    - platform: time
+      at: '17:30:00'
+    - platform: sun
+      event: 'sunset'
+      offset: '-1:30:00'
+  condition:
+    - condition: template
+      value_template: >
+        {{ is_state('light.hue_living_room_all', 'off') }}
+  action:
+    - service: script.hue_lights_living_room_full
+
+### LIVING ROOM LIGHTS OFF AM
+- alias: 'hue_lights_living_room_off_am'
+  id: hue_lights_living_room_off_am
+#  initial_state: 'True'
+  trigger:
+    - platform: time
+      at: '08:45:00'
+  condition:
+    - condition: template
+      value_template: >
+        {{ is_state('binary_sensor.workday_sensor', 'on') }}
+  action:
+    - service: script.hue_lights_living_room_off
+
+### LIVING ROOM LIGHTS OFF PM
+- alias: 'hue_lights_living_room_off_pm'
+  id: hue_lights_living_room_off_pm
+#  initial_state: 'True'
+  trigger:
+    - platform: time
+      at: '22:15:00'
+  action:
+    - service: script.hue_lights_living_room_off
+
+### HUE
+### LIGHTS ON OUTSIDE AM
+- alias: 'hue_lights_outside_full_am'
+  id: hue_lights_outside_full_am
+#  initial_state: 'True'
+  trigger:
+    - platform: time
+      at: '05:30:00'
+  action:
+    - service: script.hue_lights_outside_full
+
+### LIGHTS ON OUTSIDE PM
+- alias: 'hue_lights_outside_full_pm'
+  id: hue_lights_outside_full_pm
+#  initial_state: 'True'
+  trigger:
+    - platform: sun
+      event: 'sunset'
+      offset: '-1:00:00'
+  action:
+    - service: script.hue_lights_outside_full
+
+### LIGHTS DIM OUTSIDE PM
+- alias: 'hue_lights_outside_dim'
+  id: hue_lights_outside_dim
+#  initial_state: 'True'
+  trigger:
+    - platform: time
+      at: '22:15:00'
+  action:
+    - service: script.hue_lights_outside_dim
+
+### LIGHTS OFF OUTSIDE AM
+- alias: 'hue_lights_outside_off_am'
+  id: hue_lights_outside_off_am
+  initial_state: 'True'
+  trigger:
+    - platform: time
+      at: '08:30:00'
+  action:
+    - service: script.hue_lights_outside_off
+
+### LIGHTS OFF OUTSIDE PM
+- alias: 'hue_lights_outside_off_pm'
+  id: hue_lights_outside_off_pm
+#  initial_state: 'True'
+  trigger:
+    - platform: time
+      at: '23:30:00'
+  action:
+    - service: script.hue_lights_outside_off
+
+### HUE
+### NOTIFY MOTION DETECTED
+- alias: 'hue_motion_living_room_night'
+  id: hue_motion_living_room_night
+#  initial_state: 'True'
+  trigger:
+    - platform: state
+      entity_id:
+        - binary_sensor.hue_motion_living_room_motion
+        - binary_sensor.hue_motion_kitchen_motion
+      to: 'on'
+  condition:
+    - condition: template
+      value_template: >
+        {{ is_state('sensor.time_of_day', 'Night') or
+        is_state('input_boolean.night_mode_enable', 'on') }}
+  action:
+    - service: script.hue_lights_living_room_night
+    - delay: '00:00:01'
+    - service: script.hue_motion_cancel_timer
+    - delay: '00:00:01'
+    - service: script.hue_motion_start_timer
+
+### HUE MOTION TIMER ENDED
+- alias: 'hue_motion_timer_ended'
+  id: hue_motion_timer_ended
+#  initial_state: 'True'
+  trigger:
+    - platform: event
+      event_type: timer.finished
+      event_data:
+        entity_id: timer.hue_motion
+  condition:
+    - condition: template
+      value_template: >
+        {{ is_state('sensor.time_of_day', 'Night') or
+        is_state('input_boolean.night_mode_enable', 'on') }}
+  action:
+    - service: script.hue_lights_living_room_off
+
+### NOTIFY TAP PRESS
+- alias: 'hue_tap_living_room_notify'
+  id: hue_tap_living_room_notify
+  initial_state: 'True'
+  trigger:
+    - platform: state
+      entity_id:
+        - sensor.hue_tap_button
+  action:
+    - service: notify.hass
+      data_template:
+        message: "{{ trigger.to_state.state }} has been pressed"
+        title: "Hue Tap {{ trigger.to_state.state }}"
+
+### HUE
+### HUE SELECT LIVING ROOM SCENE
+- alias: 'hue_select_scene_living_room'
+  id: hue_select_scene_living_room
+  initial_state: 'True'
+  trigger:
+    - platform: state
+      entity_id:
+        - input_select.hue_select_scene_living_room
+  condition:
+    - condition: template
+      value_template: >
+        {{ not is_state('input_select.hue_select_scene_living_room', 'None') }}
+  action:
+    - service: hue.hue_activate_scene
+      data_template:
+        group_name: "Living Room"
+        scene_name: >
+          Living Room {{ states.input_select.hue_select_scene_living_room.state }}
+
+### SELECT SCENE NONE
+- alias: 'hue_select_scene_living_room_none'
+  id: hue_select_scene_living_room_none
+  initial_state: 'True'
+  trigger:
+    - platform: state
+      entity_id:
+        - input_select.hue_select_scene_living_room
+  condition:
+    - condition: template
+      value_template: >
+        {{ is_state('input_select.hue_select_scene_living_room', 'None') }}
+  action:
+    - service: script.hue_lights_living_room_off
+
+### HUE SELECT OUTSIDE SCENE
+- alias: 'hue_select_scene_outside'
+  id: hue_select_scene_outside
+  initial_state: 'True'
+  trigger:
+    - platform: state
+      entity_id:
+        - input_select.hue_select_scene_outside
+  condition:
+    - condition: template
+      value_template: >
+        {{ not is_state('input_select.hue_select_scene_outside', 'None') }}
+  action:
+    - service: hue.hue_activate_scene
+      data_template:
+        group_name: "Outside"
+        scene_name: >
+          Outside {{ states.input_select.hue_select_scene_outside.state }}
+
+### SELECT SCENE NONE
+- alias: 'hue_select_scene_outside_none'
+  id: hue_select_scene_outside_none
+  initial_state: 'True'
+  trigger:
+    - platform: state
+      entity_id:
+        - input_select.hue_select_scene_outside
+  condition:
+    - condition: template
+      value_template: >
+        {{ is_state('input_select.hue_select_scene_outside', 'None') }}
+  action:
+    - service: script.hue_lights_outside_off
+
+### SONOS
+### SONOS SELECT  MUSIC
+- alias: 'media_sonos_select_music'
+  id: media_sonos_select_music
+  initial_state: 'True'
+  trigger:
+    - platform: state
+      entity_id:
+        - input_select.media_sonos_select_source
+  action:
+    - service_template: >
+        {% if is_state('input_select.media_sonos_select_source', "BBC 6 MUSIC") %}
+          script.media_sonos_select_6music
+        {% elif is_state('input_select.media_sonos_select_source', "Sea Waves") %}
+          script.media_sonos_select_waves
+        {% elif is_state('input_select.media_sonos_select_source', "Weightless") %}
+          script.media_sonos_select_weightless
+        {% endif %}
+
+### NOTIFY
+### PING PONG
+- alias: 'notify_ping_pong'
+  id: notify_ping_pong
+  initial_state: 'True'
+  trigger:
+    - platform: event
+      event_type: 'telegram_command'
+      event_data:
+        command: '/ping'
+  action:
+    - service: notify.bot
+      data:
+        message: 'pong'
+
+### RESTARTED
+- alias: 'notify_hass_restart'
+  id: notify_hass_restart
+  initial_state: 'True'
+  trigger:
+    - platform: homeassistant
+      event: 'start'
+  action:
+    - service: notify.hass
+      data:
+        message: "Home Assistant should now be available"
+        title: "Hass Restarted"
+
+### SHUTTING DOWN
+- alias: 'notify_hass_shutdown'
+  id: notify_hass_shutdown
+  initial_state: 'True'
+  trigger:
+    - platform: homeassistant
+      event: 'shutdown'
+  action:
+    - service: notify.hass
+      data:
+        message: "Home Assistant is shutting down"
+        title: "Hass Shutting Down"
+
+### HOMEASSISTANT UPDATE
+- alias: 'notify_hass_update'
+  id: notify_hass_update
+  initial_state: 'True'
+  trigger:
+    - platform: state
+      entity_id:
+        - updater.updater
+  condition:
+    - condition: template
+      value_template: >
+        {{ not is_state('updater.updater', 'unknown' ) }}
+  action:
+    - service: notify.hass
+      data:
+        message: >
+          Home Assistant {{ states('updater.updater') }}
+          is now available. Go to https://home-assistant.io
+        title: "Home Assistant Update"
+
+### BIN REMINDERS
+### NEEDS A BIT OF WORK - BETTER NOTIFICATION MESSAGES REQUIRED
+- alias: 'notify_bin_reminders'
+  id: notify_bin_reminders
+  initial_state: 'True'
+  trigger:
+    - platform: state
+      entity_id:
+        - input_boolean.night_mode_enable
+        - calendar.garden
+        - calendar.greensleeves
+        - calendar.recycling
+        - calendar.rubbish
+        - binary_sensor.calendar_garden_reminder
+        - binary_sensor.calendar_greensleeves_reminder
+        - binary_sensor.calendar_recycling_reminder
+        - binary_sensor.calendar_rubbish_reminder
+      to: 'on'
+  action:
+    - service: notify.waste
+      data_template:
+        message: "{{ trigger.to_state.name }} Reminder"
+        title: "{{ trigger.to_state.name }} Reminder"
+
+### DOCKER
+### NOTIFY WHEN CONTAINER DOWN
+- alias: 'notify_docker_container_down'
+  id: notify_docker_container_down
+  initial_state: 'True'
+  trigger:
+    - platform: state
+      entity_id:
+        - switch.docker_hadockermon
+        - switch.docker_homeassistant
+        - switch.docker_mqtt
+        - switch.docker_nodered
+        - switch.docker_nzbget
+        - switch.docker_plex
+        - switch.docker_radarr
+        - switch.docker_sonarr
+        - switch.docker_watchtower
+      to: 'off'
+      for:
+       minutes: '5'
+  action:
+    - service: notify.hass
+      data_template:
+        message: >
+          {{ trigger.to_state.name }} container is down
+          & has been offline for more than 5 minutes
+        title: "{{ trigger.to_state.name }} Down"
+
+### DOCKER
+### NOTIFY WHEN CONTAINER RUNNING
+- alias: 'notify_docker_container_up'
+  id: notify_docker_container_up
+  initial_state: 'True'
+  trigger:
+    - platform: state
+      entity_id:
+        - switch.docker_hadockermon
+        - switch.docker_homeassistant
+        - switch.docker_mqtt
+        - switch.docker_nodered
+        - switch.docker_nzbget
+        - switch.docker_plex
+        - switch.docker_radarr
+        - switch.docker_sonarr
+        - switch.docker_watchtower
+      to: 'on'
+      for:
+       minutes: '1'
+  action:
+    - service: notify.hass
+      data_template:
+        message: >
+          {{ trigger.to_state.name }} container is back
+          up & running for 1 minute
+        title: "{{ trigger.to_state.name }} Up & Running"
+
+### TADO NOTIFY
+- alias: 'notify_tado_hot_water'
+  id: notify_tado_hot_water
+  initial_state: 'True'
+  trigger:
+    - platform: state
+      entity_id:
+        - sensor.tado_hot_water_power
+      to: 'ON'
+      for:
+       minutes: '35'
+  action:
+    - service: notify.hass
+      data_template:
+        message: >
+          Hot water has been on for more than 35 minutes
+        title: "Tado Alert"
+
+### LIGHTS OUTSIDE AM
+- alias: 'sun_lights_outside_am'
+  id: sun_lights_outside_am
+  initial_state: 'True'
+  trigger:
+    - platform: state
+      entity_id:
+        - binary_sensor.sun_lights_outside_am
+  action:
+    - service: notify.hass
+      data_template:
+        message: "The outside light would turn {{ trigger.to_state.state }}  now"
+        title: "Sun Lights Test"
+
+### LIGHTS OUTSIDE PM
+- alias: 'sun_lights_outside_pm'
+  id: sun_lights_outside_pm
+  initial_state: 'True'
+  trigger:
+    - platform: state
+      entity_id:
+        - binary_sensor.sun_lights_outside_pm
+  action:
+    - service: notify.hass
+      data_template:
+        message: "The outside light would turn {{ trigger.to_state.state }} now"
+        title: "Sun Lights Test"

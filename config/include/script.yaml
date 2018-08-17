@@ -1,0 +1,348 @@
+
+### CONFIG
+### RELOAD AUTOMATIONS
+  config_reload_automations:
+    alias: "Reload Automations"
+    sequence:
+      - service: automation.reload
+
+### RELOAD SCRIPTS
+  config_reload_scripts:
+    alias: "Reload Scripts"
+    sequence:
+      - service: script.reload
+
+### RELOAD GROUPS
+  config_reload_groups:
+    alias: "Reload Groups"
+    sequence:
+      - service: group.reload
+
+### PURGE DATABASE
+  config_purge_database_full:
+    alias: "Purge Full Database"
+    sequence:
+      - service: recorder.purge
+        data:
+          keep_days: '0'
+          repack: 'yes'
+
+### PURGE DATABASE BUT KEEP LAST DAY
+  config_purge_database_keep_1_day:
+    alias: "Purge Database (Keep 1 Day)"
+    sequence:
+      - service: recorder.purge
+        data:
+          keep_days: '1'
+          repack: 'yes'
+
+### CLEAR LOG
+  config_clear_error_log:
+    alias: "Clear Error Log"
+    sequence:
+      - service: system_log.clear
+
+### START HOMEKIT
+  config_homekit_start:
+    alias: "Start Homekit"
+    sequence:
+      - service: homekit.start
+
+### DOCKER
+### HA DOCKERMON
+  docker_restart_hadockermon:
+    alias: "Restart HA Dockermon"
+    sequence:
+      - service: shell_command.docker_restart_hadockermon
+
+### HOMEASSISTANT
+  docker_restart_homeassistant:
+    alias: "Restart Homeassistant"
+    sequence:
+      - service: shell_command.docker_restart_homeassistant
+
+### MQTT
+  docker_restart_mqtt:
+    alias: "Restart MQTT"
+    sequence:
+      - service: shell_command.docker_restart_mqtt
+
+### NODERED
+  docker_restart_nodered:
+    alias: "Restart Node-Red"
+    sequence:
+      - service: shell_command.docker_restart_nodered
+
+### NZBGET
+  docker_restart_nzbget:
+    alias: "Restart NZBGet"
+    sequence:
+      - service: shell_command.docker_restart_nzbget
+
+### PLEX
+  docker_restart_plex:
+    alias: "Restart Plex"
+    sequence:
+      - service: shell_command.docker_restart_plex
+
+### RADARR
+  docker_restart_radarr:
+    alias: "Restart Radarr"
+    sequence:
+      - service: shell_command.docker_restart_radarr
+
+### SONARR
+  docker_restart_sonarr:
+    alias: "Restart Sonarr"
+    sequence:
+      - service: shell_command.docker_restart_sonarr
+
+### WATCHTOWER
+  docker_restart_watchtower:
+    alias: "Restart Watchtower"
+    sequence:
+      - service: shell_command.docker_restart_watchtower
+
+### TURN AUTOMATIONS OFF
+  guest_mode_automations_off:
+    alias: "Auto Off"
+    sequence:
+      - service: automation.turn_off
+        entity_id:
+        # MOTION
+        - automation.hue_motion_living_room_night
+        - automation.hue_motion_timer_ended
+        # LIVING ROOM LIGHTS
+        - automation.hue_lights_living_room_on_am
+        - automation.hue_lights_living_room_on_pm
+        - automation.hue_lights_living_room_off_am
+        - automation.hue_lights_living_room_off_pm
+        # OUTSIDE LIGHTS
+        - automation.hue_lights_outside_off_pm
+
+### TURN AUTOMATIONS ON
+  guest_mode_automations_on:
+    alias: "Auto On"
+    sequence:
+      - service: automation.turn_on
+        entity_id:
+        # MOTION
+        - automation.hue_motion_living_room_night
+        - automation.hue_motion_timer_ended
+        # LIVING ROOM LIGHTS
+        - automation.hue_lights_living_room_on_am
+        - automation.hue_lights_living_room_on_pm
+        - automation.hue_lights_living_room_off_am
+        - automation.hue_lights_living_room_off_pm
+        # OUTSIDE LIGHTS
+        - automation.hue_lights_outside_off_pm
+
+### HUE
+### NATIVE HUE SCENES
+  hue_lights_living_room_dim:
+    alias: "Living Room Dim"
+    sequence:
+      - service: hue.hue_activate_scene
+        data:
+          group_name: "Living Room"
+          scene_name: "Living Room Dim"
+
+  hue_lights_living_room_full:
+    alias: "Living Room Full"
+    sequence:
+      - service: hue.hue_activate_scene
+        data:
+          group_name: "Living Room"
+          scene_name: "Living Room Full"
+
+  hue_lights_living_room_morning:
+    alias: "Living Room Morning"
+    sequence:
+      - service: hue.hue_activate_scene
+        data:
+          group_name: "Living Room"
+          scene_name: "Living Room Dim"
+
+  hue_lights_living_room_movie:
+    alias: "Living Room Movie"
+    sequence:
+      - service: hue.hue_activate_scene
+        data:
+          group_name: "Living Room"
+          scene_name: "Living Room Movie"
+
+  hue_lights_living_room_night:
+    alias: "Living Room Night"
+    sequence:
+      - service: hue.hue_activate_scene
+        data:
+          group_name: "Living Room"
+          scene_name: "Living Room Night"
+
+  hue_lights_living_room_white:
+    alias: "Living Room White"
+    sequence:
+      - service: hue.hue_activate_scene
+        data:
+          group_name: "Living Room"
+          scene_name: "Living Room White"
+
+  hue_lights_outside_full:
+    alias: "Outside Full"
+    sequence:
+      - service: hue.hue_activate_scene
+        data:
+          group_name: 'Outside'
+          scene_name: "Outside Full"
+
+  hue_lights_outside_dim:
+    alias: "Outside Dim"
+    sequence:
+      - service: hue.hue_activate_scene
+        data:
+          group_name: 'Outside'
+          scene_name: "Outside Dim"
+
+### TURN OFF THE LIGHTS
+  hue_lights_outside_off:
+    alias: "Outside Off"
+    sequence:
+      - service:  light.turn_off
+        entity_id:
+          - light.outside
+        data:
+          transition: '2'
+
+  hue_lights_living_room_off:
+    alias: "Living Room Off"
+    sequence:
+      - service:  light.turn_off
+        entity_id:
+          - light.living_room
+        data:
+          transition: '2'
+
+### HUE
+### LIVING ROOM MOTION
+  hue_motion_living_room_notify:
+    alias: "Motion Living Room"
+    sequence:
+      - service: notify.get_notified
+        data:
+          message: >
+            Living Room Motion Sensor 
+            has been triggered at home
+          title: "Motion Detected"
+          
+### MEDIA
+### SELECT 6 MUSIC
+  media_sonos_select_6music:
+    alias: "Sonos BBC 6 MUSIC"
+    sequence:
+      - service: media_player.sonos_snapshot
+      - delay: '00:00:03'
+      - service: media_player.sonos_unjoin
+      - delay: '00:00:03'
+      - service: media_player.sonos_join
+        data:
+          master: media_player.sonos_kitchen
+        entity_id:
+          - media_player.sonos_bedroom
+          - media_player.sonos_living_room
+      - delay: '00:00:03'
+      - service: media_player.volume_set
+        data:
+          volume_level: '0.15'
+        entity_id:
+          - media_player.sonos_kitchen
+          - media_player.sonos_bedroom
+          - media_player.sonos_living_room
+      - service: media_player.select_source
+        data:
+          entity_id:
+            - media_player.sonos_kitchen
+          source: "BBC Radio 6 Music"
+
+### SELECT WAVES
+  media_sonos_select_waves:
+    alias: "Sonos Sea Waves"
+    sequence:
+      - service: media_player.sonos_unjoin
+      - delay: '00:00:03'
+      - service: media_player.volume_set
+        data:
+          volume_level: '0.05'
+        entity_id:
+          - media_player.sonos_bedroom
+      - service: media_player.select_source
+        data:
+          entity_id:
+            - media_player.sonos_bedroom
+          source: "Sea Waves"
+
+### SELECT WEIGHTLESS
+  media_sonos_select_weightless:
+    alias: "Sonos Weightless"
+    sequence:
+      - service: media_player.sonos_unjoin
+      - delay: '00:00:03'
+      - service: media_player.volume_set
+        data:
+          volume_level: '0.05'
+        entity_id:
+          - media_player.sonos_bedroom
+      - service: media_player.select_source
+        data:
+          entity_id:
+            - media_player.sonos_bedroom
+          source: "Weightless (Ambient Transmission Vol. 2)"
+
+### HUE
+  hue_motion_start_timer:
+    alias: "Start Hue Timer"
+    sequence:
+      - service: timer.start
+        entity_id: timer.hue_motion
+
+  hue_motion_pause_timer:
+    alias: "Pause Hue Timer"
+    sequence:
+      - service: timer.pause
+        entity_id: timer.hue_motion
+
+  hue_motion_cancel_timer:
+    alias: "Cancel Hue Timer"
+    sequence:
+      - service: timer.cancel
+        entity_id: timer.hue_motion
+
+  hue_motion_finish_timer:
+    alias: "Finish Hue Timer"
+    sequence:
+      - service: timer.finish
+        entity_id: timer.hue_motion
+
+### PLEX
+  plex_paused_start_timer:
+    alias: "Start Plex Timer"
+    sequence:
+      - service: timer.start
+        entity_id: timer.media_plex
+
+  plex_paused_pause_timer:
+    alias: "Pause Plex Timer"
+    sequence:
+      - service: timer.pause
+        entity_id: timer.media_plex
+
+  plex_paused_cancel_timer:
+    alias: "Cancel Plex Timer"
+    sequence:
+      - service: timer.cancel
+        entity_id: timer.media_plex
+
+  plex_paused_finish_timer:
+    alias: "Finish Plex Timer"
+    sequence:
+      - service: timer.finish
+        entity_id: timer.media_plex

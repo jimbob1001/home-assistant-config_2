@@ -1,0 +1,25 @@
+
+### DEVICE TRACKERS
+
+### BLUETOOTH
+- platform: bluetooth_tracker
+
+  consider_home: '00:10:00'
+  interval_seconds: '00:02:00'
+  new_device_defaults:
+    track_new_devices: 'False'
+    hide_if_away: 'False'
+
+### ASUSWRT
+- platform: asuswrt
+  host: !secret asus_ip
+  username: !secret asus_username
+  password: !secret asus_password
+  protocol: 'ssh'
+  port: !secret asus_port
+
+### TADO
+- platform: tado
+  username: !secret tado_user
+  password: !secret tado_pass
+  home_id: !secret home_id

@@ -1,0 +1,222 @@
+
+### BINARY SENSORS
+
+### HUE MOTION SENSORS
+- platform: rest
+  resource: !secret hue_motion_living_motion
+  value_template: >
+    {{ value_json.state.presence }}
+  scan_interval: 2
+  name: "Hue Motion Living Room Motion"
+  device_class: 'motion'
+
+- platform: rest
+  resource: !secret hue_motion_kitchen_motion
+  value_template: >
+    {{ value_json.state.presence }}
+  scan_interval: 2
+  name: "Hue Motion Kitchen Motion"
+  device_class: 'motion'
+
+- platform: rest
+  resource: !secret hue_motion_garage_motion
+  value_template: >
+    {{ value_json.state.presence }}
+  scan_interval: 2
+  name: "Hue Motion Garage Motion"
+  device_class: 'motion'
+
+### HUE DAYLIGHT
+- platform: rest
+  resource: !secret hue_motion_living_daylight
+  value_template: >
+    {{ value_json.state.daylight }}
+  name: "Hue Motion Living Room Daylight"
+  device_class: 'light'
+
+### WORKDAY
+- platform: workday
+  country: 'UK'
+
+### SHIELD LIGHTS
+- platform: template
+  sensors:
+    allow_shield_lights:
+      friendly_name: "Allow Shield Lights"
+      value_template: >
+        {{ now().strftime('%H:%M:%S') > ('17:30:00') or
+        is_state('sun.sun', 'below_horizon') or
+        is_state('input_boolean.media_shield_enable_lights', 'on') }}
+
+### TESTING FOR LIGHTING AUTOMATIONS BASED ON SUN & TIME
+    sun_lights_outside_am:
+      friendly_name: "Outside Lights On AM (Sun)"
+      device_class: 'light'
+      value_template: >
+        {{ now().strftime('%H:%M:%S') > ('05:29:59') and
+        now().strftime('%H:%M:%S') < ('08:30:01') and
+        (states.sun.sun.attributes.elevation | int < 20) }}
+
+    sun_lights_outside_pm:
+      friendly_name: "Outside Lights On PM (Sun)"
+      device_class: 'light'
+      value_template: >
+        {{ now().strftime('%H:%M:%S') > ('17:29:59') and
+        now().strftime('%H:%M:%S') < ('22:15:01') and
+        (states.sun.sun.attributes.elevation | int < 20) }}
+
+### TADO HOT WATER
+    tado_hot_water:
+      friendly_name: "Hot Water"
+      device_class: 'heat'
+      value_template: >
+        {{ is_state('sensor.tado_hot_water_power', 'ON') }}
+      icon_template: >
+        {% if is_state('binary_sensor.tado_hot_water', 'on') %}
+          mdi:water
+        {%else%}
+          mdi:water-off
+        {% endif %}
+
+### HUE NO MOTION FOR 10 MINUTES
+    hue_motion_no_motion_ten:
+      friendly_name: "No Motion For 10 minutes"
+      value_template: >
+        {{ is_state('binary_sensor.hue_motion_living_room_motion', 'off')
+        and is_state('binary_sensor.hue_motion_kitchen_motion', 'off') }}
+      delay_on:
+        minutes: 10
+      icon_template: >
+        {% if is_state('binary_sensor.hue_motion_no_motion_ten', 'on') %}
+          mdi:sleep
+        {%else%}
+          mdi:sleep-off
+        {% endif %}
+
+### BIN REMINDERS
+    calendar_recycling_reminder:
+      friendly_name: "Recycling"
+      value_template: >
+        {% if as_timestamp(states.calendar.recycling.attributes.start_time)
+        - as_timestamp(strptime(states.sensor.date__time.state, "%Y-%m-%d, %H:%M"))
+        < 43200 %}
+          on
+        {% else %}
+          off
+        {% endif %}
+      icon_template: >
+        {% if is_state('binary_sensor.calendar_recycling_reminder', 'off') %}
+          mdi:recycle
+        {% else %}
+          mdi:recycle
+        {% endif %}
+
+    calendar_rubbish_reminder:
+      friendly_name: "Rubbish"
+      value_template: >
+        {% if as_timestamp(states.calendar.rubbish.attributes.start_time)
+        - as_timestamp(strptime(states.sensor.date__time.state, "%Y-%m-%d, %H:%M"))
+        < 43200 %}
+          on
+        {% else %}
+          off
+        {% endif %}
+      icon_template: >
+        {% if is_state('binary_sensor.calendar_rubbish_reminder', 'off') %}
+          mdi:delete
+        {% else %}
+          mdi:delete
+        {% endif %}
+
+    calendar_garden_reminder:
+      friendly_name: "Garden Waste"
+      value_template: >
+        {% if as_timestamp(states.calendar.garden.attributes.start_time)
+        - as_timestamp(strptime(states.sensor.date__time.state, "%Y-%m-%d, %H:%M"))
+        < 43200 %}
+          on
+        {% else %}
+          off
+        {% endif %}
+      icon_template: >
+        {% if is_state('binary_sensor.calendar_garden_reminder', 'off') %}
+          mdi:leaf
+        {% else %}
+          mdi:leaf
+        {% endif %}
+
+    calendar_greensleeves_reminder:
+      friendly_name: 'Greensleeves'
+      value_template: >
+        {% if as_timestamp(states.calendar.greensleeves.attributes.start_time)
+        - as_timestamp(strptime(states.sensor.date__time.state, "%Y-%m-%d, %H:%M"))
+        < 43200 %}
+          on
+        {% else %}
+          off
+        {% endif %}
+      icon_template: >
+        {% if is_state('binary_sensor.calendar_greensleeves_reminder', 'off') %}
+          mdi:home-alert
+        {% else %}
+          mdi:home-alert
+        {% endif %}
+
+### BAYESIAN
+### BAYESIAN PRESENCE JAMES
+- platform: bayesian
+  prior: 0.75
+  name: "Bayesian Presence James"
+  device_class: 'presence'
+  probability_threshold: 0.95
+  observations:
+    - entity_id: "device_tracker.james_asus_oneplus3"
+      prob_given_true: 0.6
+      platform: 'state'
+      to_state: 'home'
+    - entity_id: "device_tracker.james_tado"
+      prob_given_true: 0.8
+      platform: 'state'
+      to_state: 'home'
+    - entity_id: "device_tracker.james_bt_oneplus3"
+      prob_given_true: 0.8
+      platform: 'state'
+      to_state: 'home'
+
+### BAYESIAN PRESENCE GILLIAN
+- platform: bayesian
+  prior: 0.75
+  name: "Bayesian Presence Gillian"
+  device_class: 'presence'
+  probability_threshold: 0.95
+  observations:
+    - entity_id: "device_tracker.gillian_asus_oneplus3t"
+      prob_given_true: 0.8
+      platform: 'state'
+      to_state: 'home'
+    - entity_id: "device_tracker.gillian_tado"
+      prob_given_true: 0.8
+      platform: 'state'
+      to_state: 'home'
+    - entity_id: "device_tracker.gillian_bt_oneplus3t"
+      prob_given_true: 0.8
+      platform: 'state'
+      to_state: 'home'
+
+- platform: bayesian
+  prior: 0.45
+  name: "Bayesian Bedtime"
+  probability_threshold: 0.95
+  observations:
+    - entity_id: "binary_sensor.hue_motion_no_motion_ten"
+      prob_given_true: 0.8
+      platform: 'state'
+      to_state: 'on'
+    - entity_id: "sensor.time_of_day"
+      prob_given_true: 0.8
+      platform: 'state'
+      to_state: 'Night'
+    - entity_id: "input_boolean.guest_mode_enable"
+      prob_given_true: 0.8
+      platform: 'state'
+      to_state: 'off'

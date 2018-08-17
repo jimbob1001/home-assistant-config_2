@@ -1,0 +1,73 @@
+
+### MEDIA
+### PLEX
+- platform: plex
+  entity_namespace: 'plex'
+  include_non_clients: true
+  remove_unavailable_clients: false
+#  client_remove_interval: 600
+
+### KODI
+#  - platform: kodi
+#    entity_namespace: 'kodi'
+#    host: !secret cast_ip
+#    port: !secret kodi_port
+
+### EMBY
+  # - platform: emby
+  #   host: !secret emby_ip
+  #   api_key: !secret emby_api
+
+### SONY_BRAVIA_TV_PSK
+### CUSTOM COMPONENT
+#- platform: braviatv_psk
+#  name: "Sony Bravia"
+#  host: !secret sony_ip
+#  psk: !secret sony_psk
+#  mac: !secret sony_mac
+#  amp: 'True'
+#  android: 'True'
+#  sourcefilter:
+#    - HDMI
+
+### UNIVERSAL
+### COMBINES ALL MEDIA PLAYERS INTO A SINGLE ENTITY
+- platform: universal
+  name: "SHIELD ALL"
+  children:
+    - media_player.plex_shield2
+    - media_player.cast_shield
+    - media_player.kodi_kodi
+    - media_player.emby_shield
+
+### UNIVERSAL
+- platform: universal
+  name: "SONOS ALL"
+  state_template: >
+    {% if is_state("media_player.sonos_bedroom", 'playing') or
+    is_state("media_player.sonos_kitchen", 'playing') or
+    is_state("media_player.sonos_living_room", 'playing') or
+    is_state("media_player.sonos_tv", 'playing') %}
+      playing
+    {% else %}
+      off
+    {% endif %}
+  children:
+    - media_player.sonos_living_room
+    - media_player.sonos_tv
+    - media_player.sonos_kitchen
+    - media_player.sonos_bedroom
+
+### CAST
+# cast:
+#   media_player:
+#     - host: !secret cast_ip
+
+### SONOS
+# sonos:
+#   media_player:
+#     hosts:
+#       - !secret sonos_ip_living_room
+#       - !secret sonos_ip_kitchen
+#       - !secret sonos_ip_bedroom
+#       - !secret sonos_ip_tv

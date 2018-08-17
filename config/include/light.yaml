@@ -1,0 +1,15 @@
+
+### LIGHT GROUPS
+- platform: group
+  name: "Hue Outside All"
+  entities:
+    - light.hue_front_porch
+
+- platform: group
+  name: "Hue Living Room All"
+  entities:
+    - light.hue_big_floor_lamp
+    - light.hue_small_floor_lamp
+    - light.hue_table_lamp
+    - light.hue_tv_backlight
+    

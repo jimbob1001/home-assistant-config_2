@@ -1,13 +1,64 @@
 resources:
   - url: /local/custom_ui/weather-card.js
     type: js
+  - url: /local/custom_ui/thermostat-card/thermostat-card.js?v=0.0.2
+    type: module
+  - url: /local/tracker-card.js?v=0.1.4
+    type: js
+  - url: /local/monster-card.js?v=1
+    type: js
 
 title: No. 33
 views:
   - title: 'Home'
     id: home
+    #panel: true
     cards:
+      - type: entity-filter
+        ### REMINDERS
+        entities:
+          - calendar.recycling
+          - calendar.rubbish
+          - calendar.garden
+          - calendar.greensleeves
+          - binary_sensor.calendar_recycling_reminder
+          - binary_sensor.calendar_rubbish_reminder
+          - binary_sensor.calendar_garden_reminder
+          - binary_sensor.calendar_greensleeves_reminder
+        show_empty: false
+        state_filter:
+          - 'on'
+        card:
+          type: entities
+
+      - type: conditional
+        ### BIRTHDAYS
+        conditions:
+          - entity: sensor.birthdays
+            state_not: 'off'
+        card:
+          type: entities
+          entities:
+            - sensor.birthdays
+
+      - type: entity-filter
+        ### SHOW MEDIA PLAYERS PLAYING
+        show_empty: false
+        entities:
+          - media_player.sonos_kitchen
+          - media_player.sonos_living_room
+          - media_player.sonos_bedroom
+          - media_player.sonos_tv
+          - media_player.plex_shield2
+          - media_player.cast_shield
+        state_filter:
+          - 'playing'
+        card:
+          - type: glance
+
       - type: glance
+        ### PRESENCE
+        show_name: false
         entities:
           - entity: binary_sensor.bayesian_presence_james
             name: 'James'
@@ -15,80 +66,72 @@ views:
             name: 'Gillian'
 
       - type: "custom:weather-card"
+        ### WEATHER
         title: 'Weather'
         entity_weather: weather.yweather
         entity_sun: sun.sun
 
-      - type: entities
+      - type: entity-filter
+        ### TESTING FOR LIGHT AUTOMATIONS
+        show_empty: false
         entities:
           - binary_sensor.sun_lights_outside_am
           - binary_sensor.sun_lights_outside_pm
+        state_filter:
+          - 'on'
+        card:
+          - type: glance
+          - type: divider
+            style:
+              height: 30px
+              margin: 10px 0
+              background: left / contain url("/local/png/leaf.png") no-repeat
 
       - type: entities
+        ### HUE ENTITIES
         entities:
-          - entity: binary_sensor.hue_motion_living_room
-            name: 'Motion'
-          - entity: timer.hue_motion
-            name: 'Timer'
-          - entity: sensor.hue_motion_battery
-            name: 'Battery'
-          - entity: sensor.hue_motion_living_room_temperature
-            name: 'Temperature'
+          - entity: binary_sensor.hue_motion_living_room_motion
+            name: "Living Room Motion"
+          - entity: binary_sensor.hue_motion_kitchen_motion
+            name: "Kitchen Motion"
+          - entity: binary_sensor.hue_motion_garage_motion
+            name: "Garage Motion"
 
       - type: entities
-        #title: 'Today'
-        #title: {{ states.sensor.today_all.state }}
+        ### INFORMATION
         show_header_toggle: false
         entities:
           - sensor.time
           - sensor.today_all
-          - binary_sensor.allow_shield_lights
-          - input_boolean.guest_mode_enable
-          - input_boolean.night_mode_enable
-
-      - type: entity-filter
-        entities:
-          - calendar.recycling
-          - calendar.rubbish
-          - calendar.garden
-          - calendar.greensleeves
-          - sensor.calendar_recycling_reminder
-          - sensor.calendar_rubbish_reminder
-          - sensor.calendar_garden_reminder
-          - sensor.calendar_greensleeves_reminder
-        state_filter:
-          - 'on'
-        card:
-          type: entities
-          show_empty: false
+          - entity: sensor.hue_tap_button
+            name: "Hue Tap"
+            icon: mdi:google-circles-communities
+          - entity: input_boolean.guest_mode_enable
+            icon: mdi:account-group
+          - entity: input_boolean.night_mode_enable
+            icon: mdi:weather-night
+          - entity: binary_sensor.bayesian_bedtime
+            name: 'Bedtime'
 
       - type: entities
-        #title: 'Sun'
+        ### SUN / DAYLIGHT
         show_header_toggle: false
         entities:
           - sun.sun
-          - sensor.solar_elevation
-          - entity: binary_sensor.hue_motion_daylight
+          - entity: sensor.solar_elevation
+            icon: mdi:elevation-rise
+          - entity: binary_sensor.hue_motion_living_room_daylight
             name: 'Daylight'
           - sensor.time_of_day
-          - entity: sensor.hue_motion_lux
-            name: 'Lux'
+          - sensor.moon
 
       - type: entities
-        #title: 'Info'
-        show_header_toggle: false
-        entities:
-          - entity: climate.heating
-            name: 'Tado'
-          - entity: sensor.hue_tap_button
-            name: "Hue Tap"
-
-      - type: entities
-        #title: 'Restart'
+        ### RESTART / PURGE
         show_header_toggle: false
         entities:
           - entity: script.docker_restart_homeassistant
             name: "Restart Homeassistant"
+            icon: mdi:docker
           - entity: script.config_purge_database_keep_1_day
             name: "Clear Database"
 
@@ -99,14 +142,18 @@ views:
           - light.hue_small_floor_lamp
           - light.hue_table_lamp
           - light.hue_tv_backlight
+          - type: divider
           - sensor.hue_lights_active_scene
+          - type: divider
           - input_select.hue_select_scene_living_room
 
       - type: entities
         title: "Outside Lights"
         entities:
           - light.hue_front_porch
+          - type: divider
           - sensor.hue_lights_active_scene_outside
+          - type: divider
           - input_select.hue_select_scene_outside
 
   - title: 'Media'
@@ -135,20 +182,29 @@ views:
         show_header_toggle: false
         entities:
           - switch.docker_homeassistant
-          - script.docker_restart_homeassistant
+          - entity: script.docker_restart_homeassistant
+            icon: mdi:docker
 
       - type: entities
         title: "Restart Containers"
         show_header_toggle: false
         entities:
-          - script.docker_restart_hadockermon
-          - script.docker_restart_nodered
-          - script.docker_restart_nzbget
-          - script.docker_restart_mqtt
-          - script.docker_restart_plex
-          - script.docker_restart_radarr
-          - script.docker_restart_sonarr
-          - script.docker_restart_watchtower
+          - entity: script.docker_restart_hadockermon
+            icon: mdi:docker
+          - entity: script.docker_restart_nodered
+            icon: mdi:docker
+          - entity: script.docker_restart_nzbget
+            icon: mdi:docker
+          - entity: script.docker_restart_mqtt
+            icon: mdi:docker
+          - entity: script.docker_restart_plex
+            icon: mdi:docker
+          - entity: script.docker_restart_radarr
+            icon: mdi:docker
+          - entity: script.docker_restart_sonarr
+            icon: mdi:docker
+          - entity: script.docker_restart_watchtower
+            icon: mdi:docker
 
       - type: entities
         title: "Docker Switches"
@@ -170,3 +226,194 @@ views:
             name: 'Sonarr'
           - entity: switch.docker_watchtower
             name: 'Watchtower'
+
+  - title: 'Tado'
+    id: tado
+    cards:
+      - type: custom:thermostat-card
+        entity: climate.heating
+
+      - type: entities
+        title: 'Tado'
+        show_header_toggle: false
+        entities:
+          - entity: climate.heating
+            name: 'Tado'
+          - type: divider
+          - binary_sensor.tado_hot_water
+          - type: divider
+          ### TADO HEATING
+          - sensor.tado_bridge_status
+          - sensor.tado_heating_heating
+          - sensor.tado_heating_humidity
+          - sensor.tado_heating_link
+          - sensor.tado_heating_overlay
+          - sensor.tado_heating_power
+          - sensor.tado_heating_tado_mode
+          - sensor.tado_heating_temperature
+
+          - type: divider
+          ### TADO HOT WATER
+          - sensor.tado_hot_water_link
+          - sensor.tado_hot_water_overlay
+          - sensor.tado_hot_water_power
+          - sensor.tado_hot_water_tado_mode
+
+  - title: 'Hue'
+    # panel: true
+    id: hue
+    cards:
+      - type: entities
+        title: "Hue Motion Sensors"
+        entities:
+          ### HUE MOTION
+          - entity: binary_sensor.hue_motion_living_room_motion
+            name: "Living Room Motion"
+          - entity: binary_sensor.hue_motion_kitchen_motion
+            name: "Kitchen Motion"
+          - entity: binary_sensor.hue_motion_garage_motion
+            name: "Garage Motion"
+
+          - type: divider
+          ### HUE BATTERIES
+          - entity: sensor.hue_motion_living_room_battery
+            name: "Living Room Battery"
+            icon: mdi:battery-80
+          - entity: sensor.hue_motion_kitchen_battery
+            name: "Kitchen Battery"
+            icon: mdi:battery-80
+          - entity: sensor.hue_motion_garage_battery
+            name: "Garage Battery"
+            icon: mdi:battery-80
+
+          - type: divider
+          ### HUE TEMPERATURE
+          - entity: sensor.hue_motion_living_room_temperature
+            name: "Living Room Temperature"
+          - entity: sensor.hue_motion_kitchen_temperature
+            name: "Kitchen Temperature"
+          - entity: sensor.hue_motion_garage_temperature
+            name: "Garage Temperature"
+
+          - type: divider
+          ### HUE LIGHT LEVELS
+          - entity: sensor.hue_motion_living_room_lux
+            name: 'Living Room Lux'
+            icon: mdi:theme-light-dark
+          - entity: sensor.hue_motion_kitchen_lux
+            name: 'Kitchen Lux'
+            icon: mdi:theme-light-dark
+          - entity: sensor.hue_motion_garage_lux
+            name: 'Garage Lux'
+            icon: mdi:theme-light-dark
+
+          - type: divider
+
+          - binary_sensor.hue_motion_no_motion_ten
+          - entity: timer.hue_motion
+            name: "Motion Timer"
+
+  - title: 'Presence'
+    # panel: true
+    id: presence
+    cards:
+      - type: entities
+        title: 'Presence'
+        entities:
+          ### PRESENCE
+          - entity: binary_sensor.bayesian_presence_gillian
+            name: "Gillian Bayesian"
+            secondary_info: entity-id
+          - entity: device_tracker.gillian_asus_oneplus3t
+            name: "Gillian WiFi"
+            secondary_info: entity-id
+          - entity: device_tracker.gillian_bt_oneplus3t
+            name: "Gillian BT"
+            secondary_info: entity-id
+          - entity: device_tracker.gillian_tado
+            name: "Gillian Tado"
+            secondary_info: entity-id
+
+          - type: divider
+          - entity: binary_sensor.bayesian_presence_james
+            name: "James Bayesian"
+            secondary_info: entity-id
+          - entity: device_tracker.james_asus_oneplus3
+            name: "Gillian WiFi"
+            secondary_info: entity-id
+          - entity: device_tracker.james_bt_oneplus3
+            name: "Gillian BT"
+            secondary_info: entity-id
+          - entity: device_tracker.james_tado
+            name: "Gillian Tado"
+            secondary_info: entity-id
+
+  - title: 'Updates'
+    # panel: true
+    id: updates
+    cards:
+      - type: custom:tracker-card
+        title:
+        trackers:
+          - sensor.custom_card_tracker
+          - sensor.custom_component_tracker
+
+      - type: entities
+        entities:
+          - sensor.uptime
+
+  # - title: 'Testing'
+  #   # panel: true
+  #   id: testing
+  #   cards:
+  #     - type: picture-elements
+  #       image: /local/backgrounds/moon_surface.jpg
+  #       elements:
+  #         - type: image
+  #           entity: binary_sensor.bayesian_presence_james
+  #           image: /local/png/hunk.png
+  #           state_filter:
+  #             'on': brightness(100%) saturate(0.6)  # drop-shadow(0px 0px 5px skyblue) opacity(80%) hue-rotate(170deg)
+  #             'off': opacity(0%)
+  #           style:
+  #              top: 66%
+  #              left: 65%
+  #              width: 44%
+  #              pointer-events: none
+  #         - type: image
+  #           entity: binary_sensor.bayesian_presence_gillian
+  #           image: /local/png/pidge.png
+  #           state_filter:
+  #             'on': brightness(100%) saturate(0.8)  # drop-shadow(0px 0px 5px skyblue) opacity(80%) hue-rotate(170deg)
+  #             'off': opacity(0%)
+  #           style:
+  #              top: 69%
+  #              left: 32%
+  #              width: 50%
+  #              pointer-events: none
+  #
+  #     - type: picture-elements
+  #       image: /local/backgrounds/falcon_inside.jpg
+  #       elements:
+  #         - type: image
+  #           entity: binary_sensor.bayesian_presence_james
+  #           image: /local/png/han.png
+  #           state_filter:
+  #             'on': hue-rotate(170deg) brightness(80%) saturate(0.8)  drop-shadow(0px 0px 5px skyblue) opacity(80%)
+  #             'off': opacity(0%)
+  #           style:
+  #              top: 66%
+  #              left: 65%
+  #              width: 44%
+  #              pointer-events: none
+  #         - type: image
+  #           entity: binary_sensor.bayesian_presence_gillian
+  #           image: /local/png/jyn.png
+  #           state_filter:
+  #             'on': hue-rotate(170deg) brightness(80%) saturate(0.8)  drop-shadow(0px 0px 5px skyblue) opacity(80%)
+  #             'off': opacity(0%)
+  #           style:
+  #              top: 69%
+  #              left: 42%
+  #              width: 50%
+  #              pointer-events: none

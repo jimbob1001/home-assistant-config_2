@@ -1,0 +1,8 @@
+
+### HUE
+### HUB
+bridges:
+  - host: !secret hue_ip
+    filename: phue.conf
+    allow_unreachable: 'True'
+    allow_hue_groups: 'True'

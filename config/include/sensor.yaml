@@ -1,0 +1,243 @@
+
+### SENSORS
+
+### HUE MOTION - TEMPERATURE
+- platform: rest
+  resource: !secret hue_motion_living_temp
+  value_template: >
+    {{ value_json.state.temperature | float / 100 }}
+  unit_of_measurement: '°C'
+  name: "Hue Motion Living Room Temperature"
+  device_class: 'temperature'
+
+- platform: rest
+  resource: !secret hue_motion_kitchen_temp
+  value_template: >
+    {{ value_json.state.temperature | float / 100 }}
+  unit_of_measurement: '°C'
+  name: "Hue Motion Kitchen Temperature"
+  device_class: 'temperature'
+
+- platform: rest
+  resource: !secret hue_motion_garage_temp
+  value_template: >
+    {{ value_json.state.temperature | float / 100 }}
+  unit_of_measurement: '°C'
+  name: "Hue Motion Garage Temperature"
+  device_class: 'temperature'
+
+### HUE MOTION - BATTERY
+- platform: rest
+  resource: !secret hue_motion_living_battery
+  value_template: >
+    {{ value_json.config.battery }}
+  unit_of_measurement: '%'
+  name: "Hue Motion Living Room Battery"
+  device_class: 'battery'
+
+- platform: rest
+  resource: !secret hue_motion_kitchen_battery
+  value_template: >
+    {{ value_json.config.battery }}
+  unit_of_measurement: '%'
+  name: "Hue Motion Kitchen Battery"
+  device_class: 'battery'
+
+- platform: rest
+  resource: !secret hue_motion_garage_battery
+  value_template: >
+    {{ value_json.config.battery }}
+  unit_of_measurement: '%'
+  name: "Hue Motion Garage Battery"
+  device_class: 'battery'
+
+### HUE MOTION - LUX
+- platform: rest
+  resource: !secret hue_motion_living_lightlevel
+  value_template: >
+    {{ value_json.state.lightlevel }}
+  unit_of_measurement: 'Lux'
+  name: "Hue Motion Living Room Lux"
+  device_class: 'lux'
+
+- platform: rest
+  resource: !secret hue_motion_kitchen_lightlevel
+  value_template: >
+    {{ value_json.state.lightlevel }}
+  unit_of_measurement: 'Lux'
+  name: "Hue Motion Kitchen Lux"
+  device_class: 'lux'
+
+- platform: rest
+  resource: !secret hue_motion_garage_lightlevel
+  value_template: >
+    {{ value_json.state.lightlevel }}
+  unit_of_measurement: 'Lux'
+  name: "Hue Motion Garage Lux"
+  device_class: 'lux'
+
+### HUE TAP
+- platform: rest
+  resource: !secret hue_tap
+  value_template: >
+    {% if value_json.state.buttonevent == 34 %}
+      Button 1
+    {% elif value_json.state.buttonevent == 16 %}
+      Button 2
+    {% elif value_json.state.buttonevent == 17 %}
+      Button 3
+    {% elif value_json.state.buttonevent == 18 %}
+      Button 4
+    {% else %}
+      Unknown
+    {% endif %}
+  name: "Hue Tap Button"
+
+### TIME & DATE SENSOR
+- platform: time_date
+  display_options:
+    - 'time'
+    - 'date'
+    - 'date_time'
+
+### MOON
+- platform: moon
+
+### UPTIME SENSOR
+- platform: uptime
+
+### TEMPLATES
+- platform: template
+  sensors:
+### BIRTHDAYS
+    birthdays:
+      friendly_name: "Happy Birthday!"
+      value_template: !secret birthdays
+
+### LIGHTS
+### CURRENT SCENE LIVING ROOM
+    hue_lights_active_scene:
+      friendly_name: "Active Scene"
+      value_template: >
+        {% if states.light.living_room.attributes.xy_color == (0.447, 0.406) and
+        is_state('light.hue_table_lamp', 'off') %}
+          Movie
+        {% elif states.light.living_room.attributes.xy_color == (0.502, 0.414) and
+        is_state('light.hue_table_lamp', 'on') %}
+          Dim
+        {% elif states.light.living_room.attributes.xy_color == (0.447, 0.406) and
+        is_state('light.hue_table_lamp', 'on') %}
+          Full
+        {% elif states.light.living_room.attributes.xy_color == (0.314, 0.331) %}
+          White
+        {% elif states.light.living_room.attributes.xy_color == (0.429, 0.321) %}
+          Night
+        {% else %}
+          None
+        {% endif %}
+      icon_template: >
+        {% if is_state('sensor.hue_lights_active_scene', 'None') %}
+          mdi:checkbox-multiple-marked-circle-outline
+        {% else %}
+          mdi:checkbox-multiple-marked-circle-outline
+        {% endif %}
+
+### CURRENT SCENE OUTSIDE
+    hue_lights_active_scene_outside:
+      friendly_name: "Active Scene"
+      value_template: >
+        {% if states.light.outside.attributes.brightness == 127 %}
+          Dim
+        {% elif states.light.outside.attributes.brightness == 254 %}
+          Full
+        {% else %}
+          None
+        {% endif %}
+      icon_template: >
+        {% if is_state('sensor.hue_lights_active_scene_outside', 'None') %}
+          mdi:checkbox-multiple-marked-circle-outline
+        {% else %}
+          mdi:checkbox-multiple-marked-circle-outline
+        {% endif %}
+
+### TODAY
+    today_all:
+      friendly_name: 'Today'
+      value_template: >
+        {{ now().strftime('%a %d %b %Y') }}
+      icon_template: >
+        {% if is_state('sensor.today_all', 'unknown') %}
+          mdi:calendar
+        {%else%}
+          mdi:calendar
+        {% endif %}
+
+    today_day:
+      friendly_name: 'Day'
+      value_template: >
+        {{ now().strftime('%A') }}
+
+    today_date:
+      friendly_name: 'Date'
+      value_template: >
+        {{ now().strftime('%d') }}
+
+    today_month:
+      friendly_name: 'Month'
+      value_template: >
+        {{ now().strftime('%b') }}
+
+    today_year:
+      friendly_name: 'Year'
+      value_template: >
+        {{ now().strftime('%Y') }}
+
+### MORNING, AFTERNOON, EVENING OR NIGHT
+    time_of_day:
+      friendly_name_template: >
+        {% if is_state("sensor.time_of_day", 'Morning') %}
+          Morning
+        {% elif is_state("sensor.time_of_day", 'Afternoon') %}
+          Afternoon
+        {% elif is_state("sensor.time_of_day", 'Evening') %}
+          Evening
+        {% elif is_state("sensor.time_of_day", 'Night') %}
+          Night
+        {% elif is_state("sensor.time_of_day", 'Off') %}
+          Off
+        {% endif %}
+      icon_template: >
+        {% if is_state("sensor.time_of_day", 'Morning') or
+        is_state("sensor.time_of_day", 'Afternoon') or
+        is_state("sensor.time_of_day", 'Evening') %}
+          mdi:weather-partlycloudy
+        {% elif is_state("sensor.time_of_day", 'Night') %}
+          mdi:weather-night
+        {% else %}
+          mdi:timelapse
+        {% endif %}
+      value_template: >
+        {% if now().strftime('%H:%M:%S') > ('00:00:00') and
+        now().strftime('%H:%M:%S') < ('05:50:00') %}
+          Night
+        {% elif now().strftime('%H:%M:%S') > ('05:49:59') and
+        now().strftime('%H:%M:%S') < ('12:00:00') %}
+          Morning
+        {% elif now().strftime('%H:%M:%S') > ('11:59:59') and
+        now().strftime('%H:%M:%S') < ('18:00:00') %}
+          Afternoon
+        {% elif now().strftime('%H:%M:%S') > ('17:59:59') and
+        now().strftime('%H:%M:%S') < ('22:15:00') %}
+          Evening
+        {% elif now().strftime('%H:%M:%S') > ('22:14:59') and
+        now().strftime('%H:%M:%S') < ('23:59:59') %}
+          Night
+        {% else %}
+          Off
+        {% endif %}
+
+### SOLAR ELEVATION
+    solar_elevation:
+      friendly_name: "Solar Elevation"
+      value_template: >
+        {{ states.sun.sun.attributes.elevation }}

@@ -1,0 +1,33 @@
+
+### NOTIFY
+### PUSHOVER
+- name: 'hass'
+  platform: pushover
+  api_key: !secret hass_pushover_api
+  user_key: !secret pushover_user
+### PUSHOVER FOR WASTE
+- name: 'waste'
+  platform: pushover
+  api_key: !secret waste_pushover_api
+  user_key: !secret pushover_user
+### TELEGRAM
+- name: 'bot'
+  platform: telegram
+  api_key: !secret telegram_api
+  chat_id: !secret telegram_id
+### SLACK
+#- name: 'jkslack'
+#  platform: slack
+#  api_key: !secret slack_api
+#  default_channel: '#home-assistant'
+#  username: 'homeassistant'
+#  icon: 'bird'
+### EMAIL PUSHOVER
+#- name: 'Waste2'
+#  platform: smtp
+#  server: smtp.gmail.com
+#  sender: !secret gmail_address
+#  username: !secret gmail_address
+#  password: !secret gmail_password
+#  recipient:
+#    - !secret gmail_recipient

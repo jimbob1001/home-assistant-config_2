@@ -1,0 +1,6 @@
+
+ # pincode: !secret homekit_pincode
+ # auto_start: false
+ # filter:
+ #   include_domains:
+ #     - light

@@ -1,22 +1,17 @@
 
 ### WEATHER
 ### YAHOO
-weather:
-  - platform: yweather
-    woeid: !secret yweather_woeid
+- platform: yweather
+  woeid: !secret yweather_woeid
 
 ### DARKSKY
-  - platform: darksky
-    api_key: !secret darksky_api
+- platform: darksky
+  api_key: !secret darksky_api
 
 # ### OPENWEATHERMAP
 #   - platform: openweathermap
 #     api_key: !secret openweathermap_api
-#
+
 # ### METOFFICE
 #   - platform: metoffice
 #     api_key: !secret metoffice_api
-
-### MOON
-sensor:
-  - platform: moon

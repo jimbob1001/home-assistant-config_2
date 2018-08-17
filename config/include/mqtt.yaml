@@ -1,0 +1,8 @@
+
+ # broker: !secret mqtt_broker
+ # port: !secret mqtt_port
+ # username: !secret mqtt_user
+ # password: !secret mqtt_pass
+ # client_id: !secret mqtt_client
+ # keepalive: 60
+ # protocol: 3.1

@@ -1,0 +1,11 @@
+
+### SHELL COMMANDS
+  docker_restart_hadockermon: !secret docker_restart_hadockermon
+  docker_restart_homeassistant: !secret docker_restart_homeassistant
+  docker_restart_nodered: !secret docker_restart_nodered
+  docker_restart_nzbget: !secret docker_restart_nzbget
+  docker_restart_mqtt: !secret docker_restart_mqtt
+  docker_restart_plex: !secret docker_restart_plex
+  docker_restart_radarr: !secret docker_restart_radarr
+  docker_restart_sonarr: !secret docker_restart_sonarr
+  docker_restart_watchtower: !secret docker_restart_watchtower

@@ -7,28 +7,16 @@ homeassistant:
   elevation: !secret elevation_home
   unit_system: metric
   time_zone: Europe/London
-  packages: !include_dir_named include/packages
+  auth_providers:
+    - type: homeassistant
 
 ### ADDITIONAL CONFIG
 updater:
 config:
 sun:
-#conversation:
-#shopping_list:
 map:
 frontend:
   javascript_version: latest
-  themes: !include_dir_merge_named include/themes/
-
-timer:
-  hue_motion:
-    name: "Hue Motion Timer"
-    duration: '00:10:00'
-    icon: mdi:clock-fast
-  media_plex:
-    name: "Plex Paused Timer"
-    duration: '00:00:15'
-    icon: mdi:pause-circle
 
 history:
 logger:
@@ -54,42 +42,44 @@ logbook:
     entities:
       - sensor.time
       - sensor.date
-
-http:
-  api_password: !secret api_password
-  trusted_networks:
-    - !secret trusted_ip_1
-    - !secret trusted_ip_2
-    - !secret trusted_ip_3
-    - !secret trusted_ip_4
-  ip_ban_enabled: true
-  login_attempts_threshold: 5
+      - binary_sensor.hue_motion_living_room
 
 #cloud: !include include/cloud.yaml
+
+#http:
+#   api_password: !secret api_password
+#   trusted_networks:
+#     - !secret trusted_ip_1
+#     - !secret trusted_ip_2
+#     - !secret trusted_ip_3
+#     - !secret trusted_ip_4
+#   ip_ban_enabled: true
+#   login_attempts_threshold: 5
 
 google:
   client_id: !secret google_client_id
   client_secret: !secret google_client_secret
-  
-#homekit:
-#  pincode: !secret homekit_pincode
-#  auto_start: false
-#  filter:
-#    include_domains:
-#      - light
 
-mqtt:
-  broker: !secret mqtt_broker
-  port: !secret mqtt_port
-  username: !secret mqtt_user
-  password: !secret mqtt_pass
-  client_id: !secret mqtt_client
-  keepalive: 60
-  protocol: 3.1
+custom_updater:
 
 ### INCLUDE
-automation: !include_dir_merge_list include/automation
-script: !include_dir_merge_named include/script/
-# group: !include_dir_merge_named include/group/
-input_boolean: !include include/input/input_boolean.yaml
-input_select: !include include/input/input_select.yaml
+automation: !include include/automation.yaml
+binary_sensor: !include include/binary_sensor.yaml
+device_tracker: !include include/device_tracker.yaml
+homekit: !include include/homekit.yaml
+hue: !include include/hue.yaml
+input_boolean: !include include/input_boolean.yaml
+input_select: !include include/input_select.yaml
+light: !include include/light.yaml
+media_player: !include include/media_player.yaml
+mqtt: !include include/mqtt.yaml
+notify: !include include/notify.yaml
+script: !include include/script.yaml
+sensor: !include include/sensor.yaml
+shell_command: !include include/shell_command.yaml
+switch: !include include/switch.yaml
+tado: !include include/tado.yaml
+telegram_bot: !include include/telegram_bot.yaml
+timer: !include include/timer.yaml
+weather: !include include/weather.yaml
+zone: !include include/zone.yaml
