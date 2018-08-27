@@ -1,6 +1,5 @@
 
 ### BINARY SENSORS
-
 ### HUE MOTION SENSORS
 - platform: rest
   resource: !secret hue_motion_living_motion
@@ -27,12 +26,12 @@
   device_class: 'motion'
 
 ### HUE DAYLIGHT
-- platform: rest
-  resource: !secret hue_motion_living_daylight
-  value_template: >
-    {{ value_json.state.daylight }}
-  name: "Hue Motion Living Room Daylight"
-  device_class: 'light'
+# - platform: rest
+#   resource: !secret hue_motion_living_daylight
+#   value_template: >
+#     {{ value_json.state.daylight }}
+#   name: "Hue Motion Living Room Daylight"
+#   device_class: 'light'
 
 ### WORKDAY
 - platform: workday

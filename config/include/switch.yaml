@@ -45,7 +45,6 @@
         {% endif %}
 
 ### DOCKER
-### SWITCHES
 - platform: rest
   resource: !secret docker_hadockermon
   name: 'Docker HaDockermon'
@@ -117,3 +116,9 @@
   body_off: '{"state": "stop"}'
   is_on_template: >
     {{ value_json is not none and value_json.state == "running" }}
+
+### COMMAND LINE
+- platform: command_line
+  switches:
+    synoindex:
+      command_on: !secret synoindex

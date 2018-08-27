@@ -336,9 +336,25 @@
       event_data:
         command: '/ping'
   action:
-    - service: notify.bot
+    - service: notify.no33
       data:
         message: 'pong'
+
+### NZBGET SYNOINDEX
+- alias: 'nzbget_synoindex'
+  id: nzbget_synoindex
+  initial_state: 'True'
+  trigger:
+    - platform: event
+      event_type: 'telegram_command'
+      event_data:
+        command: '/synoindex'
+  action:
+    - service: switch.turn_on
+      entity_id: switch.synoindex
+    - service: notify.no33
+      data:
+        message: 'pongo'
 
 ### RESTARTED
 - alias: 'notify_hass_restart'

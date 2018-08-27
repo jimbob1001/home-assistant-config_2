@@ -1,6 +1,5 @@
 
-### HUE
-### HUB
+### HUE HUB
 bridges:
   - host: !secret hue_ip
     filename: phue.conf

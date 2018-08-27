@@ -1,8 +1,12 @@
 
+### TIMER
+### HUE
   hue_motion:
     name: "Hue Motion Timer"
     duration: '00:10:00'
     icon: mdi:clock-fast
+
+### PLEX
   media_plex:
     name: "Plex Paused Timer"
     duration: '00:00:15'

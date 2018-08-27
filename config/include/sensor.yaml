@@ -1,31 +1,6 @@
 
 ### SENSORS
 
-### HUE MOTION - TEMPERATURE
-- platform: rest
-  resource: !secret hue_motion_living_temp
-  value_template: >
-    {{ value_json.state.temperature | float / 100 }}
-  unit_of_measurement: '°C'
-  name: "Hue Motion Living Room Temperature"
-  device_class: 'temperature'
-
-- platform: rest
-  resource: !secret hue_motion_kitchen_temp
-  value_template: >
-    {{ value_json.state.temperature | float / 100 }}
-  unit_of_measurement: '°C'
-  name: "Hue Motion Kitchen Temperature"
-  device_class: 'temperature'
-
-- platform: rest
-  resource: !secret hue_motion_garage_temp
-  value_template: >
-    {{ value_json.state.temperature | float / 100 }}
-  unit_of_measurement: '°C'
-  name: "Hue Motion Garage Temperature"
-  device_class: 'temperature'
-
 ### HUE MOTION - BATTERY
 - platform: rest
   resource: !secret hue_motion_living_battery
@@ -52,29 +27,54 @@
   device_class: 'battery'
 
 ### HUE MOTION - LUX
-- platform: rest
-  resource: !secret hue_motion_living_lightlevel
-  value_template: >
-    {{ value_json.state.lightlevel }}
-  unit_of_measurement: 'Lux'
-  name: "Hue Motion Living Room Lux"
-  device_class: 'lux'
+# - platform: rest
+#   resource: !secret hue_motion_living_lightlevel
+#   value_template: >
+#     {{ value_json.state.lightlevel }}
+#   unit_of_measurement: 'Lux'
+#   name: "Hue Motion Living Room Lux"
+#   device_class: 'lux'
+#
+# - platform: rest
+#   resource: !secret hue_motion_kitchen_lightlevel
+#   value_template: >
+#     {{ value_json.state.lightlevel }}
+#   unit_of_measurement: 'Lux'
+#   name: "Hue Motion Kitchen Lux"
+#   device_class: 'lux'
+#
+# - platform: rest
+#   resource: !secret hue_motion_garage_lightlevel
+#   value_template: >
+#     {{ value_json.state.lightlevel }}
+#   unit_of_measurement: 'Lux'
+#   name: "Hue Motion Garage Lux"
+#   device_class: 'lux'
 
-- platform: rest
-  resource: !secret hue_motion_kitchen_lightlevel
-  value_template: >
-    {{ value_json.state.lightlevel }}
-  unit_of_measurement: 'Lux'
-  name: "Hue Motion Kitchen Lux"
-  device_class: 'lux'
-
-- platform: rest
-  resource: !secret hue_motion_garage_lightlevel
-  value_template: >
-    {{ value_json.state.lightlevel }}
-  unit_of_measurement: 'Lux'
-  name: "Hue Motion Garage Lux"
-  device_class: 'lux'
+### HUE MOTION - TEMPERATURE
+# - platform: rest
+#   resource: !secret hue_motion_living_temp
+#   value_template: >
+#     {{ value_json.state.temperature | float / 100 }}
+#   unit_of_measurement: '°C'
+#   name: "Hue Motion Living Room Temperature"
+#   device_class: 'temperature'
+#
+# - platform: rest
+#   resource: !secret hue_motion_kitchen_temp
+#   value_template: >
+#     {{ value_json.state.temperature | float / 100 }}
+#   unit_of_measurement: '°C'
+#   name: "Hue Motion Kitchen Temperature"
+#   device_class: 'temperature'
+#
+# - platform: rest
+#   resource: !secret hue_motion_garage_temp
+#   value_template: >
+#     {{ value_json.state.temperature | float / 100 }}
+#   unit_of_measurement: '°C'
+#   name: "Hue Motion Garage Temperature"
+#   device_class: 'temperature'
 
 ### HUE TAP
 - platform: rest
@@ -106,9 +106,18 @@
 ### UPTIME SENSOR
 - platform: uptime
 
+### AIR QUALITY
+- platform: waqi
+  token: !secret waqi_api
+  locations:
+    - !secret waqi_location
+#  stations:
+#    - Leeds Centre
+
 ### TEMPLATES
 - platform: template
   sensors:
+
 ### BIRTHDAYS
     birthdays:
       friendly_name: "Happy Birthday!"

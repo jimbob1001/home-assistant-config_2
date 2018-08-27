@@ -1,5 +1,5 @@
 
-### MEDIA
+### MEDIA_PLAYER
 ### PLEX
 - platform: plex
   entity_namespace: 'plex'

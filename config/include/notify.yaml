@@ -5,16 +5,18 @@
   platform: pushover
   api_key: !secret hass_pushover_api
   user_key: !secret pushover_user
-### PUSHOVER FOR WASTE
+
 - name: 'waste'
   platform: pushover
   api_key: !secret waste_pushover_api
   user_key: !secret pushover_user
+
 ### TELEGRAM
-- name: 'bot'
+- name: 'no33'
   platform: telegram
-  api_key: !secret telegram_api
-  chat_id: !secret telegram_id
+  api_key: !secret telegram_api_1
+  chat_id: !secret telegram_id_1
+
 ### SLACK
 #- name: 'jkslack'
 #  platform: slack
@@ -22,6 +24,7 @@
 #  default_channel: '#home-assistant'
 #  username: 'homeassistant'
 #  icon: 'bird'
+
 ### EMAIL PUSHOVER
 #- name: 'Waste2'
 #  platform: smtp

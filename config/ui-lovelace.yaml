@@ -1,11 +1,11 @@
 resources:
   - url: /local/custom_ui/weather-card.js
     type: js
-  - url: /local/custom_ui/thermostat-card/thermostat-card.js?v=0.0.2
+  - url: /local/custom_ui/thermostat-card/thermostat-card.js?v=0.1.1
     type: module
   - url: /local/tracker-card.js?v=0.1.4
     type: js
-  - url: /local/monster-card.js?v=1
+  - url: /local/monster-card.js?v=0.2.3
     type: js
 
 title: No. 33
@@ -71,6 +71,9 @@ views:
         entity_weather: weather.yweather
         entity_sun: sun.sun
 
+      # - type: weather-forecast
+      #   entity: weather.dark_sky
+
       - type: entity-filter
         ### TESTING FOR LIGHT AUTOMATIONS
         show_empty: false
@@ -81,11 +84,6 @@ views:
           - 'on'
         card:
           - type: glance
-          - type: divider
-            style:
-              height: 30px
-              margin: 10px 0
-              background: left / contain url("/local/png/leaf.png") no-repeat
 
       - type: entities
         ### HUE ENTITIES
@@ -124,6 +122,8 @@ views:
             name: 'Daylight'
           - sensor.time_of_day
           - sensor.moon
+          - entity: sensor.waqi_leeds_centre_united_kingdom
+            name: "Air Quality"
 
       - type: entities
         ### RESTART / PURGE
@@ -134,6 +134,7 @@ views:
             icon: mdi:docker
           - entity: script.config_purge_database_keep_1_day
             name: "Clear Database"
+          - switch.synoindex
 
       - type: entities
         title: "Living Room Lights"
@@ -313,6 +314,11 @@ views:
           - entity: timer.hue_motion
             name: "Motion Timer"
 
+      - type: history-graph
+        title: 'My Graph'
+        entities:
+           - binary_sensor.sun_lights_outside_pm
+
   - title: 'Presence'
     # panel: true
     id: presence
@@ -335,6 +341,7 @@ views:
             secondary_info: entity-id
 
           - type: divider
+              
           - entity: binary_sensor.bayesian_presence_james
             name: "James Bayesian"
             secondary_info: entity-id
@@ -361,6 +368,62 @@ views:
       - type: entities
         entities:
           - sensor.uptime
+
+  - title: 'Monsters'
+    # panel: true
+    id: monsters
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: custom:monster-card
+            card:
+              type: entities
+              title: 'Devices'
+            filter:
+              include:
+                - domain: device_tracker
+                  options:
+                    secondary_info: entity-id
+
+          - type: custom:monster-card
+            card:
+              type: entities
+              title: "Binary Sensors"
+            filter:
+              include:
+                - domain: binary_sensor
+                  options:
+                    secondary_info: entity-id
+
+          - type: custom:monster-card
+            card:
+              type: entities
+              title: 'Sensors'
+            filter:
+              include:
+                - domain: sensor
+                  options:
+                    secondary_info: entity-id
+
+          - type: custom:monster-card
+            card:
+              type: entities
+              title: 'Scripts'
+            filter:
+              include:
+                - domain: script
+                  options:
+                    secondary_info: entity-id
+
+          - type: custom:monster-card
+            card:
+              type: entities
+              title: 'Automations'
+            filter:
+              include:
+                - domain: automation
+                  options:
+                    secondary_info: entity-id
 
   # - title: 'Testing'
   #   # panel: true

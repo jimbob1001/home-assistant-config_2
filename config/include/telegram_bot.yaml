@@ -1,7 +1,6 @@
 
 ### TELEGRAM
-### TELEGRAM BOT TO CONTROL HOMEASSISTANT
 - platform: polling
-  api_key: !secret telegram_api
+  api_key: !secret telegram_api_1
   allowed_chat_ids:
-    - !secret telegram_id
+    - !secret telegram_id_1

@@ -1,5 +1,4 @@
 
-### SENSORS
 ### TADO
 username: !secret tado_user
 password: !secret tado_pass
