@@ -1,5 +1,25 @@
 
 ### SENSORS
+### NZBGET
+#- platform: rest
+#  resource: !secret nzbget_rest_sensor
+#  value_template: >
+#    {{ value_json.body.Category }}
+#  name: 'Nzbget'
+#  json_attributes:
+#    - Status
+
+### TRAKT
+- platform: trakt
+  id: !secret trakt_id
+  secret: !secret trakt_secret
+  username: !secret trakt_username
+  days: 10
+
+### HUE
+- platform: hue
+  ip_address: !secret hue_ip
+  token: !secret hue_token
 
 ### HUE MOTION - BATTERY
 - platform: rest

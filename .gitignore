@@ -27,13 +27,13 @@ Thumbs.db
 *.json
 *.conf
 *.log
-*.log
 *.db
 *.db-wal
 *.db-shm
 *.google.token
 *.storage
 *.cloud
+*.ssh
 
 known_devices.yaml
 secrets.yaml

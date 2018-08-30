@@ -64,6 +64,7 @@ views:
             name: 'James'
           - entity: binary_sensor.bayesian_presence_gillian
             name: 'Gillian'
+          - sensor.nzbget
 
       - type: "custom:weather-card"
         ### WEATHER
@@ -118,8 +119,6 @@ views:
           - sun.sun
           - entity: sensor.solar_elevation
             icon: mdi:elevation-rise
-          - entity: binary_sensor.hue_motion_living_room_daylight
-            name: 'Daylight'
           - sensor.time_of_day
           - sensor.moon
           - entity: sensor.waqi_leeds_centre_united_kingdom
@@ -287,26 +286,26 @@ views:
             name: "Garage Battery"
             icon: mdi:battery-80
 
-          - type: divider
-          ### HUE TEMPERATURE
-          - entity: sensor.hue_motion_living_room_temperature
-            name: "Living Room Temperature"
-          - entity: sensor.hue_motion_kitchen_temperature
-            name: "Kitchen Temperature"
-          - entity: sensor.hue_motion_garage_temperature
-            name: "Garage Temperature"
-
-          - type: divider
-          ### HUE LIGHT LEVELS
-          - entity: sensor.hue_motion_living_room_lux
-            name: 'Living Room Lux'
-            icon: mdi:theme-light-dark
-          - entity: sensor.hue_motion_kitchen_lux
-            name: 'Kitchen Lux'
-            icon: mdi:theme-light-dark
-          - entity: sensor.hue_motion_garage_lux
-            name: 'Garage Lux'
-            icon: mdi:theme-light-dark
+          # - type: divider
+          # ### HUE TEMPERATURE
+          # - entity: sensor.hue_motion_living_room_temperature
+          #   name: "Living Room Temperature"
+          # - entity: sensor.hue_motion_kitchen_temperature
+          #   name: "Kitchen Temperature"
+          # - entity: sensor.hue_motion_garage_temperature
+          #   name: "Garage Temperature"
+          #
+          # - type: divider
+          # ### HUE LIGHT LEVELS
+          # - entity: sensor.hue_motion_living_room_lux
+          #   name: 'Living Room Lux'
+          #   icon: mdi:theme-light-dark
+          # - entity: sensor.hue_motion_kitchen_lux
+          #   name: 'Kitchen Lux'
+          #   icon: mdi:theme-light-dark
+          # - entity: sensor.hue_motion_garage_lux
+          #   name: 'Garage Lux'
+          #   icon: mdi:theme-light-dark
 
           - type: divider
 
@@ -341,7 +340,7 @@ views:
             secondary_info: entity-id
 
           - type: divider
-              
+
           - entity: binary_sensor.bayesian_presence_james
             name: "James Bayesian"
             secondary_info: entity-id
