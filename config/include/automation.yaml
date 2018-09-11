@@ -223,20 +223,6 @@
   action:
     - service: script.hue_lights_living_room_off
 
-### NOTIFY TAP PRESS
-- alias: 'hue_tap_living_room_notify'
-  id: hue_tap_living_room_notify
-  initial_state: 'True'
-  trigger:
-    - platform: state
-      entity_id:
-        - sensor.hue_tap_button
-  action:
-    - service: notify.hass
-      data_template:
-        message: "{{ trigger.to_state.state }} has been pressed"
-        title: "Hue Tap {{ trigger.to_state.state }}"
-
 ### HUE
 ### HUE SELECT LIVING ROOM SCENE
 - alias: 'hue_select_scene_living_room'
@@ -339,22 +325,6 @@
     - service: notify.no33
       data:
         message: 'pong'
-
-### NZBGET SYNOINDEX
-- alias: 'nzbget_synoindex'
-  id: nzbget_synoindex
-  initial_state: 'True'
-  trigger:
-    - platform: event
-      event_type: 'telegram_command'
-      event_data:
-        command: '/synoindex'
-  action:
-    - service: switch.turn_on
-      entity_id: switch.synoindex
-    - service: notify.no33
-      data:
-        message: 'pongo'
 
 ### RESTARTED
 - alias: 'notify_hass_restart'
@@ -499,6 +469,18 @@
         message: >
           Hot water has been on for more than 35 minutes
         title: "Tado Alert"
+
+### SYNOINDEX
+- alias: 'new_file_synoindex'
+  id: new_file_synoindex
+  initial_state: 'True'
+  trigger:
+    - platform: event
+      event_type: folder_watcher
+      event_data:
+        event_type: created
+  action:
+    - service: script.synoindex
 
 ### LIGHTS OUTSIDE AM
 - alias: 'sun_lights_outside_am'

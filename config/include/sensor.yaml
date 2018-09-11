@@ -1,13 +1,9 @@
 
 ### SENSORS
-### NZBGET
-#- platform: rest
-#  resource: !secret nzbget_rest_sensor
-#  value_template: >
-#    {{ value_json.body.Category }}
-#  name: 'Nzbget'
-#  json_attributes:
-#    - Status
+### VERSIONS
+- platform: versions
+  installation: docker
+  branch: rc
 
 ### TRAKT
 - platform: trakt
@@ -29,6 +25,8 @@
   unit_of_measurement: '%'
   name: "Hue Motion Living Room Battery"
   device_class: 'battery'
+  scan_interval:
+    minutes: 60
 
 - platform: rest
   resource: !secret hue_motion_kitchen_battery
@@ -37,6 +35,8 @@
   unit_of_measurement: '%'
   name: "Hue Motion Kitchen Battery"
   device_class: 'battery'
+  scan_interval:
+    minutes: 60
 
 - platform: rest
   resource: !secret hue_motion_garage_battery
@@ -45,6 +45,8 @@
   unit_of_measurement: '%'
   name: "Hue Motion Garage Battery"
   device_class: 'battery'
+  scan_interval:
+    minutes: 60
 
 ### HUE MOTION - LUX
 # - platform: rest
@@ -126,23 +128,21 @@
 ### UPTIME SENSOR
 - platform: uptime
 
-### AIR QUALITY
-- platform: waqi
-  token: !secret waqi_api
-  locations:
-    - !secret waqi_location
-#  stations:
-#    - Leeds Centre
-
 ### TEMPLATES
 - platform: template
   sensors:
 
 ### BIRTHDAYS
     birthdays:
-      friendly_name: "Happy Birthday!"
+      friendly_name: 'Birthdays'
       value_template: !secret birthdays
-
+      icon_template: >
+        {% if is_state('sensor.birthdays', 'off') %}
+          mdi:checkbox-multiple-marked-circle-outline
+        {% else %}
+          mdi:checkbox-multiple-marked-circle-outline
+        {% endif %}
+        
 ### LIGHTS
 ### CURRENT SCENE LIVING ROOM
     hue_lights_active_scene:

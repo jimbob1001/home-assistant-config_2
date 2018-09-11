@@ -170,7 +170,7 @@
   probability_threshold: 0.95
   observations:
     - entity_id: "device_tracker.james_asus_oneplus3"
-      prob_given_true: 0.6
+      prob_given_true: 0.8
       platform: 'state'
       to_state: 'home'
     - entity_id: "device_tracker.james_tado"

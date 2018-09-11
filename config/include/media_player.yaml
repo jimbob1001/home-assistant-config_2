@@ -20,15 +20,15 @@
 
 ### SONY_BRAVIA_TV_PSK
 ### CUSTOM COMPONENT
-#- platform: braviatv_psk
-#  name: "Sony Bravia"
-#  host: !secret sony_ip
-#  psk: !secret sony_psk
-#  mac: !secret sony_mac
-#  amp: 'True'
-#  android: 'True'
-#  sourcefilter:
-#    - HDMI
+- platform: braviatv_psk
+  name: "Sony Bravia"
+  host: !secret sony_ip
+  psk: !secret sony_psk
+  mac: !secret sony_mac
+  amp: 'True'
+  android: 'True'
+  sourcefilter:   
+    - HDMI
 
 ### UNIVERSAL
 ### COMBINES ALL MEDIA PLAYERS INTO A SINGLE ENTITY

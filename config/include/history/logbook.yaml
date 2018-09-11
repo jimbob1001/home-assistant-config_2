@@ -1,0 +1,25 @@
+
+  exclude:
+    domains:
+      - sun
+      - group
+      - weather
+    entities:
+      - sensor.time
+      - sensor.time_of_day
+      - sensor.date
+      - sensor.date__time
+      - sensor.today_date
+      - sensor.today_day
+      - sensor.today_month
+      - sensor.today_year
+      - sensor.solar_elevation
+      - binary_sensor.hue_motion_living_room_motion
+      - binary_sensor.hue_motion_kitchen_motion
+      - binary_sensor.hue_motion_garage_motion
+      - sensor.hue_motion_living_room_motion_sensor
+      - sensor.hue_motion_kitchen_motion_sensor
+      - sensor.hue_motion_garage_motion_sensor
+      - sensor.custom_card_tracker
+      - sensor.custom_component_tracker
+      

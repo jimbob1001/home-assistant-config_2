@@ -9,3 +9,5 @@
   docker_restart_radarr: !secret docker_restart_radarr
   docker_restart_sonarr: !secret docker_restart_sonarr
   docker_restart_watchtower: !secret docker_restart_watchtower
+
+  synoindex: !secret synoindex

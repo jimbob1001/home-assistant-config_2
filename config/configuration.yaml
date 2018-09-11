@@ -7,6 +7,8 @@ homeassistant:
   elevation: !secret elevation_home
   unit_system: metric
   time_zone: Europe/London
+  whitelist_external_dirs:
+    - !secret folder_1
 
 ### ADDITIONAL CONFIG
 updater:
@@ -16,31 +18,15 @@ map:
 frontend:
   javascript_version: latest
 
-history:
 logger:
   default: warning
+
 system_log:
-  max_entries: 15
+  max_entries: 25
 
-recorder:
-  purge_interval: 10
-  purge_keep_days: 2
-  exclude:
-    domains:
-      - sun
-    entities:
-      - sensor.time
-      - sensor.date
-
-logbook:
-  exclude:
-    domains:
-      - sun
-      - group
-    entities:
-      - sensor.time
-      - sensor.date
-      - binary_sensor.hue_motion_living_room
+history: !include include/history/history.yaml
+logbook: !include include/history/logbook.yaml
+recorder: !include include/history/recorder.yaml
 
 http:
   api_password: !secret api_password
@@ -59,12 +45,15 @@ google:
 custom_updater:
   component_urls:
     - https://raw.githubusercontent.com/robmarkcole/Hue-sensors-HASS/master/custom_updater.json
+  card_urls:
+    - https://raw.githubusercontent.com/kuuji/button-card/0.0.2/tracker.json
 
 ### INCLUDE
 automation: !include include/automation.yaml
 binary_sensor: !include include/binary_sensor.yaml
 #cloud: !include include/cloud.yaml
 device_tracker: !include include/device_tracker.yaml
+folder_watcher: !include include/folder_watcher.yaml
 #homekit: !include include/homekit.yaml
 hue: !include include/hue.yaml
 input_boolean: !include include/input_boolean.yaml

@@ -48,6 +48,12 @@
     sequence:
       - service: homekit.start
 
+### SYNOINDEX
+  synoindex:
+    alias: "Syno Index"
+    sequence:
+      - service: shell_command.synoindex
+
 ### DOCKER
 ### HA DOCKERMON
   docker_restart_hadockermon:
@@ -230,10 +236,10 @@
       - service: notify.get_notified
         data:
           message: >
-            Living Room Motion Sensor 
+            Living Room Motion Sensor
             has been triggered at home
           title: "Motion Detected"
-          
+
 ### MEDIA
 ### SELECT 6 MUSIC
   media_sonos_select_6music:

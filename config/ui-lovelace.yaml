@@ -3,10 +3,12 @@ resources:
     type: js
   - url: /local/custom_ui/thermostat-card/thermostat-card.js?v=0.1.1
     type: module
-  - url: /local/tracker-card.js?v=0.1.4
+  - url: /local/custom_ui/tracker-card.js?v=0.1.4
     type: js
-  - url: /local/monster-card.js?v=0.2.3
+  - url: /local/custom_ui/monster-card.js?v=0.2.3
     type: js
+  - url: /local/custom_ui/button-card.js?v=0.0.2
+    type: module
 
 title: No. 33
 views:
@@ -66,15 +68,6 @@ views:
             name: 'Gillian'
           - sensor.nzbget
 
-      - type: "custom:weather-card"
-        ### WEATHER
-        title: 'Weather'
-        entity_weather: weather.yweather
-        entity_sun: sun.sun
-
-      # - type: weather-forecast
-      #   entity: weather.dark_sky
-
       - type: entity-filter
         ### TESTING FOR LIGHT AUTOMATIONS
         show_empty: false
@@ -100,6 +93,7 @@ views:
         ### INFORMATION
         show_header_toggle: false
         entities:
+          - switch.flux
           - sensor.time
           - sensor.today_all
           - entity: sensor.hue_tap_button
@@ -121,19 +115,36 @@ views:
             icon: mdi:elevation-rise
           - sensor.time_of_day
           - sensor.moon
-          - entity: sensor.waqi_leeds_centre_united_kingdom
-            name: "Air Quality"
 
-      - type: entities
-        ### RESTART / PURGE
-        show_header_toggle: false
-        entities:
-          - entity: script.docker_restart_homeassistant
-            name: "Restart Homeassistant"
+      - type: horizontal-stack
+        cards:
+          - type: "custom:button-card"
+            color_type: blank-card
+
+          - type: "custom:button-card"
+            entity: script.synoindex
+            icon: mdi:cloud-sync
+            name: 'Index'
+            style:
+              - text-transform: none
+
+          - type: "custom:button-card"
+            entity: script.docker_restart_homeassistant
             icon: mdi:docker
-          - entity: script.config_purge_database_keep_1_day
-            name: "Clear Database"
-          - switch.synoindex
+            name: 'Restart'
+            style:
+              - text-transform: none
+
+          - type: "custom:button-card"
+            entity: script.config_purge_database_keep_1_day
+            icon: mdi:database
+            name: 'Clear'
+            action: more_info
+            style:
+              - text-transform: none
+
+          - type: "custom:button-card"
+            color_type: blank-card
 
       - type: entities
         title: "Living Room Lights"
@@ -173,6 +184,8 @@ views:
             entity: media_player.plex_shield2
           - type: media-control
             entity: media_player.cast_shield
+          - type: media-control
+            entity: media_player.sony_bravia
 
   - title: 'Docker'
     id: docker
@@ -286,27 +299,6 @@ views:
             name: "Garage Battery"
             icon: mdi:battery-80
 
-          # - type: divider
-          # ### HUE TEMPERATURE
-          # - entity: sensor.hue_motion_living_room_temperature
-          #   name: "Living Room Temperature"
-          # - entity: sensor.hue_motion_kitchen_temperature
-          #   name: "Kitchen Temperature"
-          # - entity: sensor.hue_motion_garage_temperature
-          #   name: "Garage Temperature"
-          #
-          # - type: divider
-          # ### HUE LIGHT LEVELS
-          # - entity: sensor.hue_motion_living_room_lux
-          #   name: 'Living Room Lux'
-          #   icon: mdi:theme-light-dark
-          # - entity: sensor.hue_motion_kitchen_lux
-          #   name: 'Kitchen Lux'
-          #   icon: mdi:theme-light-dark
-          # - entity: sensor.hue_motion_garage_lux
-          #   name: 'Garage Lux'
-          #   icon: mdi:theme-light-dark
-
           - type: divider
 
           - binary_sensor.hue_motion_no_motion_ten
@@ -345,13 +337,13 @@ views:
             name: "James Bayesian"
             secondary_info: entity-id
           - entity: device_tracker.james_asus_oneplus3
-            name: "Gillian WiFi"
+            name: "James WiFi"
             secondary_info: entity-id
           - entity: device_tracker.james_bt_oneplus3
-            name: "Gillian BT"
+            name: "James BT"
             secondary_info: entity-id
           - entity: device_tracker.james_tado
-            name: "Gillian Tado"
+            name: "James Tado"
             secondary_info: entity-id
 
   - title: 'Updates'
@@ -367,6 +359,7 @@ views:
       - type: entities
         entities:
           - sensor.uptime
+          - sensor.ha_version_docker_rc
 
   - title: 'Monsters'
     # panel: true
