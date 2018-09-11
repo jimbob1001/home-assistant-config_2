@@ -31,6 +31,7 @@ Thumbs.db
 *.db-wal
 *.db-shm
 *.google.token
+*.token
 *.storage
 *.cloud
 *.ssh
